@@ -36,8 +36,7 @@
 /*    gap: 50px;*/
 /*    text-align: left;*/
 /*}*/
-/*.detail .image img{*/
-/*    width: 100%;*/
+/*.
 /*}*/
 /*.detail .image{*/
 /*    position: relative;*/
@@ -156,13 +155,13 @@
 }
 
 .productdetails-img-list img{
-    height: 120px;
-    width: 300px;
+    height: 88px;
+    max-width: 88px;
 
 }
 .productdetails-main-img{
-    width: 1400px;
-    height: 550px;
+    max-width: 400px;
+    height: 400px;
 }
 
 .product-details-right{
@@ -241,6 +240,82 @@
 }
 .productdisplay-right-category span{
     font-weight: 600;
+}
+
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .product-details {
+        margin: 0px 50px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .product-details-right {
+        margin: 30px 0;
+    }
+    .productdetails-main-img {
+        width: 350px;
+        height: 350px;
+    }
+    .productdetails-img-list img {
+        height: 75px;
+        width: 75px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-details {
+        margin: 0px 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .productdetails-main-img {
+        width: 300px;
+        height: 300px;
+    }
+    .productdetails-img-list img {
+        height: 60px;
+        width: 60px;
+    }
+    .product-details-right h1 {
+        font-size: 35px;
+    }
+    .productdetails-right-prices {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .product-details-right button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-details {
+        margin: 0px 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .productdetails-main-img {
+        width: 250px;
+        height: 250px;
+    }
+    .productdetails-img-list img {
+        height: 50px;
+        width: 50px;
+    }
+    .product-details-right h1 {
+        font-size: 30px;
+    }
+    .productdetails-right-prices {
+        font-size: 20px;
+    }
+    .productdetails-right-star {
+        font-size: 16px;
+    }
+    .quantity {
+        width: 60px;
+    }
 }
 
 

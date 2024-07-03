@@ -10,26 +10,26 @@ const CurriculumData = [
     {
         title: "How to connect LDR TO AEC Microcontroller",
         subtitle:
-            "minima facere deserunt vero illo beatae deleniti eius dolores consequuntur, eligendi corporis maiores molestiae laudantium. Porro?",
+            "Unlock the world of light-dependent resistors (LDR) with our step-by-step guide on connecting this sensor to an AEC Board. Dive into the fascinating realm of electronics as we walk you through the process, demystifying the connections and empowering you to harness the power of light sensing technology effortlessly. Watch and learn how to integrate LDR sensors seamlessly with AEC Boards, opening doors to exciting possibilities in your projects.",
         published: "Jan 20, 2024",
         image: Img1,
         aosDelay: "0",
     },
     {
-        title: "How to connect LDR TO AEC Microcontroller",
+        title: "How to integrate LCD(I2C) Module to AEC Microcontroller Board",
         subtitle:
-            "minima facere deserunt vero illo beatae deleniti eius dolores consequuntur, eligendi corporis maiores molestiae laudantium. Porro?",
+            "Unlock the potential of your AEC Microcontroller Board by learning how to seamlessly integrate an I2C LCD Module with this easy-to-follow tutorial! In this video, we'll guide you through the step-by-step process of connecting your LCD module to the AEC Microcontroller, enabling you to display information with clarity and precision.?",
         published: "Jan 20, 2024",
         image: Img2,
         aosDelay: "200",
     },
     {
-        title: "How to connect LDR TO AEC Microcontroller",
+        title: "How to integrate LCD(I2C) Module to AEC Microcontroller Board",
         subtitle:
-            "minima facere deserunt vero illo beatae deleniti eius dolores consequuntur, eligendi corporis maiores molestiae laudantium. Porro?",
+            "Unlock the potential of your AEC Microcontroller Board by learning how to seamlessly integrate an I2C LCD Module with this easy-to-follow tutorial! In this video, we'll guide you through the step-by-step process of connecting your LCD module to the AEC Microcontroller, enabling you to display information with clarity and precision.?",
         published: "Jan 20, 2024",
-        image: Img3,
-        aosDelay: "400",
+        image: Img2,
+        aosDelay: "200",
     },
 ];
 const Curriculum = () => {

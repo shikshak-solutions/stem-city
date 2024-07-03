@@ -13,8 +13,8 @@ const MenuLinks = [
     },
     {
         id: 2,
-        name: "Shop",
-        link: "/#shop",
+        name: "Products",
+        link: "/products",
     },
     {
         id: 3,
@@ -32,17 +32,17 @@ const DropdownLinks = [
     {
         id: 1,
         name: "Trending Products",
-        link: "/#",
+        link: "/products",
     },
     {
         id: 2,
         name: "Best Selling",
-        link: "/#",
+        link: "/products",
     },
     {
         id: 3,
         name: "Top Rated",
-        link: "/#",
+        link: "/products",
     },
 ];
 const Navbar = ({ handleOrderPopup }) => {

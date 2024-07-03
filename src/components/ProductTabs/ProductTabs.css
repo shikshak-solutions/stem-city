@@ -45,3 +45,41 @@
     border: 1px solid #e6e6e6 ;
     font-size: 16px;
 }
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .descriptionbox {
+        margin: 20px 30px;
+    }
+    .product-tab-container {
+        margin: 80px 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .descriptionbox {
+        margin: 20px 20px;
+    }
+    .product-tab-container {
+        margin: 60px 20px;
+    }
+    .tab {
+        flex-direction: column;
+    }
+    .tab button {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .descriptionbox {
+        margin: 20px 10px;
+    }
+    .product-tab-container {
+        margin: 40px 10px;
+    }
+    .tab button {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}

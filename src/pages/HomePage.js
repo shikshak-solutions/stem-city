@@ -37,7 +37,7 @@ const HomePage = () => {
         title: "Creative Expansion Kit",
         image: creativeExpansion,
         title2: "Get this",
-        title3: "@Only 17,327 /-",
+        title3: "@Only 20,445 /-",
         title4:
             "Explore our Creative Expansion Kit and make various Creative models",
         bgColor: "#f42c37",
@@ -48,7 +48,7 @@ const HomePage = () => {
         title: "Defender WiseKit",
         image: Defender,
         title2: "Get this",
-        title3: "@Only 21,550 /-",
+        title3: "@Only 25,499 /-",
         title4:
             "Explore our Defender WiseKit and make various Creative models",
         bgColor: "#2dcc6f",
