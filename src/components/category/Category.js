@@ -3,6 +3,7 @@ import Image1 from "../../assets/images/category/stem.png";
 import Image2 from "../../assets/images/category/robotics.png";
 import Image3 from "../../assets/images/category/AI.png";
 import Button from "../shared/Button";
+import {Link} from "react-router-dom";
 
 const Category = () => {
     return (
@@ -17,11 +18,12 @@ const Category = () => {
                                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                                     STEM
                                 </p>
+                                <Link to='/products'>
                                 <Button
                                     text="Browse"
                                     bgColor={"bg-primary"}
                                     textColor={"text-white"}
-                                />
+                                /></Link>
                             </div>
                         </div>
                         <img src={Image1} alt="" className="w-[320px] absolute bottom-0" />
@@ -34,11 +36,12 @@ const Category = () => {
                                 <p className="text-4xl xl:text-5xl font-bold opacity-40 mb-2">
                                     Robotics
                                 </p>
+                                <Link to='/products'>
                                 <Button
                                     text="Browse"
                                     bgColor={"bg-white"}
                                     textColor={"text-brandYellow"}
-                                />
+                                /></Link>
                             </div>
                         </div>
                         <img
@@ -54,12 +57,12 @@ const Category = () => {
                                 <p className="text-2xl font-semibold mb-[2px]">With</p>
                                 <p className="text-4xl xl:text-5xl font-bold opacity-40 mb-2">
                                     Artificial Intelligence
-                                </p>
+                                </p><Link to='/products'>
                                 <Button
                                     text="Browse"
                                     bgColor={"bg-white"}
                                     textColor={"text-primary"}
-                                />
+                                /></Link>
                             </div>
                         </div>
                         <img

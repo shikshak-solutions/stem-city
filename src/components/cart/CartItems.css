@@ -1,0 +1,162 @@
+.cartitems{
+    margin: 100px 170px;
+}
+.cartitems hr{
+    height: 3px;
+    background: #e2e2e2;
+    border: 0;
+}
+.cartitems-format-main{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 75px;
+    padding: 20px 0px;
+    color: #454545;
+    font-size: 18px;
+    font-weight: 600;
+}
+.caritems-format{
+    font-size: 16px;
+    font-weight: 500;
+}
+.carticon-product-icon{
+    height: 62px;
+}
+.cartitems-remove-icon{
+    width: 15px;
+    margin: 0px 40px;
+    cursor: pointer;
+ }
+.cartitems-quantity{
+    width: 64px;
+    height: 50px;
+    border: 2px solid #ebebeb;
+    background: #fff;
+}
+.cartitems-down{
+    display: flex;
+    margin: 100px 0px;
+}
+.cartitems-total{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 200px;
+    gap: 40px;
+}
+.cartitems-total-item{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0px;
+}
+.cartitems-total button{
+    margin-top: 20px;
+    padding: 10px;
+    width: 190px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: #ED2126;
+    margin-bottom: 40px;
+    border: 1px solid #ED2126;
+    outline: none;
+    cursor: pointer;
+    border-radius: 30px;
+}
+.cartitems-total button:hover{
+    border: 1px solid #ED2126;
+    background: #fff;
+    color: #ED2126;
+}
+.cartitems-promocode{
+    flex: 1;
+    font-size: 16px;
+    font-weight: 500;
+}
+.cartitems-promocode p{
+    color: #555;
+}
+.cartitems-promobox{
+    width: 504px;
+    margin-top: 15px;
+    padding-left: 20px;
+    height: 58px;
+    background: #eaeaea;
+    display: flex;
+}
+.cartitems-promobox input{
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    width: 330px;
+    height: 50px;
+}
+.cartitems-promobox button{
+    width: 170px;
+    height: 58px;
+    font-size: 16px;
+    background: black;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .cartitems {
+        margin: 80px 100px;
+    }
+    .cartitems-format-main {
+        grid-template-columns: 1fr 2fr 1fr 1fr;
+        gap: 40px;
+    }
+    .cartitems-total {
+        margin-right: 100px;
+    }
+    .cartitems-promobox {
+        width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cartitems {
+        margin: 50px 50px;
+    }
+    .cartitems-format-main {
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 20px;
+    }
+    .cartitems-total {
+        margin-right: 50px;
+    }
+    .cartitems-promobox {
+        width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cartitems {
+        margin: 30px 20px;
+    }
+    .cartitems-format-main {
+        grid-template-columns: 1fr 1.5fr;
+        gap: 10px;
+    }
+    .cartitems-total {
+        margin-right: 20px;
+    }
+    .cartitems-total button {
+        width: 100%;
+    }
+    .cartitems-promobox {
+        width: 100%;
+        padding-left: 10px;
+    }
+    .cartitems-promobox input {
+        width: 60%;
+    }
+    .cartitems-promobox button {
+        width: 40%;
+    }
+}

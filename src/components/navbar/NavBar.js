@@ -1,6 +1,6 @@
 import React from "react";
-import { IoMdSearch } from "react-icons/io";
-import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
+import { IoMdSearch, IoMdLogIn  } from "react-icons/io";
+import { FaCaretDown, FaCartShopping, FaRightToBracket} from "react-icons/fa6";
 import logo from "../../assets/images/logo2.png";
 import {FaUser} from "react-icons/fa";
 import {Link} from "react-router-dom";
@@ -45,7 +45,7 @@ const DropdownLinks = [
         link: "/products",
     },
 ];
-const Navbar = ({ handleOrderPopup }) => {
+const Navbar = () => {
     return (
         <div className="bg-white duration-200 relative z-40">
             <div className="py-4">
@@ -105,17 +105,24 @@ const Navbar = ({ handleOrderPopup }) => {
                                 className="search-bar"/>
                             <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
                         </div>
-
-                        <button className="relative p-3" onClick={handleOrderPopup}>
+                        <Link to='/account'>
+                        <button className="relative p-3">
                             <FaUser className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
                         </button>
-
-                        <button className="relative p-3" onClick={handleOrderPopup}>
+                        </Link>
+                        <Link to='/login'>
+                            <button className="relative p-3">
+                                <FaRightToBracket className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
+                            </button>
+                        </Link>
+                        <Link to='/cart'>
+                        <button className="relative p-3">
                             <FaCartShopping className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
                             {/*<div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">*/}
                             {/*    4*/}
                             {/*</div>*/}
                         </button>
+                        </Link>
                     </div>
                 </div>
             </div>

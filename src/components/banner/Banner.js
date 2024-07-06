@@ -42,7 +42,7 @@ const Banner = ({ data }) => {
                             {data.title4}
                         </p>
                         <div data-aos="fade-up" data-aos-offset="0">
-                            <Link to='/'>
+                            <Link to='/products'>
                             <button
                                 style={{ color: data.bgColor }}
                                 className="bg-white py-2 px-4 rounded-full"

@@ -3,7 +3,7 @@ import Image1 from "../../assets/images/category/electronics.png";
 import Image2 from "../../assets/images/category/iot.png";
 import Image3 from "../../assets/images/category/diy.png";
 import Button from "../shared/Button";
-
+import {Link} from "react-router-dom";
 const Category = () => {
     return (
         <div className="py-8">
@@ -17,11 +17,12 @@ const Category = () => {
                                 <p className="text-4xl xl:text-5xl font-bold opacity-40 mb-2">
                                     Electronics
                                 </p>
+                                <Link to='/products'>
                                 <Button
                                     text="Browse"
                                     bgColor={"bg-primary"}
                                     textColor={"text-white"}
-                                />
+                                /></Link>
                             </div>
                         </div>
                         <img
@@ -38,11 +39,12 @@ const Category = () => {
                                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                                     Internet of Things
                                 </p>
+                                <Link to='/products'>
                                 <Button
                                     text="Browse"
                                     bgColor={"bg-white"}
                                     textColor={"text-brandGreen"}
-                                />
+                                /></Link>
                             </div>
                         </div>
                         <img src={Image2} alt="" className="w-[320px] absolute bottom-0" />
@@ -55,11 +57,12 @@ const Category = () => {
                                 <p className="text-4xl xl:text-5xl font-bold opacity-40 mb-2">
                                     DIY Kits
                                 </p>
+                                <Link to='/products'>
                                 <Button
                                     text="Browse"
                                     bgColor={"bg-white"}
                                     textColor={"text-brandBlue"}
-                                />
+                                /></Link>
                             </div>
                         </div>
                         <img

@@ -6,6 +6,8 @@ import Image3 from "../../assets/images/home/intelligence-strom.png";
 import Button from "../shared/Button";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {Link} from "react-router-dom";
+
 
 const HomeData = [
     {
@@ -84,12 +86,13 @@ const Home = ({ handleOrderPopup }) => {
                                             data-aos-duration="500"
                                             data-aos-delay="300"
                                         >
+                                            <Link to='/products'>
                                             <Button
                                                 text="Shop By Category"
                                                 bgColor="bg-primary"
                                                 textColor="text-white"
                                                 handler={handleOrderPopup}
-                                            />
+                                            /></Link>
                                         </div>
                                     </div>
                                     <div className="order-1 md:order-2 sm:order-2">
