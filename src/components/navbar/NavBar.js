@@ -75,7 +75,7 @@ const Navbar = () => {
                                         Quick Links
                                         <span>
                                             <FaCaretDown className="group-hover:rotate-180 duration-300" />
-                    </span>
+                                        </span>
                                     </a>
 
                                     <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white shadow-md dark:bg-gray-900 p-2 dark:text-white ">
@@ -97,33 +97,33 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center gap-4">
-                        <div className="relative group hidden sm:block">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="search-bar"/>
-                            <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-                        </div>
-                        <Link to='/account'>
-                        <button className="relative p-3">
-                            <FaUser className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
-                        </button>
-                        </Link>
-                        <Link to='/login'>
-                            <button className="relative p-3">
-                                <FaRightToBracket className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
-                            </button>
-                        </Link>
-                        <Link to='/cart'>
-                        <button className="relative p-3">
-                            <FaCartShopping className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
-                            {/*<div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">*/}
-                            {/*    4*/}
-                            {/*</div>*/}
-                        </button>
-                        </Link>
-                    </div>
+                    {/*<div className="flex justify-between items-center gap-4">*/}
+                    {/*    <div className="relative group hidden sm:block">*/}
+                    {/*        <input*/}
+                    {/*            type="text"*/}
+                    {/*            placeholder="Search"*/}
+                    {/*            className="search-bar"/>*/}
+                    {/*        <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />*/}
+                    {/*    </div>*/}
+                    {/*    <Link to='/account'>*/}
+                    {/*    <button className="relative p-3">*/}
+                    {/*        <FaUser className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />*/}
+                    {/*    </button>*/}
+                    {/*    </Link>*/}
+                    {/*    <Link to='/login'>*/}
+                    {/*        <button className="relative p-3">*/}
+                    {/*            <FaRightToBracket className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />*/}
+                    {/*        </button>*/}
+                    {/*    </Link>*/}
+                    {/*    <Link to='/cart'>*/}
+                    {/*    <button className="relative p-3">*/}
+                    {/*        <FaCartShopping className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />*/}
+                    {/*        /!*<div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">*!/*/}
+                    {/*        /!*    4*!/*/}
+                    {/*        /!*</div>*!/*/}
+                    {/*    </button>*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>

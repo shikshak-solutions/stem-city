@@ -46,11 +46,11 @@ const ProductDetail = () => {
                 <div className='productdetails-right-description'>
                     {product.description}
                 </div>
-                <div className='productdetails-right-quantity'>
-                    <h1>Select Qty :</h1>
-                    <input className='quantity' placeholder='0' type='number'/>
-                </div>
-                <button>Add to Cart</button>
+                {/*<div className='productdetails-right-quantity'>*/}
+                {/*    <h1>Select Qty :</h1>*/}
+                {/*    <input className='quantity' placeholder='0' type='number'/>*/}
+                {/*</div>*/}
+                {/*<button>Add to Cart</button>*/}
                 <p className='productdisplay-right-category'><span>Category :</span> {product.category}</p>
             </div>
         </div>
