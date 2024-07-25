@@ -7,7 +7,6 @@ import Cart from "./pages/Cart";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
 
-
 function App() {
   return (
       <BrowserRouter>
