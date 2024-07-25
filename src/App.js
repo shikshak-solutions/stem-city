@@ -13,7 +13,6 @@ import RefundAndCancellation from "./pages/RefundAndCancellation";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
 
-
 function App() {
   return (
       <BrowserRouter>
@@ -32,7 +31,6 @@ function App() {
               <Route exact path="/shipping-policy" element={<ShippingPolicy />}/>
           </Routes>
       </BrowserRouter>
-
   );
 }
 
