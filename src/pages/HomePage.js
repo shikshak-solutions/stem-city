@@ -33,7 +33,7 @@ const HomePage = () => {
     }, []);
 
     const BannerData = {
-        discount: "Enjoy Learing with",
+        discount: "Enjoy Learning with",
         title: "Creative Expansion Kit",
         image: creativeExpansion,
         title2: "Get this",
@@ -44,7 +44,7 @@ const HomePage = () => {
     };
 
     const BannerData2 = {
-        discount: "Enjoy Learing with",
+        discount: "Enjoy Learning with",
         title: "Defender WiseKit",
         image: Defender,
         title2: "Get this",

@@ -30,6 +30,28 @@ const FooterLinks = [
         link: "/#curriculum",
     },
 ];
+const ImportantLinks = [
+    {
+        title: "Terms & Conditions",
+        link: "/terms-and-conditions",
+    },
+    {
+        title: "Privacy Policy",
+        link: "/privacy-policy",
+    },
+    {
+        title: "Refund and Cancellation Policy",
+        link: "/refund-and-cancellation",
+    },
+    {
+        title: "Return Policy",
+        link: "/return-policy",
+    },
+    {
+        title: "Shipping Policy",
+        link: "/shipping-policy",
+    },
+];
 
 const Footer = () => {
     return (
@@ -49,7 +71,7 @@ const Footer = () => {
                     <div className="col-span-2 grid grid-cols-2 sm:grid-cols-3 md:pl-10">
                         <div className="py-8 px-4">
                             <h1 className="text-xl font-bold sm:text-left mb-3">
-                                Important Links
+                                Quick Links
                             </h1>
                             <ul className="space-y-3">
                                 {FooterLinks.map((data, index) => (
@@ -66,10 +88,10 @@ const Footer = () => {
                         </div>
                         <div className="py-8 px-4">
                             <h1 className="text-xl font-bold sm:text-left mb-3">
-                                Quick Links
+                                Important Links
                             </h1>
                             <ul className="space-y-3">
-                                {FooterLinks.map((data, index) => (
+                                {ImportantLinks.map((data, index) => (
                                     <li key={index}>
                                         <a
                                             href={data.link}
