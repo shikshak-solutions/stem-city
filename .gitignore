@@ -8,3 +8,6 @@
 /dataSources.local.xml
 /.idea
 /node_modules
+/build
+/backend/node_modules
+/backend/.env
