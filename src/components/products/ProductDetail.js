@@ -1,12 +1,8 @@
 import React from "react";
 import "./Product.css";
-import Img1 from "../../assets/images/product/p-1.png";
 import { useParams } from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons/faStar";
-import NavBar from "../navbar/NavBar";
-import {faRupee} from "@fortawesome/free-solid-svg-icons";
-import {faRupeeSign} from "@fortawesome/free-solid-svg-icons/faRupeeSign";
 import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupeeSign";
 import {ProductsData} from "../../pages/ProductData";
 
@@ -46,11 +42,11 @@ const ProductDetail = () => {
                 <div className='productdetails-right-description'>
                     {product.description}
                 </div>
-                {/*<div className='productdetails-right-quantity'>*/}
-                {/*    <h1>Select Qty :</h1>*/}
-                {/*    <input className='quantity' placeholder='0' type='number'/>*/}
-                {/*</div>*/}
-                {/*<button>Add to Cart</button>*/}
+                <div className='productdetails-right-quantity'>
+                    <h1>Select Qty :</h1>
+                    <input className='quantity' placeholder='0' type='number'/>
+                </div>
+                <button>Add to Cart</button>
                 <p className='productdisplay-right-category'><span>Category :</span> {product.category}</p>
             </div>
         </div>

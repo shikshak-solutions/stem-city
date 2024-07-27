@@ -1,15 +1,79 @@
+.flipbook-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.flipbook {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
 .page {
-    border: 1px solid #3d3d3d;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .page-image {
     max-width: 100%;
     max-height: 100%;
+    border-radius: 5px;
 }
 
+.cover .page-image {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.flip-container{
+    margin-left: 100px;
+    align-items: center;
+    overflow: hidden;
+}
 
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 1200px;
+    margin-left: 100px;
+    margin-top: 5px;
+}
+
+.prev-button,
+.next-button {
+    font-size: 24px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .flip-container {
+        height: auto;
+    }
+
+    .flipbook {
+        width: 80%;
+        height: auto;
+    }
+
+    .prev-button,
+    .next-button {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .prev-button,
+    .next-button {
+        font-size: 18px;
+    }
+}

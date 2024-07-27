@@ -27,12 +27,14 @@
 }
 .input-field{
     background: #eaeaea;
+    height: 50px;
     margin: 15px 0;
     border-radius: 3px;
     display: flex;
     align-items: center;
 }
 input{
+    height: 50px;
     width: 100%;
     background: transparent;
     border: 0;
@@ -54,7 +56,7 @@ form p a{
 .btn-field{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 10px;
 }
 .btn-field button{
@@ -72,4 +74,21 @@ form p a{
     border: 1px solid #ED2126;
     background: #fff;
     color: #ED2126;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+.input-field .eye-icon{
+    margin-right: 10px;
+    color: #999999;
+    cursor: pointer;
+}
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
 }

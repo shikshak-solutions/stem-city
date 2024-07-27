@@ -12,6 +12,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundAndCancellation from "./pages/RefundAndCancellation";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route exact path="/cart" element={<Cart />}/>
               <Route exact path="/account" element={<Account />}/>
               <Route exact path="/login" element={<Login />}/>
+              <Route exact path="/signup" element={<SignUp />}/>
               <Route exact path="/flipbook" element={<FlipBook />}/>
               <Route exact path="/terms-and-conditions" element={<TermsAndConditions />}/>
               <Route exact path="/privacy-policy" element={<PrivacyPolicy />}/>

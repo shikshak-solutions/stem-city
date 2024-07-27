@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import "../flipbook/Flipbook.css"
 import HTMLFlipBook from 'react-pageflip';
-import Flip1 from "../../assets/images/Flip/001.png";
-import Flip2 from "../../assets/images/Flip/002.png";
-import Flip3 from "../../assets/images/Flip/003.png";
-import Flip4 from "../../assets/images/Flip/004.png";
-import Flip5 from "../../assets/images/Flip/005.png";
-import Flip6 from "../../assets/images/Flip/006.png";
-import Flip7 from "../../assets/images/Flip/007.png";
-import Flip8 from "../../assets/images/Flip/008.png";
-import Flip9 from "../../assets/images/Flip/009.png";
-import Flip10 from "../../assets/images/Flip/010.png";
-import Flip11 from "../../assets/images/Flip/011.png";
-import Flip12 from "../../assets/images/Flip/012.png";
-import Flip13 from "../../assets/images/Flip/013.png";
-import Flip14 from "../../assets/images/Flip/014.png";
-import Flip15 from "../../assets/images/Flip/015.png";
-import Flip16 from "../../assets/images/Flip/016.png";
+import Flip1 from "../../assets/images/Flip/BalancingBird/balance bird-02.jpg";
+import Flip2 from "../../assets/images/Flip/BalancingBird/balance bird-03.jpg";
+import Flip3 from "../../assets/images/Flip/BalancingBird/balance bird-04.jpg";
+import Flip4 from "../../assets/images/Flip/BalancingBird/balance bird-05.jpg";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {FaCartShopping} from "react-icons/fa6";
+import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 const FlipbookContent = () => {
+    const flipBookRef = useRef(null);
+    const handleNext = () => {
+        if (flipBookRef.current) {
+            flipBookRef.current.pageFlip().flipNext();
+        }
+    };
+
+    const handlePrev = () => {
+        if (flipBookRef.current) {
+            flipBookRef.current.pageFlip().flipPrev();
+        }
+    };
     return (
-        <HTMLFlipBook width={600} height={800}>
+        <>
+        <div className='flip-container'>
+        <HTMLFlipBook ref={flipBookRef}
+                      width={600}
+                      height={800}
+                      startPage={0}
+                      showCover={true}
+                      maxShadowOpacity={0.5}
+                      className="flipbook">
+            <div className="page cover">
+                <img src={Flip1} alt="Cover Page" className="page-image" />
+            </div>
             <div className="page">
                 <img src={Flip1} alt="Page 1" className="page-image" />
             </div>
@@ -32,43 +47,14 @@ const FlipbookContent = () => {
             <div className="page">
                 <img src={Flip4} alt="Page 4" className="page-image" />
             </div>
-            <div className="page">
-                <img src={Flip5} alt="Page 5" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip6} alt="Page 6" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip7} alt="Page 7" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip8} alt="Page 8" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip9} alt="Page 9" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip10} alt="Page 10" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip11} alt="Page 11" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip12} alt="Page 12" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip13} alt="Page 13" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip14} alt="Page 14" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip15} alt="Page 15" className="page-image" />
-            </div>
-            <div className="page">
-                <img src={Flip16} alt="Page 16" className="page-image" />
-            </div>
         </HTMLFlipBook>
+        </div>
+            <div className="navigation-buttons">
+                <button onClick={handlePrev} className="prev-button"><FaArrowLeft className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" /></button>
+                <button onClick={handleNext} className="next-button"><FaArrowRight className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" /></button>
+            </div>
+    </>
+
     );
 };
 
