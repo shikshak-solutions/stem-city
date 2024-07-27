@@ -13,10 +13,19 @@ import RefundAndCancellation from "./pages/RefundAndCancellation";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import SignUp from "./pages/SignUp";
+import {useEffectOnce} from "./redux/hooks/useEffectOnce";
+import {actionToGetSEOMetaDataApiCall} from "./redux/action";
+import {useDispatch} from "react-redux";
+import {HelmetComponent} from "./components/layout/HelmetComponent";
 
 function App() {
+    const dispatch = useDispatch();
+    useEffectOnce(()=>{
+        dispatch(actionToGetSEOMetaDataApiCall());
+    })
   return (
       <BrowserRouter>
+          <HelmetComponent />
           <Routes>
               <Route exact path="/" element={<HomePage />}/>
               <Route exact path="/product/:id" element={<ProductOverview />}/>

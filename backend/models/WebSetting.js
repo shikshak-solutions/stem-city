@@ -1,20 +1,19 @@
 import connectPool from './connection.js';
-import {getCache, resetKey, setCache} from "./redis/cache.js";
+//import {getCache, resetKey, setCache} from "./redis/cache.js";
 const pool = await connectPool();
 export const actionToGetSEOReferencesApiCall = async (body) => {
     let {condition} = body;
-    console.log(condition,'condition')
+   /* console.log(condition,'condition')
     let seoReference = await getCache('shikshak-admin-seo-reference');
     console.log(seoReference,'seoReference')
     if(!condition && seoReference){
         console.log('10')
         return seoReference;
-    } else{
+    } else{*/
         try {
             return new Promise(function (resolve, reject) {
-                let where = (condition) ? ` ${condition} ` : '';
                 const query = `select seo_reference.*
-                               from seo_reference ${where}`;
+                               from seo_reference where website='stemcity'`;
                 console.log(query,'query')
                 pool.query(query, (error, results) => {
                     if (error) {
@@ -24,7 +23,7 @@ export const actionToGetSEOReferencesApiCall = async (body) => {
                     if (results?.length) {
                         data = results;
                     }
-                    !condition && setCache('shikshak-admin-seo-reference', JSON.stringify(data))
+                  //  !condition && setCache('shikshak-admin-seo-reference', JSON.stringify(data))
                     resolve(data);
                 })
             })
@@ -34,14 +33,12 @@ export const actionToGetSEOReferencesApiCall = async (body) => {
             // Send a user-friendly error message or log it as appropriate
         }
 
-    }
+   // }
 
 }
 export const actionToGetUrlSlugApiCall = (body) => {
-    let {condition} = body;
     return new Promise(function(resolve, reject) {
-        let where = (condition) ? ` ${condition} ` : '';
-        const query = `select url_slug_map.* from url_slug_map ${where}`;
+        const query = `select url_slug_map.* from url_slug_map where website='stemcity'`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(error)
@@ -72,10 +69,10 @@ export const actionToGetSEOReferencesHtmlDropdownApiCall = () => {
 export const actionToGetSEOMetaDataApiCall = () => {
         try{
             return new Promise(async function (resolve, reject) {
-                let seoReference = await getCache('shikshak-admin-seo-meta-data');
+              /*  let seoReference = await getCache('shikshak-admin-seo-meta-data');
                 if(seoReference){
                     resolve(JSON.parse(seoReference));
-                } else {
+                } else {*/
                     const query = `SELECT JSON_OBJECTAGG(seo.page_slug, seo.jsdata) as data
                                from (SELECT seo.page_slug,
                                             JSON_ARRAYAGG(JSON_OBJECT('id', seo.id,
@@ -99,11 +96,11 @@ export const actionToGetSEOMetaDataApiCall = () => {
                         if (results?.length) {
                             data = results[0]['data'];
                         }
-                         setCache('shikshak-admin-seo-meta-data',JSON.stringify(data))
+                        // setCache('shikshak-admin-seo-meta-data',JSON.stringify(data))
                         resolve(data);
                     })
 
-                }
+                //}
             })
         } catch (e){
             console.log(e);
@@ -113,11 +110,11 @@ export const actionToGetSEOMetaDataApiCall = () => {
 export const actionToGetURLSlugDataApiCall = () => {
     try {
         return new Promise(async function (resolve, reject) {
-            let seoReference = await getCache('shikshak-admin-url-slug-data');
+            /*let seoReference = await getCache('shikshak-admin-url-slug-data');
             if (seoReference) {
                 console.log('114')
                 resolve(JSON.parse(seoReference));
-            } else {
+            } else {*/
                 const query = `SELECT JSON_OBJECTAGG(url.url_path, url.slug) jsdata
                                FROM url_slug_map as url`;
                 pool.query(query, (error, results) => {
@@ -128,16 +125,17 @@ export const actionToGetURLSlugDataApiCall = () => {
                     if (results?.length) {
                         data = results[0]['jsdata'];
                     }
-                    setCache('shikshak-admin-url-slug-data', JSON.stringify(data))
+                  //  setCache('shikshak-admin-url-slug-data', JSON.stringify(data))
                     resolve(data);
                 })
-            }
+           // }
         })
     }catch (e){
         console.log(e,'e')
     }
 }
+/*
 export const actionToDeleteAllCacheDataApiCall=async (key)=>{
     await resetKey(key);
     return key;
-}
+}*/
