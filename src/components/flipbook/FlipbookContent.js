@@ -5,9 +5,6 @@ import Flip1 from "../../assets/images/Flip/BalancingBird/balance bird-02.jpg";
 import Flip2 from "../../assets/images/Flip/BalancingBird/balance bird-03.jpg";
 import Flip3 from "../../assets/images/Flip/BalancingBird/balance bird-04.jpg";
 import Flip4 from "../../assets/images/Flip/BalancingBird/balance bird-05.jpg";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import {FaCartShopping} from "react-icons/fa6";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 const FlipbookContent = () => {
     const flipBookRef = useRef(null);
