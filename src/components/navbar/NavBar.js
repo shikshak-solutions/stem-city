@@ -61,13 +61,12 @@ const Navbar = () => {
                             <ul className="flex items-center gap-4">
                                 {MenuLinks.map((data, index) => (
                                     <li key={index}>
-                                        <a
-                                            href={data.link}
+                                        <Link to={data.link}
                                             className="inline-block px-4 font-semibold text-gray-500 hover:text-red-600 dark:hover:text-white duration-200"
                                         >
                                             {" "}
                                             {data.name}
-                                        </a>
+                                        </Link>
                                     </li>
                                 ))}
                                 <li className="relative cursor-pointer group">

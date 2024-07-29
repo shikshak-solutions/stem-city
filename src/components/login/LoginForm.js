@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faPhone, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import useAuth from '../../redux/hooks/useAuth';
 import "./Login.css";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { actionToLogin} from "../../redux/action";
 import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
@@ -49,7 +49,7 @@ const LoginForm = () => {
             dispatch(actionToLogin(formData.email,formData.password)).then(
                 res => {
                     setAuth({...res});
-                    navigate("/");
+                    navigate(-1);
                     setIsSubmitting(false);
                 },
                 (error) => {
