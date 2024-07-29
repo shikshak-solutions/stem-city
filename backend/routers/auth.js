@@ -28,8 +28,8 @@ authRouter.post(
     }),
   ],
   async (req, res) => {
-    const {email, name, password, mobile, gender, id,website} = req.body;
-    let web = website ? website : 'shikshak';
+    const {email, name, password, mobile, gender, id} = req.body;
+
     // Validate user input
     const errors = validationResult(req);
 
@@ -40,7 +40,7 @@ authRouter.post(
     }
 
     // Validate if user already exists
-     await actionToGetUserIsExistApiCall(email,web).then(async (userData) => {
+     await actionToGetUserIsExistApiCall(email).then(async (userData) => {
        if (userData?.id) {
          // 422 Unprocessable Entity: server understands the content type of the request entity
          // 200 Ok: Gmail, Facebook, Amazon, Twitter are returning 200 for user already exists
@@ -131,8 +131,7 @@ authRouter.post(
       }),
     ],
     async (req, res) => {
-      const {email, name, password, id,website} = req.body;
-      let web = website ? website : 'shikshak';
+      const {email, name, password, id} = req.body;
       // Validate user input
       const errors = validationResult(req);
 
@@ -143,7 +142,7 @@ authRouter.post(
       }
 
       // Validate if user already exists
-      await actionToGetUserIsExistApiCall(email,web).then(async (userData) => {
+      await actionToGetUserIsExistApiCall(email).then(async (userData) => {
         if (userData?.id) {
           // 422 Unprocessable Entity: server understands the content type of the request entity
           // 200 Ok: Gmail, Facebook, Amazon, Twitter are returning 200 for user already exists
@@ -234,10 +233,9 @@ authRouter.get("/users", actionToGetAllUserApiCall);
 // Log in
 authRouter.post("/login", async (req, res) => {
 
-  const { email, password,website } = req.body;
-  let web = website ? website : 'shikshak';
+  const { email, password } = req.body;
   // Look for user email in the database
-  let user = await actionToGetUserIsExistApiCall(email,web)
+  let user = await actionToGetUserIsExistApiCall(email)
 
   // If user not found, send error message
   if (!user?.id) {
@@ -396,10 +394,9 @@ authRouter.delete("/logout", (req, res) => {
 // Forgot password
 authRouter.post("/forgot-password", async (req, res) => {
 
-  const { email,website } = req.body;
-  let web = website ? website : 'shikshak';
+  const { email } = req.body;
   // Look for user email in the database
-  let user = await actionToGetUserIsExistApiCall(email,web)
+  let user = await actionToGetUserIsExistApiCall(email)
 
   // If user not found, send error message
   if (!user) {
@@ -562,10 +559,9 @@ authRouter.post("/update-password", async (req, res) => {
 
 });
 authRouter.post("/send-otp-for-login", async (req, res) => {
-  const { emailMobileNo,website } = req.body;
-  let web = website ? website : 'shikshak';
+  const { emailMobileNo } = req.body;
   // Look for user email or mobile no in the database
-  let user = await actionToGetUserIsExistApiCall(emailMobileNo,web)
+  let user = await actionToGetUserIsExistApiCall(emailMobileNo)
   console.log(user,"user Details");
 
   // If user not found, send error message
@@ -631,9 +627,8 @@ authRouter.post("/get-otp-details-by-otp-email", async (req, res) => {
       }else if( response?.is_active ===0){
         return res.status(200).send({status:4, message: 'Your OTP is invalid or expired.'});
       } else{
-        let web = req.body?.website ? req.body?.website : 'shikshak';
         // Look for user email in the database
-        let user = await actionToGetUserIsExistApiCall(req.body?.emailOrMobile,web);
+        let user = await actionToGetUserIsExistApiCall(req.body?.emailOrMobile);
         // If user not found, send error message
         if (!user?.id) {
           return res.status(401).json({

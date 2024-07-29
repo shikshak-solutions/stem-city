@@ -17,9 +17,22 @@ import {useEffectOnce} from "./redux/hooks/useEffectOnce";
 import {actionToGetSEOMetaDataApiCall} from "./redux/action";
 import {useDispatch} from "react-redux";
 import {HelmetComponent} from "./components/layout/HelmetComponent";
+import {parseJwt} from "./redux/utility/jwtUtils";
+import useAuth from "./redux/hooks/useAuth";
 
 function App() {
+    const { setAuth } = useAuth();
     const dispatch = useDispatch();
+    const authorized = async()=>{
+        if(localStorage.getItem('user')){
+            const data = JSON.parse(localStorage.getItem('user'));
+            if (data.accessToken ) {
+                let user =  await parseJwt(data.accessToken);
+                let value  = user.user
+                setAuth({...value});
+            }
+        }
+    }
     useEffectOnce(()=>{
         dispatch(actionToGetSEOMetaDataApiCall());
     })

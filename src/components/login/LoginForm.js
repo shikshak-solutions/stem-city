@@ -1,37 +1,30 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faPhone, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import useAuth from '../../redux/hooks/useAuth';
 import "./Login.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import { actionToLogin} from "../../redux/action";
+import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
 const LoginForm = () => {
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
-        mobile: '',
         password: ''
     });
-
+    const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [signInError, setSignInError] = useState(false);
     const [formErrors, setFormErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const { setAuth } = useAuth();
+    const dispatch = useDispatch();
 
     const validate = () => {
         let errors = {};
-
-        if (!formData.name) {
-            errors.name = 'Name is required';
-        }
-
         if (!formData.email && !formData.mobile) {
             errors.contact = 'Either Email or Mobile is required';
-        } else {
-            if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-                errors.email = 'Email is invalid';
-            }
-            if (formData.mobile && !/^\d{10}$/.test(formData.mobile)) {
-                errors.mobile = 'Mobile must be a 10-digit number';
-            }
         }
-
         if (!formData.password) {
             errors.password = 'Password is required';
         } else if (formData.password.length < 6) {
@@ -40,7 +33,6 @@ const LoginForm = () => {
 
         return errors;
     };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -49,11 +41,23 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleLogin = async (e) => {
+        setIsSubmitting(true);
+       // e.preventDefault();
         const errors = validate();
         if (Object.keys(errors).length === 0) {
-            console.log('Form data is valid:', formData);
+            dispatch(actionToLogin(formData.email,formData.password)).then(
+                res => {
+                    setAuth({...res});
+                    setIsSubmitting(false);
+                    console.log(res,'res');
+                },
+                (error) => {
+                    console.log(error);
+                    setSignInError(error?.response?.data?.errors[0]?.msg)
+                    setIsSubmitting(false);
+                }
+            )
         } else {
             setFormErrors(errors);
         }
@@ -62,11 +66,18 @@ const LoginForm = () => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    useEffectOnce(()=>{
+        if(localStorage.getItem('user')){
+            navigate("/");
+        }
+
+    });
     return (
         <div className='container'>
             <div className='form-box'>
                 <h1>Sign In</h1>
-                <form onSubmit={handleSubmit}>
+                <form >
                     <div className='input-group'>
                         <div className='input-field'>
                             <FontAwesomeIcon className='icon' icon={faEnvelope} />
@@ -100,7 +111,7 @@ const LoginForm = () => {
                         <p>Don't Have an Account?<a href='/signup'>  Click Here to Register</a></p>
                     </div>
                     <div className='btn-field'>
-                        <button type='submit'>Sign in</button>
+                        <button type='button' onClick={()=>handleLogin()} disabled={isSubmitting}>Sign in</button>
                     </div>
                 </form>
             </div>

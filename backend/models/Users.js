@@ -29,17 +29,12 @@ export const actionToGetAllUserApiCall = () => {
  * @param email
  * @returns {Promise<unknown>}
  */
-export const actionToGetUserIsExistApiCall = async (email,website) => {
+export const actionToGetUserIsExistApiCall = async (email) => {
     try {
     return new Promise(function(resolve, reject) {
-        const query = `select app_user.* ,
-                              school_class_with_section.class_standard_id,
-                              app_user.syllabus_type AS syllabus_type_id,
-                              school_users.syllabus_type as school_syllabus_id 
+        const query = `select app_user.* 
 from app_user
-         LEFT JOIN app_user as school_users ON school_users.id = app_user.school_id
-         LEFT JOIN school_class_with_section ON school_class_with_section.id = app_user.school_class_with_section_id
-where app_user.source='${website}' and (app_user.email = '${email}' or app_user.mobile = '${email}')`;
+where app_user.source='stemcity' and (app_user.email = '${email}' or app_user.mobile = '${email}')`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
