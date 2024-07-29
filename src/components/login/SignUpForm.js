@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faPhone, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import "./Login.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {actionToLogin, actionToSignup} from "../../redux/action";
+import {useDispatch} from "react-redux";
+import {generateUniqueIdForBlock} from "../../redux/helper/CommonHelper";
+import useAuth from "../../redux/hooks/useAuth";
 const SignUpForm = () => {
+    const { setAuth } = useAuth();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -14,7 +19,11 @@ const SignUpForm = () => {
 
     const [formErrors, setFormErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [signInError, setSignInError] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const validate = () => {
         let errors = {};
@@ -58,11 +67,23 @@ const SignUpForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSignUp = (e) => {
         e.preventDefault();
         const errors = validate();
         if (Object.keys(errors).length === 0) {
-            console.log('Form data is valid:', formData);
+            let id= generateUniqueIdForBlock()+'_user_'+generateUniqueIdForBlock();
+            let data = {id:id,name: formData.name,  email: formData.email, password: formData.password, mobile: formData.mobile }
+            dispatch(actionToSignup(data)).then(
+                res => {
+                    setAuth({...res});
+                    navigate('/');
+                    setIsSubmitting(false);
+                },
+                (error) => {
+                    setSignInError(error?.response?.data?.errors[0]?.msg)
+                    setIsSubmitting(false);
+                }
+            )
         } else {
             setFormErrors(errors);
         }
@@ -78,7 +99,7 @@ const SignUpForm = () => {
         <div className='container'>
             <div className='form-box'>
                 <h1>Sign Up</h1>
-                <form onSubmit={handleSubmit}>
+                <form >
                     <div className='input-group'>
                         <div className='input-field'>
                             <FontAwesomeIcon className='icon' icon={faUser} />
@@ -149,7 +170,7 @@ const SignUpForm = () => {
                         <p>Already Have an Account?<a href='/login'>  Click Here to Sign in</a></p>
                     </div>
                     <div className='btn-field'>
-                        <button type='submit'>Sign up</button>
+                        <button type='button' onClick={handleSignUp} disabled={isSubmitting}>Sign up</button>
                     </div>
                 </form>
             </div>

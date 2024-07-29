@@ -19,7 +19,7 @@ export const actionToSendCustomEmail = async (req, res) => {
         }
     });
     let mailDetails = {
-        from: '"Team Shikshak Solutions" <test-support@shikshaksolutions.com>', // sender address
+        from: '"Team Stemcity" <test-support@stemcity.in>', // sender address
         to: req.to, // list of receivers
         cc: req.cc, // list of cc
         replyTo: (req?.replyTo) ? req?.replyTo:'',

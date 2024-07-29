@@ -33,3 +33,18 @@ export const actionToLogout = () => ()=>{
             return true;
         });
 }
+export const actionToSignup = (param) => ()=> {
+    return api
+        .post("/auth/signup", param)
+        .then((response) => {
+            if (response.data.accessToken) {
+                localStorage.setItem("user", JSON.stringify(response.data));
+                localStorage.setItem("cartCount", "0");
+                // Parse the JWT token
+                const parsedData = parseJwt(response.data.accessToken);
+                return parsedData.user;
+            }
+
+            return response.data;
+        });
+};

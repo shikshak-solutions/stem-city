@@ -28,13 +28,13 @@ authRouter.post(
     }),
   ],
   async (req, res) => {
-    const {email, name, password, mobile, gender, id} = req.body;
+    const {email, name, password, mobile, id} = req.body;
 
     // Validate user input
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(400).json({
+      return res.status(401).json({
         errors: errors.array(),
       });
     }
@@ -44,7 +44,7 @@ authRouter.post(
        if (userData?.id) {
          // 422 Unprocessable Entity: server understands the content type of the request entity
          // 200 Ok: Gmail, Facebook, Amazon, Twitter are returning 200 for user already exists
-         return res.status(200).json({
+         return res.status(401).json({
            errors: [
              {
                email: userData?.email,
@@ -65,12 +65,9 @@ authRouter.post(
            name: name,
            password: hashedPassword,
            mobile: mobile,
-           gender: gender,
-           website: web,
            id: id,
            role: 4
          }
-         console.log(user,'user')
                  let emailBodyHtml=`<body><h3> Thank you for register on Shikshak Solutions</h3>
         <p>Dear,${name}</p>
         <p>This email is just for inform you that you have benn successfully registered on Shikshak Solutions</p>
@@ -144,9 +141,10 @@ authRouter.post(
       // Validate if user already exists
       await actionToGetUserIsExistApiCall(email).then(async (userData) => {
         if (userData?.id) {
+          console.log('147')
           // 422 Unprocessable Entity: server understands the content type of the request entity
           // 200 Ok: Gmail, Facebook, Amazon, Twitter are returning 200 for user already exists
-          return res.status(200).json({
+          return res.status(401).json({
             errors: [
               {
                 email: userData?.email,

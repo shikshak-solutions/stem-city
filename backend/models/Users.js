@@ -57,10 +57,10 @@ where app_user.source='stemcity' and (app_user.email = '${email}' or app_user.mo
  */
 export const actionToInsertUserApi = async (body) => {
     try {
-    let {email,name,password,mobile,gender,id,website} = body;
+    let {email,name,password,mobile,id} = body;
     return new Promise(function(resolve, reject) {
-        const query = `INSERT INTO app_user (id,email,name,password,mobile,gender,role,source)
-                       VALUES ('${id}','${email}','${name}','${password}','${mobile}','${gender}',4,'${website}')`;
+        const query = `INSERT INTO app_user (id,email,name,password,mobile,role,source)
+                       VALUES ('${id}','${email}','${name}','${password}','${mobile}',4,'stemcity')`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
