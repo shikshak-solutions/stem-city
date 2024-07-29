@@ -5,13 +5,22 @@ import { faUser, faBox, faHeart, faSignOutAlt } from '@fortawesome/free-solid-sv
 import Profile from "./AccountTabs/Profile";
 import Orders from "./AccountTabs/Orders";
 import WishList from "./AccountTabs/WishList";
+import {useDispatch} from "react-redux";
+import {actionToLogout} from "../../redux/action";
+import useAuth from "../../redux/hooks/useAuth";
 
 const MyAccount = () => {
+    const { setAuth } = useAuth();
     const [activeTab, setActiveTab] = useState('profile');
+    const dispatch = useDispatch();
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
+    const logout =()=>{
+        dispatch(actionToLogout());
+        setAuth({});
+    }
     const getTabContent =() =>{
         switch (activeTab){
             case 'profile':
@@ -46,7 +55,7 @@ const MyAccount = () => {
                     </button>
                     <h2>Wishlist</h2>
                 </div>
-                <div className="account-section">
+                <div className="account-section" onClick={logout}>
                     <FontAwesomeIcon icon={faSignOutAlt} />
                     <h2>Logout</h2>
                 </div>

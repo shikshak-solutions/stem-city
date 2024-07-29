@@ -4,6 +4,7 @@ import { FaCaretDown, FaCartShopping, FaRightToBracket} from "react-icons/fa6";
 import logo from "../../assets/images/logo2.png";
 import {FaUser} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import useAuth from "../../redux/hooks/useAuth";
 
 const MenuLinks = [
     {
@@ -46,6 +47,8 @@ const DropdownLinks = [
     },
 ];
 const Navbar = () => {
+    const { auth } = useAuth();
+    console.log(auth?.id,'auth?.id')
     return (
         <div className="bg-white duration-200 relative z-40">
             <div className="py-4">
@@ -105,16 +108,20 @@ const Navbar = () => {
                                 className="search-bar"/>
                             <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
                         </div>
-                        <Link to='/account'>
-                        <button className="relative p-3">
-                            <FaUser className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
-                        </button>
-                        </Link>
-                        <Link to='/login'>
-                            <button className="relative p-3">
-                                <FaRightToBracket className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
-                            </button>
-                        </Link>
+                        {auth?.id ?
+                            <Link to='/account'>
+                                <button className="relative p-3">
+                                    <FaUser className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
+                                </button>
+                            </Link> :
+                            <Link to='/login'>
+                                <button className="relative p-3">
+                                    <FaRightToBracket className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
+                                </button>
+                            </Link>
+                        }
+
+
                         <Link to='/cart'>
                         <button className="relative p-3">
                             <FaCartShopping className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />

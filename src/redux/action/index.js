@@ -24,3 +24,12 @@ export const actionToLogin =  (email, password) => async (dispatch) =>{
             return response.data;
         });
 }
+export const actionToLogout = () => ()=>{
+    return api.delete("/auth/logout")
+        .then( (response) => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("cartCount");
+            window.location.href='/login';
+            return true;
+        });
+}

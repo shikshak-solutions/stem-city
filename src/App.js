@@ -34,6 +34,7 @@ function App() {
         }
     }
     useEffectOnce(()=>{
+        authorized();
         dispatch(actionToGetSEOMetaDataApiCall());
     })
   return (

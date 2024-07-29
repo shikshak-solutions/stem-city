@@ -49,11 +49,10 @@ const LoginForm = () => {
             dispatch(actionToLogin(formData.email,formData.password)).then(
                 res => {
                     setAuth({...res});
+                    navigate("/");
                     setIsSubmitting(false);
-                    console.log(res,'res');
                 },
                 (error) => {
-                    console.log(error);
                     setSignInError(error?.response?.data?.errors[0]?.msg)
                     setIsSubmitting(false);
                 }
@@ -71,7 +70,6 @@ const LoginForm = () => {
         if(localStorage.getItem('user')){
             navigate("/");
         }
-
     });
     return (
         <div className='container'>
