@@ -9,8 +9,8 @@ export const actionToGetProductsApiCall =  (body) => {
         // if(seoReference){
         //     resolve(JSON.parse(seoReference));
         // } else {
-            let {condition,show_on_website} = body;
-                let where = (condition) ? ` ${condition} AND products.show_on_website = '${showOnWebsite}'` : ` where products.show_on_website = 'stem_city'`;
+            let {condition} = body;
+                let where = (condition) ? ` ${condition} AND products.show_on_website = 'stemcity'` : ` where products.show_on_website = 'stemcity'`;
                 const query = `SELECT products.*,
                                       categories.name                       AS category,
                                       subcategories.sub_name                AS sub_category,
@@ -36,7 +36,7 @@ export const actionToGetProductsApiCall =  (body) => {
                                                      product_reviews.review_title IS NOT null
                                    ${where}
                                GROUP BY products.id`;
-                console.log(query,'query');
+                //console.log(query,'query');
                 pool.query(query, (error, results) => {
                     if (error) {
                         reject(query)

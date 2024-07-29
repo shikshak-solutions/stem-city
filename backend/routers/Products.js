@@ -42,7 +42,7 @@ productsRouter.post(
     '/actionToGetProductsApiCall',
     expressAsyncHandler(async (req, res) => {
         actionToGetProductsApiCall(req.body).then((data) => {
-            res.status(200).send(CryptoJS.AES.encrypt(JSON.stringify(data), ENCRYPTION_KEY).toString());
+            res.status(200).send(data);
         })
             .catch(error => {
                 res.status(500).send(error);
@@ -53,7 +53,7 @@ productsRouter.post(
     '/actionToGetCategoriesApiCall',
     expressAsyncHandler(async (req, res) => {
         actionToGetCategoriesApiCall(req.body).then((data) => {
-            res.status(200).send(CryptoJS.AES.encrypt(JSON.stringify(data), ENCRYPTION_KEY).toString());
+            res.status(200).send(data);
         })
             .catch(error => {
                 res.status(500).send(error);
