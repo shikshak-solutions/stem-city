@@ -1,17 +1,13 @@
+import {PRODUCTS_LIST_DATA} from "../constant";
 const initialState = {
-    someValue: 'Initial value',
-};
-
-const productReducer = (state = initialState, action) => {
+    ProductsData: []
+}
+export  const productReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'EXAMPLE_ACTION':
-            return {
-                ...state,
-                someValue: action.payload.someValue,
-            };
+       case PRODUCTS_LIST_DATA:
+            return { ...state, ProductsData: action.payload };
         default:
-            return state;
+            return state
     }
-};
-
+}
 export default productReducer;

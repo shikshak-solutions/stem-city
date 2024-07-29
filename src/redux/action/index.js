@@ -1,10 +1,11 @@
 import {api} from "../hooks/apiConfig";
-import {SEO_META_DATA, URL_SLUG_DATA} from "../constant";
+import {PRODUCTS_LIST_DATA, SEO_META_DATA, URL_SLUG_DATA} from "../constant";
 import {parseJwt} from "../utility/jwtUtils";
 export const actionToGetSEOMetaDataApiCall = () => async (dispatch) => {
     const {data} = await api.post(`web-setting/actionToGetSEOMetaDataApiCall`);
     dispatch({ type: SEO_META_DATA, payload: data });
     const response = await api.post(`web-setting/actionToGetURLSlugDataApiCall`);
+    dispatch({ type: URL_SLUG_DATA, payload: response.data });
     return data;
 }
 
@@ -48,3 +49,7 @@ export const actionToSignup = (param) => ()=> {
             return response.data;
         });
 };
+export const actionToGetProductsApiCall = () => async (dispatch) => {
+    const {data} = await api.post(`products/actionToGetProductsApiCall`);
+    dispatch({ type: PRODUCTS_LIST_DATA, payload: data });
+}

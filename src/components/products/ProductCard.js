@@ -13,25 +13,27 @@ const ProductCard = ({ data }) => {
                         className="group"
                         key={data.id}
                     >
+                        <Link to={`/product/${data.id}`}>
                         <div className="relative">
                             <img
-                                src={data.img}
+                                src={data.photo}
                                 alt=""
                                 className="h-[180px] w-[260px] object-cover rounded-md"
                             />
                             <div className="hidden group-hover:flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-full w-full text-center group-hover:backdrop-blur-sm justify-center items-center duration-200 rounded-md">
-                                <Link to={`/product/${data.id}`}>
+
                                 <Button
                                     text={"View Product"}
                                     bgColor={"bg-primary"}
                                     textColor={"text-white"}
-                                /></Link>
+                                />
                             </div>
                         </div>
                         <div className="leading-7">
                             <h2 className="font-semibold">{data.title}</h2>
                             <h2 className="font-bold">Rs.{data.price}</h2>
                         </div>
+                        </Link>
                     </div>
                 ))}
             </div>

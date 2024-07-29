@@ -1,12 +1,19 @@
 import React from "react";
 import Heading from "../components/shared/Heading";
 import ProductCard from "../components/products/ProductCard";
-import {ProductsData} from "./ProductData";
 import NavBar from "../components/navbar/NavBar";
 import Footer from "../footer/Footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffectOnce} from "../redux/hooks/useEffectOnce";
+import {actionToGetProductsApiCall} from "../redux/action";
 const Products = () => {
+    const ProductsData = useSelector((state) => state.product.ProductsData);
+    const dispatch = useDispatch();
+    useEffectOnce(()=>{
+        dispatch(actionToGetProductsApiCall());
+    })
     React.useEffect(() => {
         AOS.init({
             duration: 800,
