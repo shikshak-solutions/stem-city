@@ -13,7 +13,7 @@ const ProductCard = ({ data }) => {
                         className="group"
                         key={data.id}
                     >
-                        <Link to={`/product/${data.id}`}>
+                        <Link to={`/products/${data.category_slug}/${data.sub_category_slug}/${data.slug}`}>
                         <div className="relative">
                             <img
                                 src={data.photo}

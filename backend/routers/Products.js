@@ -206,13 +206,10 @@ productsRouter.post(
     })
 );
 productsRouter.post(
-    '/actionToGetProductsDetailsByIdApiCall',
+    '/actionToGetProductsDetailsBySlugApiCall',
     expressAsyncHandler(async (req, res) => {
-
-        const data = CryptoJS.AES.decrypt(req?.body?.payload, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
-        let payload = JSON.parse(data)
-        actionToGetProductsDetailsApiCall(payload).then((response) => {
-            res.status(200).send(CryptoJS.AES.encrypt(JSON.stringify(response), ENCRYPTION_KEY).toString());
+         actionToGetProductsDetailsApiCall(req?.body).then((response) => {
+            res.status(200).send(response);
         })
             .catch(error => {
                 res.status(500).send(error);

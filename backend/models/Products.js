@@ -13,7 +13,9 @@ export const actionToGetProductsApiCall =  (body) => {
                 let where = (condition) ? ` ${condition} AND products.show_on_website = 'stemcity'` : ` where products.show_on_website = 'stemcity'`;
                 const query = `SELECT products.*,
                                       categories.name                       AS category,
+                                      categories.slug                       AS category_slug,
                                       subcategories.sub_name                AS sub_category,
+                                      subcategories.slug                    AS sub_category_slug,
                                       subcategories.categoryId              AS categoryId,
                                       subchildcategories.subcategoryId      AS subCategoryId,
                                       subchildcategories.name               AS sub_child_category,
@@ -266,7 +268,7 @@ export const actionUpdateProductQuantityOnCartByCartId = (body) => {
     })
 }
 export const actionToGetProductsDetailsApiCall = (body) => {
-    let {id} = body;
+    let {product_slug,cat_slug,sub_cat_slug} = body;
     try {
         return new Promise(async function (resolve, reject) {
             // let seoReference = await getCache('shikshak-admin-products-detail-data-' + id);
@@ -278,6 +280,7 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                               'name', products.name,
                                               'brand', products.brand,
                                               'status', products.status,
+                                              'subcategory_name', subcategories.sub_name,
                                               'price', products.price,
                                               'photo', products.photo,
                                               'sortDesc', products.sortDesc,
@@ -290,14 +293,14 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                from product_photos
                                                         JOIN products as prod
                                                WHERE prod.id = product_photos.productId
-                                                 AND prod.id = ${id}),
+                                                 AND prod.id =products.id),
                                               'review_photos',
                                               (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_reviews.id, 'photos',
                                                                                 product_reviews.review_photos))
                                                from product_rating_and_reviews AS product_reviews
                                                         JOIN products as prodr
                                                WHERE prodr.id = product_reviews.product_id
-                                                 AND prodr.id = ${id}),
+                                                 AND prodr.id = products.id),
                                               'reviews', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_reviews.id,
                                                                                            'review_title',
                                                                                            product_reviews.review_title,
@@ -317,7 +320,7 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                                    JOIN products as prodreview
                                                                    JOIN app_user AS review_user ON review_user.id = product_reviews.review_by
                                                           WHERE prodreview.id = product_reviews.product_id
-                                                            AND prodreview.id = ${id}),
+                                                            AND prodreview.id = products.id),
                                               'product_faqs',
                                               (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_faqs.id, 'question',
                                                                                 product_faqs.question, 'answer',
@@ -328,7 +331,7 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                from product_faqs AS product_faqs
                                                         JOIN products as productfq
                                                WHERE productfq.id = product_faqs.product_id
-                                                 AND productfq.id = ${id}),
+                                                 AND productfq.id = products.id),
                                               'related_products', (SELECT JSON_ARRAYAGG(JSON_OBJECT(
                                 'id', related_prod.id,
                                 'photo', related_prod.photo,
@@ -338,11 +341,10 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                                    from products as related_prod
                                                                             JOIN categories AS related_cat
                                                                    WHERE related_prod.categoryId = related_cat.id
-                                                                     AND related_prod.id!=${id} AND related_prod.categoryId IN (SELECT categoryId FROM products AS pp WHERE id=${id}))
+                                                                     AND related_prod.id!=products.id AND related_prod.subcategoryId =products.subcategoryId)
                         ) as productData
                                from products
-                                        LEFT JOIN subchildcategories ON subchildcategories.id = products.childCategoryId
-                                        LEFT JOIN subcategories ON subcategories.id = subchildcategories.subcategoryId
+                                        LEFT JOIN subcategories ON subcategories.id = products.subcategoryId
                                         LEFT JOIN categories ON categories.id = subcategories.categoryId
                                         LEFT JOIN brand ON brand.id = products.brand
                                         LEFT JOIN product_rating_and_reviews AS product_ratings
@@ -351,8 +353,11 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                         LEFT JOIN product_rating_and_reviews AS product_reviews
                                                   ON product_reviews.product_id = products.id AND
                                                      product_reviews.review_title IS NOT null
-                               WHERE products.id = ${id}
+                               WHERE products.slug = '${product_slug}' and subcategories.slug = '${sub_cat_slug}' and categories.slug = '${cat_slug}' 
+                                 AND products.show_on_website = 'stemcity'
                                GROUP BY products.id`;
+
+
                 pool.query(query, (error, results) => {
                     if (error) {
                         reject(query)

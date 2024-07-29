@@ -4,31 +4,36 @@ import { useParams } from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons/faStar";
 import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupeeSign";
-import {ProductsData} from "../../pages/ProductData";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
+import { actionToGetProductsDetailsApiCall} from "../../redux/action";
 
 
 const ProductDetail = () => {
-    const { id } = useParams();
-    const product = ProductsData.find(p => p.id === parseInt(id));
+    const { cat_slug,sub_cat_slug,product_slug } = useParams();
+    const ProductDetailData = useSelector((state) => state.product.ProductDetailData);
+    const dispatch = useDispatch();
+    useEffectOnce(()=>{
+        dispatch(actionToGetProductsDetailsApiCall({cat_slug:cat_slug,sub_cat_slug:sub_cat_slug,product_slug:product_slug}));
+    })
 
-    if (!product) {
+    if (!ProductDetailData) {
         return <h2>Product not found</h2>;
     }
     return (
         <div className='product-details'>
             <div className='product-details-left'>
                 <div className='productdetails-img-list'>
-                    <img src={product.img} alt=''/>
-                    <img src={product.img1} alt=''/>
-                    <img src={product.img2} alt=''/>
-                    <img src={product.img3} alt=''/>
+                    {ProductDetailData.photos?.map(photos =>{
+                        return <img src={photos.photo} alt=''/>;
+                    }) }
                 </div>
                 <div className='productdetails-img'>
-                    <img className='productdetails-main-img' src={product.img} alt=''/>
+                    <img className='productdetails-main-img' src={ProductDetailData.photo} alt=''/>
                 </div>
             </div>
             <div className='product-details-right'>
-                <h1>{product.title}</h1>
+                <h1>{ProductDetailData.name}</h1>
                 <div className='productdetails-right-star'>
                     <FontAwesomeIcon icon={faStar}/>
                     <FontAwesomeIcon icon={faStar}/>
@@ -36,18 +41,18 @@ const ProductDetail = () => {
                     <FontAwesomeIcon icon={faStar}/>
                 </div>
                 <div className='productdetails-right-prices'>
-                    <div className='productdetails-right-price-old'><FontAwesomeIcon icon={faIndianRupeeSign}/> {product.price2}</div>
-                    <div className='productdetails-right-price-new'><FontAwesomeIcon icon={faIndianRupeeSign}/> {product.price}</div>
+                    <div className='productdetails-right-price-old'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.price2}</div>
+                    <div className='productdetails-right-price-new'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.price}</div>
                 </div>
-                <div className='productdetails-right-description'>
-                    {product.description}
+                <div className='productdetails-right-description' dangerouslySetInnerHTML={{__html: ProductDetailData?.description}}>
+
                 </div>
                 <div className='productdetails-right-quantity'>
                     <h1>Select Qty :</h1>
                     <input className='quantity' placeholder='0' type='number'/>
                 </div>
                 <button>Add to Cart</button>
-                <p className='productdisplay-right-category'><span>Category :</span> {product.category}</p>
+                <p className='productdisplay-right-category'><span>Category :</span> {ProductDetailData.subcategory_name}</p>
             </div>
         </div>
     );
