@@ -12,7 +12,7 @@ import creativeExpansion from "../assets/images/home/creative.png";
 import Products from "../components/products/Products";
 import Curriculum from "../components/curriculum/Curriculum";
 import Footer from "../footer/Footer";
-import Partners from "../partners/Partners";
+import Partners from "../components/partners/Partners";
 
 
 const HomePage = () => {
