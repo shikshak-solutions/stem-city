@@ -28,6 +28,13 @@ import Checkout from "./pages/Checkout";
 function App() {
     const { setAuth } = useAuth();
     const dispatch = useDispatch();
+    const ROLES = {
+        'Student': 4,
+        'Teacher': 3,
+        'School': 2,
+        'Admin': 1,
+        'Customer':5
+    }
     const authorized = async()=>{
         if(localStorage.getItem('user')){
             const data = JSON.parse(localStorage.getItem('user'));
