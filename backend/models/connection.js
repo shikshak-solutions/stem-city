@@ -24,7 +24,7 @@ const dbConfig = {
 
 // Create an SSH tunnel to the MySQL server
 export function createTunnel(){
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         const sshClient = new Client();
         sshClient.on('ready', () => {
             sshClient.forwardOut(
@@ -42,7 +42,7 @@ export function createTunnel(){
                 }
             );
         });
-        sshClient.connect(sshConfig);
+        await sshClient.connect(sshConfig);
     });
 }
 

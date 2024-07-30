@@ -48,7 +48,6 @@ const DropdownLinks = [
 ];
 const Navbar = () => {
     const { auth } = useAuth();
-    console.log(auth?.id,'auth?.id')
     return (
         <div className="bg-white duration-200 relative z-40">
             <div className="py-4">
