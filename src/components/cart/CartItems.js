@@ -2,6 +2,7 @@ import React from "react";
 import remove_icon from "../../assets/images/cart_cross_icon.png";
 import Img from "../../assets/images/product/wise-child.png";
 import "./CartItems.css";
+import {Link} from "react-router-dom";
 
 const Cart = () => {
     return (
@@ -24,8 +25,14 @@ const Cart = () => {
                 <img className='cartitems-remove-icon' src={remove_icon} alt=''  />
             </div>
             <hr/>
-
             <div className='cartitems-down'>
+                <div className='cartitems-promocode'>
+                    <p>If you have a promo code, Enter it here</p>
+                    <div className='cartitems-promobox'>
+                        <input type='text' placeholder='Promo Code'/>
+                        <button>Submit</button>
+                    </div>
+                </div>
                 <div className='cartitems-total'>
                     <h1>Cart Totals</h1>
                     <div>
@@ -44,14 +51,9 @@ const Cart = () => {
                             <h3>0</h3>
                         </div>
                     </div>
+                    <Link to='/checkout'>
                         <button>Checkout</button>
-                </div>
-                <div className='cartitems-promocode'>
-                    <p>If you have a promo code, Enter it here</p>
-                    <div className='cartitems-promobox'>
-                        <input type='text' placeholder='Promo Code'/>
-                        <button>Submit</button>
-                    </div>
+                    </Link>
                 </div>
             </div>
         </div>

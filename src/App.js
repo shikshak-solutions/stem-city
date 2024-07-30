@@ -21,18 +21,13 @@ import {parseJwt} from "./redux/utility/jwtUtils";
 import useAuth from "./redux/hooks/useAuth";
 import RequireAuth from "./components/auth/RequireAuth";
 import ErrorPage from "./pages/ErrorPage";
+import ForgotPassword from "./pages/ForgotPassword";
+import CheckOut from "./components/cart/CheckOut";
+import Checkout from "./pages/Checkout";
 
 function App() {
     const { setAuth } = useAuth();
     const dispatch = useDispatch();
-    /*------ Pages-----*/
-    const ROLES = {
-        'Student': 4,
-        'Teacher': 3,
-        'School': 2,
-        'Admin': 1,
-        'Customer':5
-    }
     const authorized = async()=>{
         if(localStorage.getItem('user')){
             const data = JSON.parse(localStorage.getItem('user'));
@@ -57,6 +52,8 @@ function App() {
               <Route exact path="/cart" element={<Cart />}/>
               <Route exact path="/login" element={<Login />}/>
               {/*<Route exact path="/signup" element={<SignUp />}/>*/}
+              <Route exact path="/forgot-password" element={<ForgotPassword />}/>
+              <Route exact path="/checkout" element={<Checkout />}/>
               <Route exact path="/flipbook" element={<FlipBook />}/>
               <Route exact path="/terms-and-conditions" element={<TermsAndConditions />}/>
               <Route exact path="/privacy-policy" element={<PrivacyPolicy />}/>

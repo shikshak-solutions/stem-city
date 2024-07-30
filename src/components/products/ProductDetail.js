@@ -14,6 +14,7 @@ const ProductDetail = () => {
     const ProductDetailData = useSelector((state) => state.product.ProductDetailData);
     const dispatch = useDispatch();
     useEffectOnce(()=>{
+        console.log(12)
         dispatch(actionToGetProductsDetailsApiCall({cat_slug:cat_slug,sub_cat_slug:sub_cat_slug,product_slug:product_slug}));
     })
 
