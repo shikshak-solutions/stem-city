@@ -8,11 +8,13 @@ import WishList from "./AccountTabs/WishList";
 import {useDispatch} from "react-redux";
 import {actionToLogout} from "../../redux/action";
 import useAuth from "../../redux/hooks/useAuth";
+import {useNavigate} from "react-router-dom";
 
 const MyAccount = () => {
     const { setAuth } = useAuth();
     const [activeTab, setActiveTab] = useState('profile');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -20,6 +22,7 @@ const MyAccount = () => {
     const logout =()=>{
         dispatch(actionToLogout());
         setAuth({});
+        navigate('/login')
     }
     const getTabContent =() =>{
         switch (activeTab){

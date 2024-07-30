@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faPhone, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import "./Login.css";
-import {Link, useNavigate} from "react-router-dom";
-import {actionToLogin, actionToSignup} from "../../redux/action";
+import { useNavigate} from "react-router-dom";
+import { actionToSignup} from "../../redux/action";
 import {useDispatch} from "react-redux";
-import {generateUniqueIdForBlock} from "../../redux/helper/CommonHelper";
 import useAuth from "../../redux/hooks/useAuth";
-const SignUpForm = () => {
+const SignUpForm = (props) => {
     const { setAuth } = useAuth();
     const [formData, setFormData] = useState({
         name: '',
@@ -71,8 +70,7 @@ const SignUpForm = () => {
         e.preventDefault();
         const errors = validate();
         if (Object.keys(errors).length === 0) {
-            let id= generateUniqueIdForBlock()+'_user_'+generateUniqueIdForBlock();
-            let data = {id:id,name: formData.name,  email: formData.email, password: formData.password, mobile: formData.mobile }
+            let data = {name: formData.name,  email: formData.email, password: formData.password, mobile: formData.mobile }
             dispatch(actionToSignup(data)).then(
                 res => {
                     setAuth({...res});
@@ -167,7 +165,7 @@ const SignUpForm = () => {
                             {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
                         </div>
                         {formErrors.contact && <span className="error">{formErrors.contact}</span>}
-                        <p>Already Have an Account?<a href='/login'>  Click Here to Sign in</a></p>
+                        <p>Already Have an Account?<a onClick={()=>props.setActivePage('login')}>  Click Here to Sign in</a></p>
                     </div>
                     <div className='btn-field'>
                         <button type='button' onClick={handleSignUp} disabled={isSubmitting}>Sign up</button>

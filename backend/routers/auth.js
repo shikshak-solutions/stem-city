@@ -28,7 +28,7 @@ authRouter.post(
     }),
   ],
   async (req, res) => {
-    const {email, name, password, mobile, id} = req.body;
+    const {email, name, password, mobile} = req.body;
 
     // Validate user input
     const errors = validationResult(req);
@@ -65,7 +65,6 @@ authRouter.post(
            name: name,
            password: hashedPassword,
            mobile: mobile,
-           id: id,
            role: 4
          }
                  let emailBodyHtml=`<body><h3> Thank you for register on Shikshak Solutions</h3>
@@ -128,7 +127,7 @@ authRouter.post(
       }),
     ],
     async (req, res) => {
-      const {email, name, password, id} = req.body;
+      const {email, name, password} = req.body;
       // Validate user input
       const errors = validationResult(req);
 
@@ -163,8 +162,6 @@ authRouter.post(
             email: email,
             name: name,
             password: hashedPassword,
-            website: web,
-            id: id,
             role: 4
           }
           let emailBodyHtml=`<body><h3> Thank you for register on Shikshak Solutions</h3>
@@ -413,7 +410,7 @@ authRouter.post("/forgot-password", async (req, res) => {
     let nowDateTime = date+' '+time;
     let setData = `token_forgot_password = "${authToken}",time_token_sent = "${nowDateTime}"`;
     let whereCondition = `id = "${user?.id}"`;
-    let dataToSend = {column: setData, value: [authToken,nowDateTime], whereCondition: whereCondition, returnColumnName:'id',tableName: 'app_user'};
+    let dataToSend = {column: setData, value: [authToken,nowDateTime], whereCondition: whereCondition, returnColumnName:'id',tableName: 'users'};
    await updateCommonApiCall(dataToSend).then( ()=>{
      let emailBodyHtml=`<body><h3> </h3>
         <p>Dear,${user?.name}</p>
@@ -482,7 +479,7 @@ authRouter.post("/change-password", async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, salt);
   let setData = `token_forgot_password = NULL,time_token_sent = NULL,password="${hashedPassword}"`;
   let whereCondition = `token_forgot_password = "${token}"`;
-  let dataToSend = {column: setData, value: ["",""], whereCondition: whereCondition, returnColumnName:'id',tableName: 'app_user'};
+  let dataToSend = {column: setData, value: ["",""], whereCondition: whereCondition, returnColumnName:'id',tableName: 'users'};
   await updateCommonApiCall(dataToSend).then( ()=>{
     return res.status(200).send({status:1, message: 'Password changed successfully.'});
   });
@@ -493,7 +490,7 @@ authRouter.post("/update-user-personal-info", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   let setData = `name = ?,email = ?,mobile=?,gender=?`;
   let whereCondition = `id = "${id}"`;
-  let dataToSend = {column: setData, value: [name,email,mobile,gender], whereCondition: whereCondition, returnColumnName:'id',tableName: 'app_user'};
+  let dataToSend = {column: setData, value: [name,email,mobile,gender], whereCondition: whereCondition, returnColumnName:'id',tableName: 'users'};
   await updateCommonApiCall(dataToSend).then( async ()=>{
     // Save email and password to database/array
     let user = {
@@ -550,7 +547,7 @@ authRouter.post("/update-password", async (req, res) => {
   const hashedPassword = await bcrypt.hash(newPassword, salt);
   let setData = `password="${hashedPassword}"`;
   let whereCondition = `id = "${id}"`;
-  let dataToSend = {column: setData, value: ["",""], whereCondition: whereCondition, returnColumnName:'id',tableName: 'app_user'};
+  let dataToSend = {column: setData, value: ["",""], whereCondition: whereCondition, returnColumnName:'id',tableName: 'users'};
   await updateCommonApiCall(dataToSend).then( ()=>{
     return res.status(200).send({status:1, message: 'Password changed successfully.'});
   });

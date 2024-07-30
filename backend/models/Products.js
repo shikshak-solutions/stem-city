@@ -318,7 +318,7 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                                                            review_user.name))
                                                           from product_rating_and_reviews AS product_reviews
                                                                    JOIN products as prodreview
-                                                                   JOIN app_user AS review_user ON review_user.id = product_reviews.review_by
+                                                                   JOIN users AS review_user ON review_user.id = product_reviews.review_by
                                                           WHERE prodreview.id = product_reviews.product_id
                                                             AND prodreview.id = products.id),
                                               'product_faqs',
@@ -698,13 +698,13 @@ export const actionGetOrderDetailsData = (body) => {
                                            'billingPincode', billing_address.pincode,
                                            'billingGstno', billing_address.gst_no,
                                            'createdAt',ordmain.createdAt,
-                                           'user_email',app_user.email,
+                                           'user_email',users.email,
                                             'initial_order_email_send',ordmain.initial_order_email_send,
                                            'products', ( SELECT JSON_ARRAYAGG(JSON_OBJECT('id',products.id,'photo',products.photo,'name',products.name,'brand',brand.name,'qty',cart.qty,'unite_price',products.price)) 
                                                          FROM orders JOIN carts as cart on cart.orderId=orders.id JOIN products ON  products.id= cart.productId JOIN brand ON  brand.id= products.brand  WHERE orders.id=ordmain.id )
                                        ) as orderData
                            from orders  AS ordmain
-                                    JOIN app_user ON ordmain.custId=app_user.id
+                                    JOIN users ON ordmain.custId=users.id
                                     JOIN payments ON payments.order_id=ordmain.id
                                     JOIN order_address_relation ON order_address_relation.order_id= ordmain.id
                                     LEFT JOIN addresses AS shipping_address ON shipping_address.id= order_address_relation.shipping_address_id
@@ -771,14 +771,14 @@ export const actionToGetAllOrdersData = () => {
                                            'direct_payment_transaction_approved_rejected_at',dptl.approved_rejected_at,
                                            'direct_payment_attachment_path',dptl.attachment_path,
                                            'createdAt',ordmain.createdAt,
-                                           'customer_name',app_user.name,
-                                           'customer_email',app_user.email,
-                                           'customer_mobile',app_user.mobile,
+                                           'customer_name',users.name,
+                                           'customer_email',users.email,
+                                           'customer_mobile',users.mobile,
                                            'products', ( SELECT JSON_ARRAYAGG(JSON_OBJECT('id',products.id,'photo',products.photo,'name',products.name,'brand',products.brand,'qty',cart.qty,'unite_price',products.price)) FROM orders JOIN carts as cart on cart.orderId=orders.id JOIN products ON  products.id= cart.productId WHERE orders.id=ordmain.id )
                                        ) as orderData
                            from orders  AS ordmain
                                     JOIN payments ON payments.order_id=ordmain.id
-                                    JOIN app_user ON app_user.id=ordmain.custId
+                                    JOIN users ON users.id=ordmain.custId
                                     JOIN order_address_relation ON order_address_relation.order_id= ordmain.id
                                     LEFT JOIN addresses AS shipping_address ON shipping_address.id= order_address_relation.shipping_address_id
                                     LEFT JOIN addresses AS billing_address ON billing_address.id= order_address_relation.billing_address_id

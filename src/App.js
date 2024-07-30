@@ -55,9 +55,8 @@ function App() {
               <Route exact path="/products" element={<Product />}/>
               <Route exact path="/products/:cat_slug/:sub_cat_slug/:product_slug" element={<ProductOverview />}/>
               <Route exact path="/cart" element={<Cart />}/>
-
               <Route exact path="/login" element={<Login />}/>
-              <Route exact path="/signup" element={<SignUp />}/>
+              {/*<Route exact path="/signup" element={<SignUp />}/>*/}
               <Route exact path="/flipbook" element={<FlipBook />}/>
               <Route exact path="/terms-and-conditions" element={<TermsAndConditions />}/>
               <Route exact path="/privacy-policy" element={<PrivacyPolicy />}/>
