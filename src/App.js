@@ -14,7 +14,7 @@ import ReturnPolicy from "./pages/ReturnPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import SignUp from "./pages/SignUp";
 import {useEffectOnce} from "./redux/hooks/useEffectOnce";
-import {actionToGetSEOMetaDataApiCall} from "./redux/action";
+import {actionToGetSEOMetaDataApiCall, actionToLoadCart} from "./redux/action";
 import {useDispatch} from "react-redux";
 import {HelmetComponent} from "./components/layout/HelmetComponent";
 import {parseJwt} from "./redux/utility/jwtUtils";
@@ -46,6 +46,11 @@ function App() {
         }
     }
     useEffectOnce(()=>{
+        // Load cart from localStorage
+        const storedCart = JSON.parse(localStorage.getItem('cart'));
+        if (storedCart) {
+            dispatch(actionToLoadCart(storedCart));
+        }
         authorized();
         dispatch(actionToGetSEOMetaDataApiCall());
     })

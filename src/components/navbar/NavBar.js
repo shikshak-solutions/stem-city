@@ -5,6 +5,7 @@ import logo from "../../assets/images/logo2.png";
 import {FaUser} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import useAuth from "../../redux/hooks/useAuth";
+import {useSelector} from "react-redux";
 
 const MenuLinks = [
     {
@@ -48,6 +49,11 @@ const DropdownLinks = [
 ];
 const Navbar = () => {
     const { auth } = useAuth();
+    const cartItem = useSelector((state)=> {
+        let quantity = 0;
+        state.product.cartItems.map(item => quantity+= item.quantity)
+        return {quantity:quantity};
+    })
     return (
         <div className="bg-white duration-200 relative z-40">
             <div className="py-4">
@@ -123,9 +129,9 @@ const Navbar = () => {
                         <Link to='/cart'>
                         <button className="relative p-3">
                             <FaCartShopping className="text-xl text-gray-600 hover:text-red-600 dark:text-gray-400" />
-                            {/*<div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">*/}
-                            {/*    4*/}
-                            {/*</div>*/}
+                            <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
+                                {cartItem.quantity}
+                            </div>
                         </button>
                         </Link>
                     </div>

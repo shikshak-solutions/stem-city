@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Product.css";
 import { useParams } from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -6,17 +6,22 @@ import {faStar} from "@fortawesome/free-solid-svg-icons/faStar";
 import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupeeSign";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
-import { actionToGetProductsDetailsApiCall} from "../../redux/action";
+import {actionToAddToCart, actionToGetProductsDetailsApiCall} from "../../redux/action";
 
 
 const ProductDetail = () => {
     const { cat_slug,sub_cat_slug,product_slug } = useParams();
+    const [quantity, setQuantity] = useState(1);
     const ProductDetailData = useSelector((state) => state.product.ProductDetailData);
     const dispatch = useDispatch();
     useEffectOnce(()=>{
-        console.log(12)
         dispatch(actionToGetProductsDetailsApiCall({cat_slug:cat_slug,sub_cat_slug:sub_cat_slug,product_slug:product_slug}));
     })
+    const addToCart = () =>{
+        let products = {id: ProductDetailData.id,name:ProductDetailData.name,price:ProductDetailData.price,photo:ProductDetailData.photo, quantity:quantity};
+        console.log(products,'products')
+        dispatch(actionToAddToCart(products));
+    }
 
     if (!ProductDetailData) {
         return <h2>Product not found</h2>;
@@ -49,10 +54,10 @@ const ProductDetail = () => {
 
                 </div>
                 <div className='productdetails-right-quantity'>
-                    <h1>Select Qty :</h1>
-                    <input className='quantity' placeholder='0' type='number'/>
+                    <h1>Select Quantity :</h1>
+                    <input className='quantity' type='number' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
                 </div>
-                <button>Add to Cart</button>
+                <button onClick={()=> addToCart()}>Add to Cart</button>
                 <p className='productdisplay-right-category'><span>Category :</span> {ProductDetailData.subcategory_name}</p>
             </div>
         </div>

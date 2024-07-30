@@ -4,7 +4,7 @@ import {
     ADD_TO_CART,
     REMOVE_FROM_CART,
     LOAD_CART,
-    CLEAR_CART
+    CLEAR_CART, UPDATE_QUANTITY_OF_CART
 } from "../constant";
 const initialState = {
     ProductsData: [],
@@ -18,13 +18,23 @@ export  const productReducer = (state = initialState, action) => {
        case PRODUCTS_DETAIL_DATA:
             return { ...state, ProductDetailData: action.payload };
         case ADD_TO_CART:
+            console.log(action.payload,'payload')
             const updatedCart = [...state.cartItems, action.payload];
+            console.log(updatedCart,'updatedCart', JSON.stringify(updatedCart))
             localStorage.setItem('cart', JSON.stringify(updatedCart));
             return { ...state, cartItems: updatedCart };
         case REMOVE_FROM_CART:
             const filteredCart = state.cartItems.filter(item => item.id !== action.payload);
             localStorage.setItem('cart', JSON.stringify(filteredCart));
             return { ...state, cartItems: filteredCart };
+        case UPDATE_QUANTITY_OF_CART:
+            console.log('here',action.payload)
+            const updatedCountCart = state.cartItems.map(item => item.id === action.payload.id
+                ? { ...item, quantity: action.payload.quantity }
+                : item);
+            console.log(updatedCountCart,'updatedCountCart')
+            localStorage.setItem('cart', JSON.stringify(updatedCountCart));
+            return { ...state, cartItems: updatedCountCart };
         case LOAD_CART:
             return { ...state, cartItems: action.payload };
         case CLEAR_CART:
@@ -34,4 +44,5 @@ export  const productReducer = (state = initialState, action) => {
             return state
     }
 }
+
 export default productReducer;
