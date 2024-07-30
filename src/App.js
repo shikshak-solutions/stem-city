@@ -19,20 +19,13 @@ import {useDispatch} from "react-redux";
 import {HelmetComponent} from "./components/layout/HelmetComponent";
 import {parseJwt} from "./redux/utility/jwtUtils";
 import useAuth from "./redux/hooks/useAuth";
-import RequireAuth from "./components/auth/RequireAuth";
-import ErrorPage from "./pages/ErrorPage";
+import ForgotPassword from "./pages/ForgotPassword";
+import CheckOut from "./components/cart/CheckOut";
+import Checkout from "./pages/Checkout";
 
 function App() {
     const { setAuth } = useAuth();
     const dispatch = useDispatch();
-    /*------ Pages-----*/
-    const ROLES = {
-        'Student': 4,
-        'Teacher': 3,
-        'School': 2,
-        'Admin': 1,
-        'Customer':5
-    }
     const authorized = async()=>{
         if(localStorage.getItem('user')){
             const data = JSON.parse(localStorage.getItem('user'));
@@ -55,22 +48,17 @@ function App() {
               <Route exact path="/products" element={<Product />}/>
               <Route exact path="/products/:cat_slug/:sub_cat_slug/:product_slug" element={<ProductOverview />}/>
               <Route exact path="/cart" element={<Cart />}/>
-
+              <Route exact path="/account" element={<Account />}/>
               <Route exact path="/login" element={<Login />}/>
               <Route exact path="/signup" element={<SignUp />}/>
+              <Route exact path="/forgot-password" element={<ForgotPassword />}/>
+              <Route exact path="/checkout" element={<Checkout />}/>
               <Route exact path="/flipbook" element={<FlipBook />}/>
               <Route exact path="/terms-and-conditions" element={<TermsAndConditions />}/>
               <Route exact path="/privacy-policy" element={<PrivacyPolicy />}/>
               <Route exact path="/refund-and-cancellation" element={<RefundAndCancellation />}/>
               <Route exact path="/return-policy" element={<ReturnPolicy />}/>
               <Route exact path="/shipping-policy" element={<ShippingPolicy />}/>
-              {/* we want to protect these routes */}
-              <Route element={<RequireAuth allowedRoles={[ROLES.Student,ROLES.Teacher,ROLES.School,ROLES.Customer,ROLES.Admin]} />}>
-                  <Route exact path="/account" element={<Account />}/>
-              </Route>
-
-              {/* catch all */}
-              <Route path="/*" element={<ErrorPage />}/>
           </Routes>
       </BrowserRouter>
   );

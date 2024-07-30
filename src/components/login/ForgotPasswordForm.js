@@ -74,7 +74,8 @@ const LoginForm = () => {
     return (
         <div className='container'>
             <div className='form-box'>
-                <h1>Sign In</h1>
+                <h1>Reset your Password</h1>
+                <h2>Please Provide the Email address or Mobile Number that you used when you signed up for your account.</h2>
                 <form >
                     <div className='input-group'>
                         <div className='input-field'>
@@ -88,28 +89,10 @@ const LoginForm = () => {
                             />
                             {formErrors.email && <span className="error">{formErrors.email}</span>}
                         </div>
-                        <div className='input-field'>
-                            <FontAwesomeIcon className='icon' icon={faLock} />
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                placeholder='Password'
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
-                            <FontAwesomeIcon
-                                className={`eye-icon ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}
-                                onClick={togglePasswordVisibility}
-                                icon={showPassword ? faEyeSlash : faEye}
-                            />
-                            {formErrors.password && <span className="error">{formErrors.password}</span>}
-                        </div>
-                        {formErrors.contact && <span className="error">{formErrors.contact}</span>}
-                        <p>Forgot Password?<a href='/forgot-password'>  Click Here to reset</a></p>
-                        <p>Don't Have an Account?<a href='/signup'>  Click Here to Register</a></p>
+                        <h2>We will Send you an Email that will Allow you to Reset your Password.</h2>
                     </div>
                     <div className='btn-field'>
-                        <button type='button' onClick={()=>handleLogin()} disabled={isSubmitting}>Sign in</button>
+                        <button type='button'>Reset Password</button>
                     </div>
                 </form>
             </div>

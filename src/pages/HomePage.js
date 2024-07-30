@@ -16,11 +16,7 @@ import Partners from "../components/partners/Partners";
 
 
 const HomePage = () => {
-    const [orderPopup, setOrderPopup] = React.useState(false);
 
-    const handleOrderPopup = () => {
-        setOrderPopup(!orderPopup);
-    };
 
     React.useEffect(() => {
         AOS.init({
@@ -57,7 +53,7 @@ const HomePage = () => {
     return (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
             <NavBar/>
-            <Home handleOrderPopup={handleOrderPopup} />
+            <Home />
             <Category/>
             <Category2/>
             <Services/>
