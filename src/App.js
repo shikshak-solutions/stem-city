@@ -19,6 +19,8 @@ import {useDispatch} from "react-redux";
 import {HelmetComponent} from "./components/layout/HelmetComponent";
 import {parseJwt} from "./redux/utility/jwtUtils";
 import useAuth from "./redux/hooks/useAuth";
+import RequireAuth from "./components/auth/RequireAuth";
+import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import CheckOut from "./components/cart/CheckOut";
 import Checkout from "./pages/Checkout";
@@ -48,9 +50,8 @@ function App() {
               <Route exact path="/products" element={<Product />}/>
               <Route exact path="/products/:cat_slug/:sub_cat_slug/:product_slug" element={<ProductOverview />}/>
               <Route exact path="/cart" element={<Cart />}/>
-              <Route exact path="/account" element={<Account />}/>
               <Route exact path="/login" element={<Login />}/>
-              <Route exact path="/signup" element={<SignUp />}/>
+              {/*<Route exact path="/signup" element={<SignUp />}/>*/}
               <Route exact path="/forgot-password" element={<ForgotPassword />}/>
               <Route exact path="/checkout" element={<Checkout />}/>
               <Route exact path="/flipbook" element={<FlipBook />}/>
@@ -59,6 +60,13 @@ function App() {
               <Route exact path="/refund-and-cancellation" element={<RefundAndCancellation />}/>
               <Route exact path="/return-policy" element={<ReturnPolicy />}/>
               <Route exact path="/shipping-policy" element={<ShippingPolicy />}/>
+              {/* we want to protect these routes */}
+              <Route element={<RequireAuth allowedRoles={[ROLES.Student,ROLES.Teacher,ROLES.School,ROLES.Customer,ROLES.Admin]} />}>
+                  <Route exact path="/account" element={<Account />}/>
+              </Route>
+
+              {/* catch all */}
+              <Route path="/*" element={<ErrorPage />}/>
           </Routes>
       </BrowserRouter>
   );

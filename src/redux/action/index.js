@@ -1,5 +1,12 @@
 import {api} from "../hooks/apiConfig";
-import {PRODUCTS_DETAIL_DATA, PRODUCTS_LIST_DATA, SEO_META_DATA, URL_SLUG_DATA} from "../constant";
+import {
+    ADD_TO_CART, CLEAR_CART, LOAD_CART,
+    PRODUCTS_DETAIL_DATA,
+    PRODUCTS_LIST_DATA,
+    REMOVE_FROM_CART,
+    SEO_META_DATA,
+    URL_SLUG_DATA
+} from "../constant";
 import {parseJwt} from "../utility/jwtUtils";
 export const actionToGetSEOMetaDataApiCall = () => async (dispatch) => {
     const {data} = await api.post(`web-setting/actionToGetSEOMetaDataApiCall`);
@@ -56,4 +63,18 @@ export const actionToGetProductsApiCall = () => async (dispatch) => {
 export const actionToGetProductsDetailsApiCall = (payload) => async (dispatch) => {
     const {data} = await api.post(`products/actionToGetProductsDetailsBySlugApiCall`,payload );
     dispatch({ type: PRODUCTS_DETAIL_DATA, payload: data });
+}
+export const actionToAddToCart = (item) =>(dispatch)=>{
+    dispatch({type: ADD_TO_CART, payload: item});
+}
+
+export const actionToRemoveFromCart = (itemId) => (dispatch)=> {
+    dispatch({type: REMOVE_FROM_CART, payload: itemId});
+}
+
+export const actionToLoadCart = (cart) =>(dispatch)=> {
+    dispatch({type: LOAD_CART, payload: cart});
+}
+export const actionToClearCart = () =>(dispatch)=> {
+    dispatch({type: CLEAR_CART});
 }

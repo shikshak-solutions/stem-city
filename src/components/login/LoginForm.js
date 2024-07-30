@@ -7,7 +7,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { actionToLogin} from "../../redux/action";
 import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
-const LoginForm = () => {
+const LoginForm = (props) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -106,7 +106,7 @@ const LoginForm = () => {
                         </div>
                         {formErrors.contact && <span className="error">{formErrors.contact}</span>}
                         <p>Forgot Password?<a href='/forgot-password'>  Click Here to reset</a></p>
-                        <p>Don't Have an Account?<a href='/signup'>  Click Here to Register</a></p>
+                        <p>Don't Have an Account?<a onClick={()=>props.setActivePage('signup')}>  Click Here to Register</a></p>
                     </div>
                     <div className='btn-field'>
                         <button type='button' onClick={()=>handleLogin()} disabled={isSubmitting}>Sign in</button>
