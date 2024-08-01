@@ -30,7 +30,6 @@ import {
     actionToResetDefaultAddress,
     updatePaymentStatusOnPaymentTable,
     updateOrderStatusOnOrderTable,
-    savePaymentGatewayTransactionAfterRefund,
     actionToGetProductReviewProductAndUserIdApiCall,
     actionToGetFaqsApiCall
 } from "../models/Products.js";
@@ -255,7 +254,7 @@ productsRouter.post(
                                          values: valuesArray,
                                          tableName: 'order_address_relation'
                                      };
-                                     insertCommonApiCall(insertOrderAddressRelationData).then((insertOderAddressRelation) => {
+                                     insertCommonApiCall(insertOrderAddressRelationData).then(() => {
                                          res.status(200).send(CryptoJS.AES.encrypt(JSON.stringify({id:orderId,orderNo:payload.uniqueOrderNumber}), ENCRYPTION_KEY).toString());
                                      })
                                  }
@@ -270,7 +269,7 @@ productsRouter.post(
                                  values: valuesArray,
                                  tableName: 'order_address_relation'
                              };
-                             insertCommonApiCall(insertOARelationDataData).then((insertOderAddressRelation) => {
+                             insertCommonApiCall(insertOARelationDataData).then(() => {
                                  res.status(200).send(CryptoJS.AES.encrypt(JSON.stringify({id:orderId}), ENCRYPTION_KEY).toString());
                              })
                          }
@@ -286,7 +285,7 @@ productsRouter.post(
                          values: valuesArray,
                          tableName: 'order_address_relation'
                      };
-                     insertCommonApiCall(insertExistingAddressOrderData).then((insertOderAddressRelation) => {
+                     insertCommonApiCall(insertExistingAddressOrderData).then(() => {
                          res.status(200).send(CryptoJS.AES.encrypt(JSON.stringify({id:orderId,orderNo:payload.uniqueOrderNumber}), ENCRYPTION_KEY).toString());
                      })
                  }
@@ -460,8 +459,8 @@ productsRouter.post(
     expressAsyncHandler(async (req, res) => {
         const data = CryptoJS.AES.decrypt(req.body?.payload, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
         let payload = JSON.parse(data);
-        actionToResetDefaultAddress(payload).then((data) => {
-            actionToUpdateDefaultDeliveryAddress(payload).then((data) => {
+        actionToResetDefaultAddress(payload).then(() => {
+            actionToUpdateDefaultDeliveryAddress(payload).then(() => {
                 res.status(200).send({"message":"success"});
             }) .catch(error => {
                 res.status(500).send(error);

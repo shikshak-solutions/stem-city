@@ -1,11 +1,6 @@
 import React from "react";
 import { FaMobileAlt } from "react-icons/fa";
-import {
-    FaFacebook,
-    FaInstagram,
-    FaLinkedin,
-    FaLocationArrow,
-} from "react-icons/fa6";
+import {FaLocationArrow} from "react-icons/fa6";
 import logo from "../assets/images/logo2.png";
 
 const FooterLinks = [

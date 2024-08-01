@@ -1,9 +1,8 @@
 import React from 'react';
 import NavBar from "../components/navbar/NavBar";
 import Footer from "../footer/Footer";
-import TermsConditions from "../components/policies/TermsConditions";
 import RefundCancellation from "../components/policies/RefundCancellation";
-const TermsAndConditions = () => {
+const RefundAndCancellation = () => {
     return (
         <>
             <NavBar/>
@@ -15,4 +14,4 @@ const TermsAndConditions = () => {
     );
 };
 
-export default TermsAndConditions;
+export default RefundAndCancellation;

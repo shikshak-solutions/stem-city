@@ -16,7 +16,7 @@ export const actionToGetSEOMetaDataApiCall = () => async (dispatch) => {
     return data;
 }
 
-export const actionToLogin =  (email, password) => async (dispatch) =>{
+export const actionToLogin =  (email, password) => async () =>{
     return api.post("/auth/login", {
             email,
             password,
@@ -34,7 +34,7 @@ export const actionToLogin =  (email, password) => async (dispatch) =>{
 }
 export const actionToLogout = () => ()=>{
     return api.delete("/auth/logout")
-        .then( (response) => {
+        .then( () => {
             localStorage.removeItem("user");
             localStorage.removeItem("cartCount");
             window.location.href='/login';

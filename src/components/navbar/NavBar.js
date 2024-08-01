@@ -1,5 +1,5 @@
 import React from "react";
-import { IoMdSearch, IoMdLogIn  } from "react-icons/io";
+import { IoMdSearch  } from "react-icons/io";
 import { FaCaretDown, FaCartShopping, FaRightToBracket} from "react-icons/fa6";
 import logo from "../../assets/images/logo2.png";
 import {FaUser} from "react-icons/fa";
@@ -87,7 +87,7 @@ const Navbar = () => {
 
                                     <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white shadow-md dark:bg-gray-900 p-2 dark:text-white ">
                                         <ul className="space-y-2">
-                                            {DropdownLinks.map((data, index) => (
+                                            {DropdownLinks.map((data) => (
                                                 <li>
                                                     <a
                                                         className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold"

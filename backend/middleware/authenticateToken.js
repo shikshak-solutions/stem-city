@@ -29,6 +29,7 @@ const authToken = async (req, res, next) => {
     res.status(403).json({
       errors: [
         {
+          message: error,
           msg: "Invalid token",
         },
       ],

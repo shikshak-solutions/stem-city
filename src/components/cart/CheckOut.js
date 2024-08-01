@@ -1,16 +1,11 @@
 import React, { useState }  from "react";
-import remove_icon from "../../assets/images/cart_cross_icon.png";
-import Img from "../../assets/images/product/wise-child.png";
 import "./CartItems.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEnvelope, faEye, faEyeSlash, faLock} from "@fortawesome/free-solid-svg-icons";
-import {Link} from "react-router-dom";
 
 const CheckOut = () => {
-    const [savedAddresses, setSavedAddresses] = useState([
+    const savedAddresses = [
         { id: 1, name: 'Ayush',  address: 'Ayush, Suncity Avenue 76 Gurugram Haryana' },
         { id: 2, name: 'Ayush', address: 'Ayush, Suncity Avenue 76 Gurugram Haryana' },
-    ]);
+    ];
     const [gstBenefits, setGstBenefits] = useState(false);
     const [differentBillingAddress, setDifferentBillingAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);

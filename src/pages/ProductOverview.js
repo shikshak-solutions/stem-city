@@ -4,7 +4,6 @@ import ProductDetail from "../components/products/ProductDetail";
 import ProductTabs from "../components/ProductTabs/ProductTabs";
 import Footer from "../footer/Footer";
 import RelatedProducts from "../components/RelatedProducts/RelatedProducts";
-import Partners from "../components/partners/Partners";
 
 const ProductOverview = () => {
     return(

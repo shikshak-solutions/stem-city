@@ -1,8 +1,8 @@
 import connectPool from './connection.js';
 //import {getCache, resetKey, setCache} from "./redis/cache.js";
 const pool = await connectPool();
-export const actionToGetSEOReferencesApiCall = async (body) => {
-    let {condition} = body;
+export const actionToGetSEOReferencesApiCall = async () => {
+    //let {condition} = body;
    /* console.log(condition,'condition')
     let seoReference = await getCache('shikshak-admin-seo-reference');
     console.log(seoReference,'seoReference')
@@ -29,14 +29,14 @@ export const actionToGetSEOReferencesApiCall = async (body) => {
             })
         }catch (error) {
             // Handle the error
-            console.error("Database error:", "An error occurred while processing your request.");
+            console.error("Database error:", "An error occurred while processing your request.",error);
             // Send a user-friendly error message or log it as appropriate
         }
 
    // }
 
 }
-export const actionToGetUrlSlugApiCall = (body) => {
+export const actionToGetUrlSlugApiCall = () => {
     return new Promise(function(resolve, reject) {
         const query = `select url_slug_map.* from url_slug_map where website='stemcity'`;
         pool.query(query, (error, results) => {

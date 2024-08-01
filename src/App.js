@@ -8,11 +8,10 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import FlipBook from "./pages/FlipBook";
 import TermsAndConditions from "./pages/TermsAndConditions";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RefundAndCancellation from "./pages/RefundAndCancellation";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
-import SignUp from "./pages/SignUp";
 import {useEffectOnce} from "./redux/hooks/useEffectOnce";
 import {actionToGetSEOMetaDataApiCall, actionToLoadCart} from "./redux/action";
 import {useDispatch} from "react-redux";
@@ -22,7 +21,6 @@ import useAuth from "./redux/hooks/useAuth";
 import RequireAuth from "./components/auth/RequireAuth";
 import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword";
-import CheckOut from "./components/cart/CheckOut";
 import Checkout from "./pages/Checkout";
 
 function App() {
@@ -68,7 +66,7 @@ function App() {
               <Route exact path="/checkout" element={<Checkout />}/>
               <Route exact path="/flipbook" element={<FlipBook />}/>
               <Route exact path="/terms-and-conditions" element={<TermsAndConditions />}/>
-              <Route exact path="/privacy-policy" element={<PrivacyPolicy />}/>
+              <Route exact path="/privacy-policy" element={<PrivacyPolicyPage />}/>
               <Route exact path="/refund-and-cancellation" element={<RefundAndCancellation />}/>
               <Route exact path="/return-policy" element={<ReturnPolicy />}/>
               <Route exact path="/shipping-policy" element={<ShippingPolicy />}/>

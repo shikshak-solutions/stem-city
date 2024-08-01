@@ -1,5 +1,4 @@
 import express from "express";
-const ENCRYPTION_KEY = "XkhZG4fW2t2W";
 const webSettingRouter = express.Router();
 import expressAsyncHandler from "express-async-handler";
 import {

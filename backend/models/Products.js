@@ -596,56 +596,6 @@ export const actionToGetAllProductsDataByOrderId = (body) => {
 }
 
 
-
-
-    export const actionSaveCustomerAddresses = (body, orderId) => {
-        let {billingAddress, billingCity, billingCompanyAddress, billingCompanyName, billingCountry, billingFullName, billingGstNo, billingMobileNo, billingPinCode, billingState,
-            shippingAddress, shippingCity, shippingCompanyAddress, shippingCompanyName, shippingCountry, shippingFullName, shippingGstNo, shippingMobileNo,shippingPinCode, shippingState, userId, cartIds} = body.data;
-        try {
-
-            const columnArray = ['fullname', "phone","address", "orderId", "discrict", "city", "states", "area", "custId", "type"];
-            let response = {};
-
-            new Promise(function(resolve, reject) {
-                const query = `INSERT INTO addresses (${columnArray.toString()})
-                           VALUES ('${billingFullName}','${billingMobileNo}', '${orderId}', '${billingCompanyAddress}', '${billingCity}', '${billingState}', '${billingAddress}', '${userId}', 'billing')`;
-                pool.query(query, (error, results) => {
-                    if (error) {
-                        reject(query)
-                    }
-                })
-            })
-
-
-            if (shippingAddress !== '' && shippingCity !== ''){
-                new Promise(function(resolve, reject) {
-                    const query = `INSERT INTO addresses (${columnArray.toString()})
-                               VALUES ('${shippingFullName}','${shippingMobileNo}', '${orderId}', '${shippingCompanyAddress}', '${shippingCity}', '${shippingState}', '${shippingAddress}', '${userId}', 'shipping')`;
-                    pool.query(query, (error, results) => {
-                        if (error) {
-                            reject(query)
-                        }
-                    })
-                })
-            }
-
-            new Promise(function(resolve, reject) {
-                const query = `UPDATE carts set carts.orderId = '${orderId}' WHERE carts.id in(${cartIds.toString()})`;
-                pool.query(query, (error, results) => {
-                    if (error) {
-                        reject(query)
-                    }
-                })
-            })
-
-
-            return response;
-
-        }catch (e){
-            return e;
-        }
-    }
-
 export const actionToDbTest = async () =>{
     return new Promise(async function(resolve, reject) {
         pool.query('SELECT * FROM categories', (error, results) => {

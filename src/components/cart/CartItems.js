@@ -1,6 +1,5 @@
 import React from "react";
 import remove_icon from "../../assets/images/cart_cross_icon.png";
-import Img from "../../assets/images/product/wise-child.png";
 import "./CartItems.css";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";

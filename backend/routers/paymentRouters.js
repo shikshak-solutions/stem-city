@@ -12,22 +12,10 @@ import {
     updatePaymentGatewayTransactionAfterPayment,
 } from "../models/Products.js";
 import CryptoJS from "crypto-js";
-import {insertCommonApiCall} from "../models/commonModel.js";
 import {actionToSendCustomEmail} from "../helper/emailNodeMailerHelper.js";
 import {checkStatus, newPayment} from "../helper/PaymentHelper.js";
 const ENCRYPTION_KEY = "XkhZG4fW2t2W";
 const PaymentRouters = express.Router();
-PaymentRouters.post(
-    '/createOrder',
-    expressAsyncHandler(async (req, res) => {
-        const data = CryptoJS.AES.decrypt(req?.body?.payload, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
-        let payload = JSON.parse(data);
-        let options = {
-            amount: Number(payload?.totalAmount * 100),  // amount in the smallest currency unit
-            currency: "INR"
-        };
-    })
-);
 PaymentRouters.post(
     '/payment',
     expressAsyncHandler(async (req, res) => {
@@ -115,24 +103,6 @@ PaymentRouters.post(
             .catch(error => {
                 res.status(500).send(error);
             })
-    })
-);
-PaymentRouters.post(
-    '/actionToCancelOrderAndRefund',
-    expressAsyncHandler(async (req, res) => {
-
-    })
-);
-PaymentRouters.post(
-    '/savePaymentAPICall',
-    expressAsyncHandler(async (req, res) => {
-        const data = CryptoJS.AES.decrypt(req?.body?.payload, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
-        let payload = JSON.parse(data);
-        insertCommonApiCall(payload).then((data) => {
-            res.status(200).send({
-                response: data,
-            });
-        })
     })
 );
 const emailUpload = multer({

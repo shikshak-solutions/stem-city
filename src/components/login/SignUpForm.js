@@ -165,6 +165,7 @@ const SignUpForm = (props) => {
                             {formErrors.confirmPassword && <span className="error">{formErrors.confirmPassword}</span>}
                         </div>
                         {formErrors.contact && <span className="error">{formErrors.contact}</span>}
+                        {signInError && <span className={"error"}>{signInError}</span> }
                         <p>Already Have an Account?<a onClick={()=>props.setActivePage('login')}>  Click Here to Sign in</a></p>
                     </div>
                     <div className='btn-field'>

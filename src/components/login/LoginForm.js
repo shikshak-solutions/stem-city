@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faPhone, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import {  faEnvelope,  faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import useAuth from '../../redux/hooks/useAuth';
 import "./Login.css";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { actionToLogin} from "../../redux/action";
 import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
@@ -41,7 +41,7 @@ const LoginForm = (props) => {
         });
     };
 
-    const handleLogin = async (e) => {
+    const handleLogin = async () => {
         setIsSubmitting(true);
        // e.preventDefault();
         const errors = validate();
@@ -106,8 +106,9 @@ const LoginForm = (props) => {
                         </div>
                         {formErrors.contact && <span className="error">{formErrors.contact}</span>}
                         <p>Forgot Password?<a href='/forgot-password'>  Click Here to reset</a></p>
-                        <p>Don't Have an Account?<a onClick={()=>props.setActivePage('signup')}>  Click Here to Register</a></p>
+                        <p>Don't Have an Account?<span onClick={()=>props.setActivePage('signup')}>  Click Here to Register</span></p>
                     </div>
+                    <p>{signInError}</p>
                     <div className='btn-field'>
                         <button type='button' onClick={()=>handleLogin()} disabled={isSubmitting}>Sign in</button>
                     </div>

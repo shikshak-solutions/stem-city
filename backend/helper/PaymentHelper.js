@@ -15,7 +15,7 @@ const ENCRYPTION_KEY = "XkhZG4fW2t2W";
 
 export const newPayment = async (req, res) => {
     try {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve) {
 
             const merchantTransactionId = req?.transactionId;
             const data = {
@@ -79,7 +79,7 @@ export const newPayment = async (req, res) => {
 export const checkStatus = async(req, res) => {
     if(req?.body?.code=='PAYMENT_SUCCESS' && req?.body?.transactionId){
     try {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve) {
             const merchantTransactionId = req?.body?.transactionId;
             // const merchantId = res.req.body.merchantId
 
@@ -97,10 +97,10 @@ export const checkStatus = async(req, res) => {
                     'X-MERCHANT-ID': `${merchantId}`
                 }
             };
-             updatePaymentGatewayTransactionByTransactionIdAfterPayment(req?.body).then( async (response)=>{
+             updatePaymentGatewayTransactionByTransactionIdAfterPayment(req?.body).then( async ()=>{
                 await getPaymentAndCartIdsByPaymentGateWayTransactionLog(req?.body).then( async (cartOrderDetails)=>{
-                    await updatePaymentStatusOnPaymentTable(cartOrderDetails[0],1).then(async (respos)=> {
-                        await updateOrderIdOnCartTable(cartOrderDetails[0]).then(async (respo) => {
+                    await updatePaymentStatusOnPaymentTable(cartOrderDetails[0],1).then(async ()=> {
+                        await updateOrderIdOnCartTable(cartOrderDetails[0]).then(async () => {
                             console.log(cartOrderDetails[0]?.id,cartOrderDetails,'10555555555555')
                             const url = `https://shikshaksolutions.com/order/success/` + CryptoJS.AES.encrypt(
                                 JSON.stringify(cartOrderDetails[0]?.id),
@@ -117,10 +117,10 @@ export const checkStatus = async(req, res) => {
                 console.log(response, "response Status")
                 if (response.data.success === true) {
                     resolve({success:true,response:response});
-                    await updatePaymentGatewayTransactionByTransactionIdAfterPayment(req?.body).then( async (response)=>{
+                    await updatePaymentGatewayTransactionByTransactionIdAfterPayment(req?.body).then( async ()=>{
                        await getPaymentAndCartIdsByPaymentGateWayTransactionLog(req?.body).then( async (cartOrderDetails)=>{
-                          await updatePaymentStatusOnPaymentTable(cartOrderDetails[0],1).then(async (respos)=> {
-                              await updateOrderIdOnCartTable(cartOrderDetails[0]).then(async (respo) => {
+                          await updatePaymentStatusOnPaymentTable(cartOrderDetails[0],1).then(async ()=> {
+                              await updateOrderIdOnCartTable(cartOrderDetails[0]).then(async () => {
                                   console.log(cartOrderDetails[0]?.id,cartOrderDetails,'1255555555555555555')
                                   const url = `https://shikshaksolutions.com/order/success/` + CryptoJS.AES.encrypt(
                                       JSON.stringify(cartOrderDetails[0]?.id),

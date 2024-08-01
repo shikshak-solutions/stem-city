@@ -8,7 +8,7 @@ import nodemailer from 'nodemailer';
  * @param res
  * @returns {Promise<*>}
  */
-export const actionToSendCustomEmail = async (req, res) => {
+export const actionToSendCustomEmail = async (req) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         service: "gmail",

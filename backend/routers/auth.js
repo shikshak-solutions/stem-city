@@ -371,6 +371,7 @@ authRouter.post("/token", async (req, res) => {
     res.status(403).json({
       errors: [
         {
+          message:error,
           msg: "Invalid token",
         },
       ],
@@ -487,7 +488,6 @@ authRouter.post("/change-password", async (req, res) => {
 });
 authRouter.post("/update-user-personal-info", async (req, res) => {
   const {email, name, mobile, gender, id,password,role} = req.body;
-  const salt = await bcrypt.genSalt(10);
   let setData = `name = ?,email = ?,mobile=?,gender=?`;
   let whereCondition = `id = "${id}"`;
   let dataToSend = {column: setData, value: [name,email,mobile,gender], whereCondition: whereCondition, returnColumnName:'id',tableName: 'users'};
@@ -638,7 +638,7 @@ authRouter.post("/get-otp-details-by-otp-email", async (req, res) => {
         const whereCondition = `code = '${req.body?.otp.toString()}' and email_address_mobile_no='${req.body?.emailOrMobile.toString()}'`;
         const value = ['0',moment().format("YYYY-MM-DD HH:mm:ss"),1];
         const dataToSend = {column: setData, value, whereCondition, tableName: 'two_factor_auth'};
-       const update= await updateCommonApiCall(dataToSend);
+        await updateCommonApiCall(dataToSend);
         // Send JWT access token
         const accessToken = await JWT.sign(
             { user },

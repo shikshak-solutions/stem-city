@@ -68,7 +68,7 @@ app.get('/api', (req, res) => {
     res.status(200).send({message:`Node Server is ready port ${port}`});
 });
 
-app.use((err, req, res,next) => {
+app.use((err, req, res) => {
     res.status(500).send({ message: err.message });
 });
 

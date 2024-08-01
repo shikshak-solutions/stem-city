@@ -10,6 +10,7 @@ export default [
     },
     ...pluginJs.configs.recommended,
     ...pluginReact.configs.flat.recommended,
+    ignores: ["build/**/*"],
     rules: {
       'no-unused-vars': 'error', // Throw error for unused variables
       'react/jsx-uses-react': 'error', // Prevent React from being incorrectly marked as unused
