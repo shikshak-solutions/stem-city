@@ -8,6 +8,9 @@ import productsRouter from "./routers/Products.js";
 import webSettingRouter from "./routers/WebSetting.js";
 import authRouter from "./routers/auth.js";
 import paymentRouters from "./routers/paymentRouters.js";
+import inventoryRouter from "./routers/inventoryRouter.js";
+import usersRouter from "./routers/usersRouter.js";
+import commonLogRouter from "./routers/commonLogRouter.js";
 
 dotenv.config();
 const app = express();
@@ -63,6 +66,9 @@ app.use('/api/products', productsRouter);
 app.use('/api/web-setting', webSettingRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/payment', paymentRouters);
+app.use('/api/inventory', inventoryRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/common-log', commonLogRouter);
 ///////// BlogPost api GET ////////////////
 app.get('/api', (req, res) => {
     res.status(200).send({message:`Node Server is ready port ${port}`});

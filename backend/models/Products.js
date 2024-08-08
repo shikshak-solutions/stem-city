@@ -9,13 +9,12 @@ export const actionToGetProductsApiCall =  (body) => {
         // if(seoReference){
         //     resolve(JSON.parse(seoReference));
         // } else {
-            let {condition} = body;
-                let where = (condition) ? ` ${condition} AND products.show_on_website = 'stemcity'` : ` where products.show_on_website = 'stemcity'`;
+            let {condition,show_on_website} = body;
+            let showOnWebsite = show_on_website ? show_on_website : 'shikshak';
+                let where = (condition) ? ` ${condition} AND products.show_on_website = '${showOnWebsite}'` : ` where products.show_on_website = '${showOnWebsite}'`;
                 const query = `SELECT products.*,
                                       categories.name                       AS category,
-                                      categories.slug                       AS category_slug,
                                       subcategories.sub_name                AS sub_category,
-                                      subcategories.slug                    AS sub_category_slug,
                                       subcategories.categoryId              AS categoryId,
                                       subchildcategories.subcategoryId      AS subCategoryId,
                                       subchildcategories.name               AS sub_child_category,
@@ -38,7 +37,7 @@ export const actionToGetProductsApiCall =  (body) => {
                                                      product_reviews.review_title IS NOT null
                                    ${where}
                                GROUP BY products.id`;
-                //console.log(query,'query');
+                console.log(query,'query');
                 pool.query(query, (error, results) => {
                     if (error) {
                         reject(query)
@@ -268,7 +267,7 @@ export const actionUpdateProductQuantityOnCartByCartId = (body) => {
     })
 }
 export const actionToGetProductsDetailsApiCall = (body) => {
-    let {product_slug,cat_slug,sub_cat_slug} = body;
+    let {id} = body;
     try {
         return new Promise(async function (resolve, reject) {
             // let seoReference = await getCache('shikshak-admin-products-detail-data-' + id);
@@ -280,7 +279,6 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                               'name', products.name,
                                               'brand', products.brand,
                                               'status', products.status,
-                                              'subcategory_name', subcategories.sub_name,
                                               'price', products.price,
                                               'photo', products.photo,
                                               'sortDesc', products.sortDesc,
@@ -293,14 +291,14 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                from product_photos
                                                         JOIN products as prod
                                                WHERE prod.id = product_photos.productId
-                                                 AND prod.id =products.id),
+                                                 AND prod.id = ${id}),
                                               'review_photos',
                                               (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_reviews.id, 'photos',
                                                                                 product_reviews.review_photos))
                                                from product_rating_and_reviews AS product_reviews
                                                         JOIN products as prodr
                                                WHERE prodr.id = product_reviews.product_id
-                                                 AND prodr.id = products.id),
+                                                 AND prodr.id = ${id}),
                                               'reviews', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_reviews.id,
                                                                                            'review_title',
                                                                                            product_reviews.review_title,
@@ -318,9 +316,9 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                                                            review_user.name))
                                                           from product_rating_and_reviews AS product_reviews
                                                                    JOIN products as prodreview
-                                                                   JOIN users AS review_user ON review_user.id = product_reviews.review_by
+                                                                   JOIN app_user AS review_user ON review_user.id = product_reviews.review_by
                                                           WHERE prodreview.id = product_reviews.product_id
-                                                            AND prodreview.id = products.id),
+                                                            AND prodreview.id = ${id}),
                                               'product_faqs',
                                               (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_faqs.id, 'question',
                                                                                 product_faqs.question, 'answer',
@@ -331,7 +329,7 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                from product_faqs AS product_faqs
                                                         JOIN products as productfq
                                                WHERE productfq.id = product_faqs.product_id
-                                                 AND productfq.id = products.id),
+                                                 AND productfq.id = ${id}),
                                               'related_products', (SELECT JSON_ARRAYAGG(JSON_OBJECT(
                                 'id', related_prod.id,
                                 'photo', related_prod.photo,
@@ -341,10 +339,11 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                                                    from products as related_prod
                                                                             JOIN categories AS related_cat
                                                                    WHERE related_prod.categoryId = related_cat.id
-                                                                     AND related_prod.id!=products.id AND related_prod.subcategoryId =products.subcategoryId)
+                                                                     AND related_prod.id!=${id} AND related_prod.categoryId IN (SELECT categoryId FROM products AS pp WHERE id=${id}))
                         ) as productData
                                from products
-                                        LEFT JOIN subcategories ON subcategories.id = products.subcategoryId
+                                        LEFT JOIN subchildcategories ON subchildcategories.id = products.childCategoryId
+                                        LEFT JOIN subcategories ON subcategories.id = subchildcategories.subcategoryId
                                         LEFT JOIN categories ON categories.id = subcategories.categoryId
                                         LEFT JOIN brand ON brand.id = products.brand
                                         LEFT JOIN product_rating_and_reviews AS product_ratings
@@ -353,11 +352,8 @@ export const actionToGetProductsDetailsApiCall = (body) => {
                                         LEFT JOIN product_rating_and_reviews AS product_reviews
                                                   ON product_reviews.product_id = products.id AND
                                                      product_reviews.review_title IS NOT null
-                               WHERE products.slug = '${product_slug}' and subcategories.slug = '${sub_cat_slug}' and categories.slug = '${cat_slug}' 
-                                 AND products.show_on_website = 'stemcity'
+                               WHERE products.id = ${id}
                                GROUP BY products.id`;
-
-
                 pool.query(query, (error, results) => {
                     if (error) {
                         reject(query)
@@ -596,6 +592,56 @@ export const actionToGetAllProductsDataByOrderId = (body) => {
 }
 
 
+
+
+    export const actionSaveCustomerAddresses = (body, orderId) => {
+        let {billingAddress, billingCity, billingCompanyAddress, billingCompanyName, billingCountry, billingFullName, billingGstNo, billingMobileNo, billingPinCode, billingState,
+            shippingAddress, shippingCity, shippingCompanyAddress, shippingCompanyName, shippingCountry, shippingFullName, shippingGstNo, shippingMobileNo,shippingPinCode, shippingState, userId, cartIds} = body.data;
+        try {
+
+            const columnArray = ['fullname', "phone","address", "orderId", "discrict", "city", "states", "area", "custId", "type"];
+            let response = {};
+
+            new Promise(function(resolve, reject) {
+                const query = `INSERT INTO addresses (${columnArray.toString()})
+                           VALUES ('${billingFullName}','${billingMobileNo}', '${orderId}', '${billingCompanyAddress}', '${billingCity}', '${billingState}', '${billingAddress}', '${userId}', 'billing')`;
+                pool.query(query, (error, results) => {
+                    if (error) {
+                        reject(query)
+                    }
+                })
+            })
+
+
+            if (shippingAddress !== '' && shippingCity !== ''){
+                new Promise(function(resolve, reject) {
+                    const query = `INSERT INTO addresses (${columnArray.toString()})
+                               VALUES ('${shippingFullName}','${shippingMobileNo}', '${orderId}', '${shippingCompanyAddress}', '${shippingCity}', '${shippingState}', '${shippingAddress}', '${userId}', 'shipping')`;
+                    pool.query(query, (error, results) => {
+                        if (error) {
+                            reject(query)
+                        }
+                    })
+                })
+            }
+
+            new Promise(function(resolve, reject) {
+                const query = `UPDATE carts set carts.orderId = '${orderId}' WHERE carts.id in(${cartIds.toString()})`;
+                pool.query(query, (error, results) => {
+                    if (error) {
+                        reject(query)
+                    }
+                })
+            })
+
+
+            return response;
+
+        }catch (e){
+            return e;
+        }
+    }
+
 export const actionToDbTest = async () =>{
     return new Promise(async function(resolve, reject) {
         pool.query('SELECT * FROM categories', (error, results) => {
@@ -648,13 +694,13 @@ export const actionGetOrderDetailsData = (body) => {
                                            'billingPincode', billing_address.pincode,
                                            'billingGstno', billing_address.gst_no,
                                            'createdAt',ordmain.createdAt,
-                                           'user_email',users.email,
+                                           'user_email',app_user.email,
                                             'initial_order_email_send',ordmain.initial_order_email_send,
                                            'products', ( SELECT JSON_ARRAYAGG(JSON_OBJECT('id',products.id,'photo',products.photo,'name',products.name,'brand',brand.name,'qty',cart.qty,'unite_price',products.price)) 
                                                          FROM orders JOIN carts as cart on cart.orderId=orders.id JOIN products ON  products.id= cart.productId JOIN brand ON  brand.id= products.brand  WHERE orders.id=ordmain.id )
                                        ) as orderData
                            from orders  AS ordmain
-                                    JOIN users ON ordmain.custId=users.id
+                                    JOIN app_user ON ordmain.custId=app_user.id
                                     JOIN payments ON payments.order_id=ordmain.id
                                     JOIN order_address_relation ON order_address_relation.order_id= ordmain.id
                                     LEFT JOIN addresses AS shipping_address ON shipping_address.id= order_address_relation.shipping_address_id
@@ -721,14 +767,14 @@ export const actionToGetAllOrdersData = () => {
                                            'direct_payment_transaction_approved_rejected_at',dptl.approved_rejected_at,
                                            'direct_payment_attachment_path',dptl.attachment_path,
                                            'createdAt',ordmain.createdAt,
-                                           'customer_name',users.name,
-                                           'customer_email',users.email,
-                                           'customer_mobile',users.mobile,
+                                           'customer_name',app_user.name,
+                                           'customer_email',app_user.email,
+                                           'customer_mobile',app_user.mobile,
                                            'products', ( SELECT JSON_ARRAYAGG(JSON_OBJECT('id',products.id,'photo',products.photo,'name',products.name,'brand',products.brand,'qty',cart.qty,'unite_price',products.price)) FROM orders JOIN carts as cart on cart.orderId=orders.id JOIN products ON  products.id= cart.productId WHERE orders.id=ordmain.id )
                                        ) as orderData
                            from orders  AS ordmain
                                     JOIN payments ON payments.order_id=ordmain.id
-                                    JOIN users ON users.id=ordmain.custId
+                                    JOIN app_user ON app_user.id=ordmain.custId
                                     JOIN order_address_relation ON order_address_relation.order_id= ordmain.id
                                     LEFT JOIN addresses AS shipping_address ON shipping_address.id= order_address_relation.shipping_address_id
                                     LEFT JOIN addresses AS billing_address ON billing_address.id= order_address_relation.billing_address_id

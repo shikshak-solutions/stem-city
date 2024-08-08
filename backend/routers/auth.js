@@ -8,7 +8,7 @@ dotenv.config();
 import { check, validationResult } from 'express-validator';
 import {
   actionToGetAllUserApiCall,
-  actionToGetUserDetailsByForgotPasswordTokenApiCall,
+  actionToGetUserDetailsByForgotPasswordTokenApiCall, actionToGetUserIsExist,
   actionToGetUserIsExistApiCall, actionToInsertGoogleUserApi,
   actionToInsertUserApi, getOtpDetailsByOptAndEmail, userPassWordByIdApiCall
 } from "../models/Users.js";
@@ -16,6 +16,7 @@ import {actionToSendCustomEmail} from "../helper/emailNodeMailerHelper.js";
 import {generateRandomString,updateCommonApiCall,insertCommonApiCall} from "../models/commonModel.js";
 import expressAsyncHandler from "express-async-handler";
 import {sendOtpSmsToMobile} from "../helper/CommonHelper.js";
+import {insertCommonWithLogCommonApiCall} from "../models/commonLogModel.js";
 const authRouter = express.Router();
 
 // Sign up
@@ -672,4 +673,109 @@ authRouter.post("/get-otp-details-by-otp-email", async (req, res) => {
 
 });
 
+
+
+// Action To create User
+authRouter.post(
+    "/create-user",async (req, res) => {
+      const param = req.body;
+      // Validate if user already exists
+      await actionToGetUserIsExist(param.data.email,param.data.source).then(async (userData) => {
+        if (userData?.id) {
+          // 422 Unprocessable Entity: server understands the content type of the request entity
+          // 200 Ok: Gmail, Facebook, Amazon, Twitter are returning 200 for user already exists
+          return res.status(401).json({
+            errors: [
+              {
+                email: userData?.email,
+                mobile: userData?.mobile,
+                msg: "User with this email address is already exist.",
+              },
+            ],
+          });
+        } else {
+          // Hash password before saving to database
+          const salt = await bcrypt.genSalt(10);
+
+          param['data']['password']  = await bcrypt.hash(param.data.password, salt);
+          const response = await insertCommonWithLogCommonApiCall(param);
+          return res.status(200).json({response: response});
+        }
+      });
+
+    }
+);
+
+// Action To create User
+authRouter.post(
+    "/update-user",async (req, res) => {
+      const param = req.body;
+
+      // Hash password before saving to database
+      const salt = await bcrypt.genSalt(10);
+
+      param['data']['password']  = await bcrypt.hash(param.data.password, salt);
+      const response = await updateCommonWithLogCommonApiCall(param);
+      return res.status(200).json({response: response});
+
+    }
+);
+
+
+// Log in
+authRouter.post("/login-to-desktop-app", async (req, res) => {
+  const {email,source,password} = req.body;
+  // Look for user email in the database
+  let user = await actionToGetUserIsExist(email,source)
+
+  // If user not found, send error message
+  if (!user?.id) {
+    return res.status(401).json({
+      errors: [
+        {
+          msg: "Invalid Email/Mobile or password.",
+        },
+      ],
+    });
+  }
+
+  // Compare hashed password with user password to see if they are valid
+  let isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res.status(401).json({
+      errors: [
+        {
+          msg: "Invalid Email/Mobile or password.",
+        },
+      ],
+    });
+  }
+
+  // Send JWT access token
+  const accessToken = await JWT.sign(
+      { user },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "1m",
+      }
+  );
+
+  // Refresh token
+  const refreshToken = await JWT.sign(
+      { user },
+      process.env.REFRESH_TOKEN_SECRET,
+      {
+        expiresIn: "5m",
+      }
+  );
+
+  // Set refresh token in refreshTokens array
+  refreshTokens.push(refreshToken);
+
+  return res.json({
+    accessToken,
+    refreshToken,
+  });
+});
 export default authRouter;

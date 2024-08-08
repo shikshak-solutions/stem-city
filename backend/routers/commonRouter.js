@@ -13,29 +13,6 @@ const ENCRYPTION_KEY = "XkhZG4fW2t2W";
 const commonRouter = express.Router();
 
 commonRouter.post(
-    '/login',
-    expressAsyncHandler(async (req, res) => {
-        let responseToSend = {
-            success:0,
-            userData:{},
-        }
-        loginUser(req.body)
-            .then(user => {
-                if(user && user.length) {
-                    responseToSend = {
-                        success:1,
-                        userData:user[0],
-                    }
-                    res.status(200).send(responseToSend);
-                }else{
-                    res.status(200).send(responseToSend);
-                }
-            }).catch(error => {
-            res.status(500).send(error);
-        })
-    })
-);
-commonRouter.post(
     '/insertCommonApiCall',
     expressAsyncHandler(async (req, res) => {
         insertCommonApiCall(req.body).then((data) => {
