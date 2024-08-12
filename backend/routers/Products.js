@@ -31,7 +31,9 @@ import {
     updatePaymentStatusOnPaymentTable,
     updateOrderStatusOnOrderTable,
     actionToGetProductReviewProductAndUserIdApiCall,
-    actionToGetFaqsApiCall
+    actionToGetFaqsApiCall,
+    actionToGetProductsListForWebsiteApiCall,
+    actionToGetProductsDetailByIdForWebsiteApiCall
 } from "../models/Products.js";
 import expressAsyncHandler from "express-async-handler";
 import CryptoJS from "crypto-js";
@@ -535,5 +537,28 @@ productsRouter.post(
     })
 );
 
+productsRouter.post(
+    '/get-web-product-list',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetProductsListForWebsiteApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+
+productsRouter.post(
+    '/get-web-product-detail-by-id',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetProductsDetailByIdForWebsiteApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
 
 export default productsRouter;

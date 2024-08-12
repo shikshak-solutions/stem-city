@@ -37,18 +37,17 @@ export const actionToGetCustomerApiCall = (body) => {
         })
     })
 }
-export const actionToGetProductListApiCall = (body) => {
+export const actionToGetProductListApiCall = () => {
     return new Promise(function(resolve, reject) {
         const query = `SELECT prod.*, subcat.name AS sub_category_name, cat.name AS category_name,subcat.category_id as category_id,
                               brand.name as brand_name, comp.name as company_name,detail.slug as slug,cat.source as source,
-                              detail.id as product_detail_id,detail.long_description,detail.min_class,detail.max_class,detail.min_age,detail.max_age,
-                              detail.product_curriculum_focus,detail.product_curriculum_name,detail.product_curriculum_description,detail.product_curriculum_index_photo
+                              detail.id as product_detail_id,detail.long_description,detail.min_age,detail.max_age
                        FROM products AS prod
                                 LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
                                 LEFT JOIN categories AS cat ON cat.id=subcat.category_id
                                 LEFT JOIN company comp on comp.id=cat.source
                                 LEFT JOIN product_details detail on detail.product_id=prod.id
-                                LEFT JOIN brand ON prod.brand_id=brand.id`;
+                                LEFT JOIN brand ON prod.brand_id=brand.id where prod.is_active='1'`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -80,23 +79,7 @@ export const actionToGetProductImagesApiCall = (body) => {
 export const actionToGetProductCurriculumApiCall = (body) => {
     let {id} = body;
     return new Promise(function(resolve, reject) {
-        const query = `select * from product_curriculum where product_id = ${id}`;
-        pool.query(query, (error, results) => {
-            if (error) {
-                reject(query)
-            }
-            let data = [];
-            if(results?.length){
-                data = results;
-            }
-            resolve(data);
-        })
-    })
-}
-export const actionToGetProductCurriculumImagesApiCall = (body) => {
-    let {id} = body;
-    return new Promise(function(resolve, reject) {
-        const query = `select * from product_curriculum_photos where product_curriculum_id = ${id}`;
+        const query = `select c.*,p.product_id from product_curriculum p join curriculum c on c.id=p.curriculum_id where p.product_id = ${id}`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -132,7 +115,7 @@ export const actionToImportProductExcelApiCall = async(file) =>{
    return data;
 }
 
-export const actionToGetCategoryListApiCall =  (body) => {
+export const actionToGetCategoryListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
           /* let {condition} = body;
@@ -154,7 +137,7 @@ export const actionToGetCategoryListApiCall =  (body) => {
         console.log(e);
     }
 }
-export const actionToGetSubCategoryListApiCall =  (body) => {
+export const actionToGetSubCategoryListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
           /* let {condition} = body;
@@ -193,5 +176,24 @@ export const actionToGetBrandListApiCall =  () => {
         })
     }catch (e){
         console.log(e);
+    }
+}
+export const actionToGetDiscountCouponForProductApiCall = () => {
+    try {
+        return new Promise(function(resolve, reject) {
+            const query = `SELECT * FROM discount_coupon WHERE type='discount' and is_active = '1'`;
+            pool.query(query, (error, results) => {
+                if (error) {
+                    reject(query)
+                }
+                let data = [];
+                if(results?.length){
+                    data = results;
+                }
+                resolve(data);
+            })
+        })
+    }catch (e){
+        return e;
     }
 }

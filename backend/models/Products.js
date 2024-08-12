@@ -591,57 +591,6 @@ export const actionToGetAllProductsDataByOrderId = (body) => {
     }
 }
 
-
-
-
-    export const actionSaveCustomerAddresses = (body, orderId) => {
-        let {billingAddress, billingCity, billingCompanyAddress, billingCompanyName, billingCountry, billingFullName, billingGstNo, billingMobileNo, billingPinCode, billingState,
-            shippingAddress, shippingCity, shippingCompanyAddress, shippingCompanyName, shippingCountry, shippingFullName, shippingGstNo, shippingMobileNo,shippingPinCode, shippingState, userId, cartIds} = body.data;
-        try {
-
-            const columnArray = ['fullname', "phone","address", "orderId", "discrict", "city", "states", "area", "custId", "type"];
-            let response = {};
-
-            new Promise(function(resolve, reject) {
-                const query = `INSERT INTO addresses (${columnArray.toString()})
-                           VALUES ('${billingFullName}','${billingMobileNo}', '${orderId}', '${billingCompanyAddress}', '${billingCity}', '${billingState}', '${billingAddress}', '${userId}', 'billing')`;
-                pool.query(query, (error, results) => {
-                    if (error) {
-                        reject(query)
-                    }
-                })
-            })
-
-
-            if (shippingAddress !== '' && shippingCity !== ''){
-                new Promise(function(resolve, reject) {
-                    const query = `INSERT INTO addresses (${columnArray.toString()})
-                               VALUES ('${shippingFullName}','${shippingMobileNo}', '${orderId}', '${shippingCompanyAddress}', '${shippingCity}', '${shippingState}', '${shippingAddress}', '${userId}', 'shipping')`;
-                    pool.query(query, (error, results) => {
-                        if (error) {
-                            reject(query)
-                        }
-                    })
-                })
-            }
-
-            new Promise(function(resolve, reject) {
-                const query = `UPDATE carts set carts.orderId = '${orderId}' WHERE carts.id in(${cartIds.toString()})`;
-                pool.query(query, (error, results) => {
-                    if (error) {
-                        reject(query)
-                    }
-                })
-            })
-
-
-            return response;
-
-        }catch (e){
-            return e;
-        }
-    }
-
 export const actionToDbTest = async () =>{
     return new Promise(async function(resolve, reject) {
         pool.query('SELECT * FROM categories', (error, results) => {
@@ -1080,6 +1029,58 @@ export const actionToGetFaqsApiCall = (body) => {
         pool.query(query, (error, results) => {
             if (error) {
                 reject(error)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetProductsListForWebsiteApiCall = (body) => {
+    let {id} = body;
+    let where = id ? `and cat.source = ${id} ` : ``;
+    return new Promise(function(resolve, reject) {
+        const query = `SELECT prod.*, subcat.name AS sub_category_name, cat.name AS category_name,subcat.category_id as category_id,
+                              brand.name as brand_name, detail.slug as slug,cat.source as source,
+                              detail.id as product_detail_id,detail.long_description,detail.min_class,detail.max_class,detail.min_age,detail.max_age,
+                              discount.discount_percentage,discount.maximum_discount
+                       FROM products AS prod
+                                LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
+                                LEFT JOIN categories AS cat ON cat.id=subcat.category_id
+                                LEFT JOIN product_details detail on detail.product_id=prod.id
+                                LEFT JOIN discount_coupon discount on discount.id=detail.discount_id and discount.is_active=1
+                                LEFT JOIN brand ON prod.brand_id=brand.id and brand.is_active=1 where prod.is_active='1' ${where}`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetProductsDetailByIdForWebsiteApiCall = (body) => {
+    let {id} = body;
+    let where = id ? `and cat.source = ${id} ` : ``;
+    return new Promise(function(resolve, reject) {
+        const query = `SELECT prod.*, subcat.name AS sub_category_name, cat.name AS category_name,subcat.category_id as category_id,
+                              brand.name as brand_name, detail.slug as slug,cat.source as source,
+                              detail.id as product_detail_id,detail.long_description,detail.min_age,detail.max_age,
+                              discount.discount_percentage,discount.maximum_discount
+                       FROM products AS prod
+                                LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
+                                LEFT JOIN categories AS cat ON cat.id=subcat.category_id
+                                LEFT JOIN product_details detail on detail.product_id=prod.id
+                                LEFT JOIN discount_coupon discount on discount.id=detail.discount_id and discount.is_active=1
+                                LEFT JOIN brand ON prod.brand_id=brand.id and brand.is_active=1 where prod.is_active='1' ${where}`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
             }
             let data = [];
             if(results?.length){

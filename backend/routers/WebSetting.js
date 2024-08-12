@@ -8,7 +8,6 @@ import {
     actionToGetWebSettingSeoMetaApiCall,
     actionToGetWebSettingSeoReferenceHtmlApiCall
 } from "../models/WebSetting.js";
-import CryptoJS from "crypto-js";
 
 
 webSettingRouter.post(

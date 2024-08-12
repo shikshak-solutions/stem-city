@@ -5,9 +5,12 @@ import {
     actionToGetBrandListApiCall,
     actionToGetCategoryListApiCall,
     actionToGetCustomerApiCall,
-    actionToGetProductListApiCall, actionToGetSubCategoryListApiCall,
-    actionToGetVendorApiCall, actionToImportProductExcelApiCall,
-    actionToGetProductImagesApiCall, actionToGetProductCurriculumApiCall, actionToGetProductCurriculumImagesApiCall
+    actionToGetProductListApiCall,
+    actionToGetSubCategoryListApiCall,
+    actionToGetVendorApiCall,
+    actionToImportProductExcelApiCall,
+    actionToGetProductImagesApiCall,
+    actionToGetProductCurriculumApiCall, actionToGetDiscountCouponForProductApiCall
 } from "../models/Inventory.js";
 
 const inventoryRouter = express.Router();
@@ -101,17 +104,6 @@ inventoryRouter.post(
             })
     })
 );
-inventoryRouter.post(
-    '/get-product-curriculum-images',
-    expressAsyncHandler(async (req, res) => {
-        actionToGetProductCurriculumImagesApiCall(req.body).then((data) => {
-            res.status(200).send(data);
-        })
-            .catch(error => {
-                res.status(500).send(error);
-            })
-    })
-);
 const emailUpload = multer({
     storage: multer.memoryStorage()
 });
@@ -125,6 +117,18 @@ inventoryRouter.post(
         };
 
         actionToImportProductExcelApiCall(file).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+
+inventoryRouter.post(
+    '/get-discount-coupon-for-product',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetDiscountCouponForProductApiCall(req.body).then((data) => {
             res.status(200).send(data);
         })
             .catch(error => {

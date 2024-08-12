@@ -7,9 +7,7 @@ export const HelmetComponent = ()=> {
     const location = useLocation();
 
     const pathname = window.location.pathname;
-
-    const urlSlug = useSelector((state) => state.webSetting.urlSlug[pathname]);
-    const seoMetaData = useSelector((state) => state.webSetting.seoMetaData[urlSlug]);
+    const seoMetaData = useSelector((state) => state.webSetting.seoMetaData[pathname]);
     const getHelmetData = (seoMeta, location) => {
         console.log(location, 'loc')
         return seoMeta?.map((data, i) => {

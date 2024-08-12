@@ -5,14 +5,15 @@ import {
     PRODUCTS_LIST_DATA,
     REMOVE_FROM_CART,
     SEO_META_DATA,
-    URL_SLUG_DATA
+    WEBSITE_CONTENT
 } from "../constant";
 import {parseJwt} from "../utility/jwtUtils";
-export const actionToGetSEOMetaDataApiCall = () => async (dispatch) => {
-    const {data} = await api.post(`web-setting/actionToGetSEOMetaDataApiCall`);
+export const actionToGetSEOMetaDataApiCall = () => async (dispatch,getState) => {
+    let company_id = getState().webSetting.company_id;
+    const {data} = await api.post(`web-setting/get-seo-meta-data-website`,{id:company_id});
     dispatch({ type: SEO_META_DATA, payload: data });
-    const response = await api.post(`web-setting/actionToGetURLSlugDataApiCall`);
-    dispatch({ type: URL_SLUG_DATA, payload: response.data });
+    const response = await api.post(`web-setting/get-website-content`,{id:company_id});
+    dispatch({ type: WEBSITE_CONTENT, payload: response.data });
     return data;
 }
 
@@ -56,12 +57,13 @@ export const actionToSignup = (param) => ()=> {
             return response.data;
         });
 };
-export const actionToGetProductsApiCall = () => async (dispatch) => {
-    const {data} = await api.post(`products/actionToGetProductsApiCall`);
+export const actionToGetProductsApiCall = () => async (dispatch,getState) => {
+    let company_id = getState().webSetting.company_id;
+    const {data} = await api.post(`products/get-web-product-list`,{id:company_id});
     dispatch({ type: PRODUCTS_LIST_DATA, payload: data });
 }
 export const actionToGetProductsDetailsApiCall = (payload) => async (dispatch) => {
-    const {data} = await api.post(`products/actionToGetProductsDetailsBySlugApiCall`,payload );
+    const {data} = await api.post(`products/get-web-product-detail-by-SLUG`,payload );
     dispatch({ type: PRODUCTS_DETAIL_DATA, payload: data });
 }
 export const actionToAddToCart = (item) =>(dispatch,getState)=>{

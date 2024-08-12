@@ -2,7 +2,7 @@ import connectPool from './connection.js';
 const pool = await connectPool();
 const logEvent = (eventTypeId,userId,tableName, action, objectId, previousData, newData,version_number) => {
     const query = `INSERT INTO event_logs(event_type_id,user_id,table_name, action, object_id, previous_data, new_data, object_version) VALUES (?, ?, ?, ?, ?, ?,?,?)`;
-    pool.query(query, [eventTypeId,userId,tableName, action, objectId, previousData, newData, version_number], (err, results) => {
+    pool.query(query, [eventTypeId,userId,tableName, action, objectId, previousData, newData, version_number], (err) => {
         if (err) {
             console.error('Error logging event:', err);
         }
@@ -29,7 +29,7 @@ export const insertCommonWithLogCommonApiCall = (body) => {
 }
 
 
-export const actionToGetCompanyListApiCall =  (body) => {
+export const actionToGetCompanyListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
             const query = `select company.* from company where in_inventory_use='1'`;
