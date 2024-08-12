@@ -1098,9 +1098,9 @@ export const actionToGetProductsDetailBySlugForWebsiteApiCall = (body) => {
                                                      from product_topic join topics on topics.id=product_topic.topic_id
                                                      WHERE product_topic.product_id = prod.id),
                                            'curriculum', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_curriculum.id,'focus',curriculum.focus,'name',curriculum.name,'description',curriculum.description,
-                                                                                           'photo',curriculum.photo, 'curriculum_content', (select JSON_ARRAYAGG(JSON_OBJECT('id',curriculum_content.id,'url',curriculum_content.url,
-                                                                                                                                                                             'type',curriculum_content.type,'flipbook_code',curriculum_content.type)) from curriculum_content WHERE curriculum_content.curriculum_id=product_curriculum.id)
-                                                                               )) from product_curriculum join curriculum on curriculum.id=product_curriculum.curriculum_id))  as productData
+                                                     'photo',curriculum.photo, 'curriculum_content', (select JSON_ARRAYAGG(JSON_OBJECT('id',curriculum_content.id,'url',curriculum_content.url,
+                                                    'type',curriculum_content.type,'flipbook_code',curriculum_content.type)) from curriculum_content WHERE curriculum_content.curriculum_id=product_curriculum.id)
+                                           )) from product_curriculum join curriculum on curriculum.id=product_curriculum.curriculum_id where product_curriculum.product_id=prod.id))  as productData
                        FROM products AS prod
                                 LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
                                 LEFT JOIN categories AS cat ON cat.id=subcat.category_id

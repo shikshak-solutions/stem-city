@@ -3,7 +3,7 @@ import expressAsyncHandler from "express-async-handler";
 import {
     actionToGetCurriculumFileApiCall,
     actionToGetCurriculumListApiCall, actionToGetGradeListApiCall,
-    actionToGetSubjectListApiCall
+    actionToGetSubjectListApiCall, actionToGetTopicsListApiCall
 } from "../models/Curriculum.js";
 const curriculumRouter = express.Router();
 
@@ -43,7 +43,7 @@ curriculumRouter.post(
     })
 );
 curriculumRouter.post(
-    '/get-subject',
+    '/get-subjects',
     expressAsyncHandler(async (req, res) => {
         actionToGetSubjectListApiCall(req.body).then((data) => {
             res.status(200).send(data);
@@ -54,4 +54,17 @@ curriculumRouter.post(
     })
 );
 
+curriculumRouter.post(
+    '/get-topics',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetTopicsListApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+
 export default curriculumRouter;
+
