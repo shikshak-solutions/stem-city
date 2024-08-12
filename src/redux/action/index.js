@@ -62,7 +62,8 @@ export const actionToGetProductsApiCall = () => async (dispatch,getState) => {
     const {data} = await api.post(`products/get-web-product-list`,{id:company_id});
     dispatch({ type: PRODUCTS_LIST_DATA, payload: data });
 }
-export const actionToGetProductsDetailsApiCall = (payload) => async (dispatch) => {
+export const actionToGetProductsDetailsApiCall = (payload) => async (dispatch,getState) => {
+    payload['source_id']=getState().webSetting.company_id;
     const {data} = await api.post(`products/get-web-product-detail-by-slug`,payload );
     dispatch({ type: PRODUCTS_DETAIL_DATA, payload: data });
 }

@@ -47,8 +47,17 @@ const ProductDetail = () => {
                     <FontAwesomeIcon icon={faStar}/>
                 </div>
                 <div className='productdetails-right-prices'>
-                    <div className='productdetails-right-price-old'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.price2}</div>
-                    <div className='productdetails-right-price-new'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.price}</div>
+                    {ProductDetailData.discount_amount_type?.trim() !== '' ?
+                        <>
+                            <div className='productdetails-right-price-old'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.sale_price}</div>
+                            <div className='productdetails-right-price-new'><FontAwesomeIcon icon={faIndianRupeeSign}/> {
+                                (ProductDetailData.discount_amount_type == 'percentage' &&
+                                    ProductDetailData.sale_price*ProductDetailData.discount_percentage*0.01 < ProductDetailData.discount_maximum_discount)
+                                    ? ProductDetailData.sale_price *(100-ProductDetailData.discount_percentage)*0.01 : ProductDetailData.sale_price-ProductDetailData.discount_maximum_discount }
+                            </div>
+                        </>
+                  : <div className='productdetails-right-price'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.sale_price}</div>
+                    }
                 </div>
                 <div className='productdetails-right-description' dangerouslySetInnerHTML={{__html: ProductDetailData?.description}}>
 
