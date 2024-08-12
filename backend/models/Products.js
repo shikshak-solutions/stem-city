@@ -19,8 +19,6 @@ export const actionToGetProductsApiCall =  (body) => {
                                       subchildcategories.subcategoryId      AS subCategoryId,
                                       subchildcategories.name               AS sub_child_category,
                                       brand.name                            AS brand_name,
-                                      products.min_class                    AS min_class,
-                                      products.max_class                    AS max_class,
                                       ROUND(AVG(product_ratings.rating), 2) AS avg_rating,
                                       COUNT(DISTINCT (product_ratings.id))  AS total_product_rating,
                                       COUNT(DISTINCT (product_reviews.id))  AS total_product_review
@@ -1042,9 +1040,11 @@ export const actionToGetProductsListForWebsiteApiCall = (body) => {
     let {id} = body;
     let where = id ? `and cat.source = ${id} ` : ``;
     return new Promise(function(resolve, reject) {
-        const query = `SELECT prod.*, subcat.name AS sub_category_name, cat.name AS category_name,subcat.category_id as category_id,
+        const query = `SELECT prod.*, subcat.name AS sub_category_name,
+                            cat.name AS category_name,cat.slug AS category_slug,
+                              subcat.category_id as category_id, subcat.slug as sub_category_slug,
                               brand.name as brand_name, detail.slug as slug,cat.source as source,
-                              detail.id as product_detail_id,detail.long_description,detail.min_class,detail.max_class,detail.min_age,detail.max_age,
+                              detail.id as product_detail_id,detail.long_description,detail.min_age,detail.max_age,
                               discount.discount_percentage,discount.maximum_discount
                        FROM products AS prod
                                 LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
@@ -1064,19 +1064,48 @@ export const actionToGetProductsListForWebsiteApiCall = (body) => {
         })
     })
 }
-export const actionToGetProductsDetailByIdForWebsiteApiCall = (body) => {
-    let {id} = body;
-    let where = id ? `and cat.source = ${id} ` : ``;
+export const actionToGetProductsDetailBySlugForWebsiteApiCall = (body) => {
+    let {source_id,product_slug,cat_slug,sub_cat_slug} = body;
+    let where = source_id ? `and cat.source = ${source_id} ` : ``;
+    where += product_slug ? `and detail.slug = '${product_slug}' ` : ``;
+    where += cat_slug ? `and cat.slug = '${cat_slug}' ` : ``;
+    where += sub_cat_slug ? `and subcat.slug = '${sub_cat_slug}' ` : ``;
     return new Promise(function(resolve, reject) {
-        const query = `SELECT prod.*, subcat.name AS sub_category_name, cat.name AS category_name,subcat.category_id as category_id,
-                              brand.name as brand_name, detail.slug as slug,cat.source as source,
-                              detail.id as product_detail_id,detail.long_description,detail.min_age,detail.max_age,
-                              discount.discount_percentage,discount.maximum_discount
+        const query = `SELECT JSON_OBJECT( 'id', prod.id,
+                                           'name', prod.name,
+                                           'brand', brand.name,
+                                           'sub_category_name', subcat.name,
+                                           'category_name', cat.name,
+                                           'photo', prod.photo,
+                                           'description', prod.description,
+                                           'long_description', detail.long_description,
+                                           'min_age', detail.min_age,
+                                           'max_age', detail.max_age,
+                                           'sale_price', prod.sale_price,
+                                           'discount_amount_type', discount.amount_type,
+                                           'discount_percentage', discount.discount_percentage,
+                                           'discount_maximum_discount', discount.maximum_discount,
+                                           'photos', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_photos.id, 'photo', product_photos.url))
+                                                      from product_photos
+                                                      WHERE product_id = prod.id),
+                                           'subjects', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_subject.id, 'name', subjects.name))
+                                                        from product_subject join subjects on subjects.id=product_subject.subject_id
+                                                        WHERE product_subject.product_id = prod.id),
+                                           'grades', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_grade.id, 'name', grades.name))
+                                                      from product_grade join grades on grades.id=product_grade.grade_id
+                                                      WHERE product_grade.product_id = prod.id),
+                                           'topic', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_topic.id, 'name', topics.name))
+                                                     from product_topic join topics on topics.id=product_topic.topic_id
+                                                     WHERE product_topic.product_id = prod.id),
+                                           'curriculum', (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', product_curriculum.id,'focus',curriculum.focus,'name',curriculum.name,'description',curriculum.description,
+                                                                                           'photo',curriculum.photo, 'curriculum_content', (select JSON_ARRAYAGG(JSON_OBJECT('id',curriculum_content.id,'url',curriculum_content.url,
+                                                                                                                                                                             'type',curriculum_content.type,'flipbook_code',curriculum_content.type)) from curriculum_content WHERE curriculum_content.curriculum_id=product_curriculum.id)
+                                                                               )) from product_curriculum join curriculum on curriculum.id=product_curriculum.curriculum_id))  as productData
                        FROM products AS prod
                                 LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
                                 LEFT JOIN categories AS cat ON cat.id=subcat.category_id
                                 LEFT JOIN product_details detail on detail.product_id=prod.id
-                                LEFT JOIN discount_coupon discount on discount.id=detail.discount_id and discount.is_active=1
+                                LEFT JOIN discount_coupon discount on discount.id=detail.discount_id and discount.is_active='1'
                                 LEFT JOIN brand ON prod.brand_id=brand.id and brand.is_active=1 where prod.is_active='1' ${where}`;
         pool.query(query, (error, results) => {
             if (error) {
@@ -1084,7 +1113,7 @@ export const actionToGetProductsDetailByIdForWebsiteApiCall = (body) => {
             }
             let data = [];
             if(results?.length){
-                data = results;
+                data = results[0].productData;
             }
             resolve(data);
         })

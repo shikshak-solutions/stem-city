@@ -63,7 +63,7 @@ export const actionToGetProductsApiCall = () => async (dispatch,getState) => {
     dispatch({ type: PRODUCTS_LIST_DATA, payload: data });
 }
 export const actionToGetProductsDetailsApiCall = (payload) => async (dispatch) => {
-    const {data} = await api.post(`products/get-web-product-detail-by-SLUG`,payload );
+    const {data} = await api.post(`products/get-web-product-detail-by-slug`,payload );
     dispatch({ type: PRODUCTS_DETAIL_DATA, payload: data });
 }
 export const actionToAddToCart = (item) =>(dispatch,getState)=>{

@@ -5,7 +5,6 @@ import {
     actionToGetCurriculumListApiCall, actionToGetGradeListApiCall,
     actionToGetSubjectListApiCall
 } from "../models/Curriculum.js";
-import inventoryRouter from "./inventoryRouter.js";
 const curriculumRouter = express.Router();
 
 
