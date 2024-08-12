@@ -7,6 +7,8 @@ import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupee
 import {useDispatch, useSelector} from "react-redux";
 import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
 import {actionToAddToCart, actionToGetProductsDetailsApiCall} from "../../redux/action";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
+import {faMinus} from "@fortawesome/free-solid-svg-icons";
 
 
 const ProductDetail = () => {
@@ -26,6 +28,16 @@ const ProductDetail = () => {
     if (!ProductDetailData) {
         return <h2>Product not found</h2>;
     }
+    const handleIncrease = () => {
+        setQuantity(prevQuantity => prevQuantity + 1);
+    };
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(prevQuantity => prevQuantity - 1);
+        }
+    };
+
     return (
         <div className='product-details'>
             <div className='product-details-left'>
@@ -64,9 +76,17 @@ const ProductDetail = () => {
                 </div>
                 <div className='productdetails-right-quantity'>
                     <h1>Select Quantity :</h1>
-                    <input className='quantity' type='number' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
+                    <div className="quantity-controls">
+                        <button className="quantity-btn" onClick={handleDecrease}>
+                            <FontAwesomeIcon icon={faMinus} />
+                        </button>
+                        <span className="quantity">{quantity}</span>
+                        <button className="quantity-btn" onClick={handleIncrease}>
+                            <FontAwesomeIcon icon={faPlus} />
+                        </button>
+                    </div>
                 </div>
-                <button onClick={()=> addToCart()}>Add to Cart</button>
+                <button className='button' onClick={()=> addToCart()}>Add to Cart</button>
                 <p className='productdisplay-right-category'><span>Category :</span> {ProductDetailData.subcategory_name}</p>
             </div>
         </div>

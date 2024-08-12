@@ -23,11 +23,21 @@ const FlipbookContent = () => {
         <>
         <div className='flip-container'>
         <HTMLFlipBook ref={flipBookRef}
-                      width={600}
-                      height={800}
-                      startPage={0}
+                      width={400}
+                      height={600}
+                      size="fixed"
+                      minWidth={200}
+                      maxWidth={800}
+                      minHeight={300}
+                      maxHeight={1000}
+                      drawShadow={true}
+                      flippingTime={1000}
+                      usePortrait={true}
+                      startZIndex={0}
+                      autoSize={true}
+                      maxShadowOpacity={1}
                       showCover={true}
-                      maxShadowOpacity={0.5}
+                      mobileScrollSupport={true}
                       className="flipbook">
             <div className="page cover">
                 <img src={Flip1} alt="Cover Page" className="page-image" />

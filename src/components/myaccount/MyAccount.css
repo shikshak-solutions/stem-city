@@ -2,7 +2,6 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
     gap: 40px;
 }
 
@@ -13,7 +12,8 @@
 
 .account-sections {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .account-section {
@@ -28,7 +28,6 @@
 }
 
 .account-section:hover {
-    transform: translateY(-10px);
 }
 
 .account-section h2 {
@@ -49,4 +48,1329 @@
     .account-section {
         width: 80%;
     }
+    .account-container{
+        flex-direction: column;
+    }
+}
+
+.accordion {
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: 50px auto;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.accordion-item {
+    border: 1px solid #ebebeb;
+    margin-bottom: 22px;
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    background: #f7f7f7;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+    color: #ED2126;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: #fff;
+    padding: 0 15px;
+}
+
+.accordion-content.active {
+    max-height: 500px;
+    padding: 15px;
+}
+
+.account-form {
+    display: flex;
+    flex-direction: row;
+}
+.log-out{
+    display: flex;
+    justify-content: right;
+}
+
+.account-label {
+    text-transform: capitalize;
+    box-shadow: none;
+    color: #333;
+    font-size: 14px;
+    width: 100%;
+    margin: 10px;
+    font-weight: 600;
+}
+.account-input {
+    background: transparent none repeat scroll 0 0;
+    border: 1px solid #ebebeb;
+    color: #000;
+    height: 40px;
+    padding: 0 15px;
+}
+.account-button{
+    margin-top: 20px;
+    padding: 8px;
+    width: 80px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: #ED2126;
+    margin-bottom: 40px;
+    border: 1px solid #ED2126;
+    outline: none;
+    cursor: pointer;
+    border-radius: 30px;
+}
+.account-button:hover{
+    border: 1px solid #ED2126;
+    background: #fff;
+    color: #ED2126;
+}
+
+/*button[type="submit"] {*/
+/*    padding: 10px 15px;*/
+/*    background: #007bff;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 3px;*/
+/*    cursor: pointer;*/
+/*    transition: background 0.3s ease;*/
+/*}*/
+
+/*button[type="submit"]:hover {*/
+/*    background: #0056b3;*/
+/*}*/
+
+.account {
+    background: var(--bg, #FFFFFF);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1440px;
+    box-sizing: border-box;
+}
+.account .top-header {
+    background: var(--button, #000000);
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 141.3px 12px 0;
+    width: 1440px;
+    box-sizing: border-box;
+}
+.account .header {
+    margin: 0 135px 16px 135px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1170px;
+    box-sizing: border-box;
+}
+.account .line-3 {
+    margin-bottom: 79.5px;
+    display: flex;
+    width: 1440px;
+    height: 0px;
+    box-sizing: border-box;
+}
+.account .roadmap {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+.account .welcome-md-rimel {
+    overflow-wrap: break-word;
+    font-family: var(--title-14-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-14-px-regular-font-weight, 400);
+    font-size: var(--title-14-px-regular-font-size, 14px);
+    line-height: var(--title-14-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.welcome-md-rimel {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.333;
+    color: var(--secondary-2, #DB4444);
+}
+.account .frame-838 {
+    box-shadow: var(--categogy-5, 0px 1px 13px 0px rgba(0, 0, 0, 0.05));
+    border-radius: 4px;
+    background: var(--primary-1, #FFFFFF);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 80px;
+    width: 870px;
+    box-sizing: border-box;
+}
+.account .manage-my-account {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-16-px-medium-font-weight, 500);
+    font-size: var(--title-16-px-medium-font-size, 16px);
+    line-height: var(--title-16-px-medium-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .my-profile {
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--secondary-2, #DB4444);
+}
+.account .address-book {
+    opacity: 0.5;
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .my-payment-options {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .my-orders {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-16-px-medium-font-weight, 500);
+    font-size: var(--title-16-px-medium-font-size, 16px);
+    line-height: var(--title-16-px-medium-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .my-returns {
+    opacity: 0.5;
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .my-cancellations {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .my-wish-list {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-16-px-medium-font-weight, 500);
+    font-size: var(--title-16-px-medium-font-size, 16px);
+    line-height: var(--title-16-px-medium-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .frame-839 {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-840 {
+    margin: 0 0 16px 7.5px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .first-name {
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .last-name {
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .email {
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .password-changes {
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .address {
+    margin-bottom: 8px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .cancel {
+    margin: 16px 32px 16px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .edit-your-profile {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-20-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-20-px-medium-font-weight, 500);
+    font-size: var(--title-20-px-medium-font-size, 20px);
+    line-height: var(--title-20-px-medium-line-height, 1.4);
+    color: var(--secondary-2, #DB4444);
+}
+.account .placebox-info {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .placebox-info-1 {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .placebox-info-2 {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .placebox-info-3 {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .placebox-info-4 {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .placebox-info-5 {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    margin-bottom: 16px;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .placebox-info-6 {
+    border-radius: 4px;
+    background: #F5F5F5;
+    position: relative;
+    padding: 13px 16px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-841 {
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    box-sizing: border-box;
+}
+.account .frame-842 {
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    box-sizing: border-box;
+}
+.account .frame-843 {
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    box-sizing: border-box;
+}
+.account .frame-844 {
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    box-sizing: border-box;
+}
+.account .frame-845 {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-846 {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .button {
+    border-radius: 4px;
+    background: var(--button-2, #DB4444);
+    display: flex;
+    padding: 16px 1px 16px 0;
+    width: 214px;
+    box-sizing: border-box;
+}
+.account .frame-847 {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-848 {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-849 {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .footer {
+    background: var(--button, #000000);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 0 24px 0;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .container {
+    margin: 0 135px 140px 135px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .container-1 {
+    margin: 0 100.1px 342px 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.account .container-2 {
+    margin: 0 136px 80px 135px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1169px;
+    box-sizing: border-box;
+}
+.account .container-3 {
+    border-radius: 4px;
+    border: 0.6px solid #FAFAFA;
+    background: url('');
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 17px 7px 9.1px 0;
+    width: 104px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+.account .container-4 {
+    width: 1.3px;
+    height: 3.9px;
+}
+.account .frame-549 {
+    margin: 1.5px 0;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+.account .english {
+    margin-right: 11.2px;
+    overflow-wrap: break-word;
+    font-family: var(--title-14-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-14-px-regular-font-weight, 400);
+    font-size: var(--title-14-px-regular-font-size, 14px);
+    line-height: var(--title-14-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .summer-sale-for-all-swim-suits-and-free-express-delivery-off-50 {
+    margin: 3px 10px 0 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-14-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-14-px-regular-font-weight, 400);
+    font-size: var(--title-14-px-regular-font-size, 14px);
+    line-height: var(--title-14-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .drop-down {
+    margin: 6.5px 0 6.7px 0;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .vector {
+    width: 7.8px;
+    height: 12.7px;
+}
+.account .frame-555 {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+.account .shop-now {
+    overflow-wrap: break-word;
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration-line: underline;
+    line-height: 1.714;
+    color: var(--text, #FAFAFA);
+}
+.account .frame-556 {
+    margin: 7px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 645px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+.account .logo {
+    display: flex;
+    box-sizing: border-box;
+}
+.account .exclusive {
+    overflow-wrap: break-word;
+    font-family: var(--heading-24-px-bold-font-family, 'Inter');
+    font-weight: var(--heading-24-px-bold-font-weight, 700);
+    font-size: var(--heading-24-px-bold-font-size, 24px);
+    letter-spacing: var(--heading-24-px-bold-letter-spacing, 0.7px);
+    line-height: var(--heading-24-px-bold-line-height, 1);
+    color: var(--text-2, #000000);
+}
+.account .frame-554 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 367px;
+    box-sizing: border-box;
+}
+.account .frame-552 {
+    display: flex;
+    flex-direction: row;
+    width: 395px;
+    box-sizing: border-box;
+}
+.account .search-component-set {
+    border-radius: 4px;
+    background: var(--secondary, #F5F5F5);
+    margin-right: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 16px 10px 20px;
+    width: 243px;
+    box-sizing: border-box;
+}
+.account .what-are-you-looking-for {
+    opacity: 0.5;
+    margin-right: 9px;
+    width: 153px;
+    overflow-wrap: break-word;
+    font-family: var(--title-12-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-12-px-regular-font-weight, 400);
+    font-size: var(--title-12-px-regular-font-size, 12px);
+    line-height: var(--title-12-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .component-2 {
+    margin: 1px 0;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .vector-1 {
+    width: 16px;
+    height: 16px;
+}
+.account .frame-551 {
+    margin: 3px 0;
+    display: flex;
+    flex-direction: row;
+    width: 128px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+.account .wishlist {
+    margin: 7px 22px 7.2px 0;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+}
+.account .vector-2 {
+    width: 20px;
+    height: 17.8px;
+}
+.account .cart-1-with-buy {
+    margin-right: 16px;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+}
+.account .cart-1 {
+    width: 32px;
+    height: 32px;
+}
+.account .user {
+    border-radius: 47px;
+    background: var(--secondary-2, #DB4444);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 9px 11px 9px 10px;
+    width: 32px;
+    box-sizing: border-box;
+}
+.account .vector-7 {
+    width: 11px;
+    height: 5px;
+}
+.account .vector-8 {
+    margin: 0 2px 3px 3px;
+    width: 6px;
+    height: 6px;
+}
+.account .header-1 {
+    display: flex;
+    box-sizing: border-box;
+}
+.account .home {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .header-2 {
+    display: flex;
+    box-sizing: border-box;
+}
+.account .contact {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .header-3 {
+    display: flex;
+    box-sizing: border-box;
+}
+.account .about {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .header-4 {
+    display: flex;
+    box-sizing: border-box;
+}
+.account .sign-up {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .line-31 {
+    opacity: 0.3;
+    background: #000000;
+    width: 1440px;
+    height: 0px;
+}
+.account .account-1 {
+    opacity: 0.5;
+    margin-right: 12.3px;
+    overflow-wrap: break-word;
+    font-family: var(--title-14-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-14-px-regular-font-weight, 400);
+    font-size: var(--title-14-px-regular-font-size, 14px);
+    line-height: var(--title-14-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .nothing {
+    overflow-wrap: break-word;
+    font-family: var(--title-14-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-14-px-regular-font-weight, 400);
+    font-size: var(--title-14-px-regular-font-size, 14px);
+    line-height: var(--title-14-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .line-13 {
+    background: rgba(0, 0, 0, 0.5);
+    transform: rotate(117.051deg);
+    margin: 4.6px 12px 15.4px 0;
+    width: 13.2px;
+    height: 0px;
+}
+.account .md {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .md-1 {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .md-2 {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .md-3 {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-2, #000000);
+}
+.account .md-4 {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .md-5 {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .md-6 {
+    opacity: 0.5;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text-2, #000000);
+}
+.account .view-all-products {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-16-px-medium-font-weight, 500);
+    font-size: var(--title-16-px-medium-font-size, 16px);
+    line-height: var(--title-16-px-medium-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .app-store {
+    background: #000000;
+    display: flex;
+    padding: 3px;
+    width: 110px;
+    height: 40px;
+    box-sizing: border-box;
+}
+.account .download-appstore {
+    border-radius: 4px;
+    border: 0.6px solid var(--primary-1, #FFFFFF);
+    background: url('');
+    width: 104px;
+    height: 34px;
+}
+.account .google-play {
+    background: #030406;
+    position: relative;
+    margin-bottom: 4px;
+    display: flex;
+    padding: 5px 3px;
+    width: 110px;
+    box-sizing: border-box;
+}
+.account .vector-1 {
+    margin: 0.3px 0 2.7px 0;
+    width: 0.6px;
+    height: 1px;
+}
+.account .vector-3 {
+    position: absolute;
+    right: 14.8px;
+    bottom: 17.7px;
+    width: 0.3px;
+    height: 0.1px;
+}
+.account .account-2 {
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-20-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-20-px-medium-font-weight, 500);
+    font-size: var(--title-20-px-medium-font-size, 20px);
+    line-height: var(--title-20-px-medium-line-height, 1.4);
+    color: var(--text, #FAFAFA);
+}
+.account .my-account {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .login-register {
+    margin-bottom: 16px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .cart {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .qr-code {
+    background: #000000;
+    margin: 2px 8px 2px 0;
+    display: flex;
+    padding: 2px;
+    width: 80px;
+    height: 80px;
+    box-sizing: border-box;
+}
+.account .qrcode-1 {
+    border: 2.5px solid var(--primary-1, #FFFFFF);
+    background: url('') 50% / cover no-repeat;
+    width: 76px;
+    height: 76px;
+}
+.account .wishlist-1 {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .shop {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .quick-link {
+    margin: 0 7.5px 24px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-20-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-20-px-medium-font-weight, 500);
+    font-size: var(--title-20-px-medium-font-size, 20px);
+    line-height: var(--title-20-px-medium-line-height, 1.4);
+    color: var(--text, #FAFAFA);
+}
+.account .privacy-policy {
+    margin-bottom: 16px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .terms-of-use {
+    margin: 0 3.2px 16px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .faq {
+    margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .contact-1 {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .support {
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-20-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-20-px-medium-font-weight, 500);
+    font-size: var(--title-20-px-medium-font-size, 20px);
+    line-height: var(--title-20-px-medium-line-height, 1.4);
+    color: var(--text, #FAFAFA);
+}
+.account .bijoy-sarani-dhaka-dh-1515-bangladesh {
+    margin: 0 1.6px 16px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .exclusivegmail-com {
+    margin-bottom: 16px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .container {
+    margin-right: 9.9px;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .subscribe {
+    margin-right: 17.1px;
+    overflow-wrap: break-word;
+    font-family: var(--title-20-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-20-px-medium-font-weight, 500);
+    font-size: var(--title-20-px-medium-font-size, 20px);
+    line-height: var(--title-20-px-medium-line-height, 1.4);
+    color: var(--text, #FAFAFA);
+}
+.account .get-10-off-your-first-order {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .download-app {
+    margin-bottom: 24px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: var(--title-20-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-20-px-medium-font-weight, 500);
+    font-size: var(--title-20-px-medium-font-size, 20px);
+    line-height: var(--title-20-px-medium-line-height, 1.4);
+    color: var(--text, #FAFAFA);
+}
+.account .frame-708 {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-709 {
+    margin: 0 88px 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+.account .frame-710 {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-711 {
+    margin-right: 87.2px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.account .frame-712 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-713 {
+    margin: 0 87.4px 56px 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.account .logo-1 {
+    margin-bottom: 24px;
+    display: flex;
+    box-sizing: border-box;
+}
+.account .exclusive-1 {
+    overflow-wrap: break-word;
+    font-family: var(--heading-24-px-bold-font-family, 'Inter');
+    font-weight: var(--heading-24-px-bold-font-weight, 700);
+    font-size: var(--heading-24-px-bold-font-size, 24px);
+    letter-spacing: var(--heading-24-px-bold-letter-spacing, 0.7px);
+    line-height: var(--heading-24-px-bold-line-height, 1);
+    color: var(--text, #FAFAFA);
+}
+.account .send-mail {
+    border-radius: 4px;
+    border: 1.5px solid var(--text, #FAFAFA);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10.5px 15.5px 10.5px 14.5px;
+    width: 217px;
+    box-sizing: border-box;
+}
+.account .enter-your-email {
+    opacity: 0.4;
+    margin-right: 12px;
+    width: 130px;
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .icon-send {
+    margin: 3px 0;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .vector-9 {
+    width: 20px;
+    height: 18px;
+}
+.account .frame-715 {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: flex-start;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-716 {
+    margin: 0 11.7px 16px 0;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-717 {
+    margin: 0 87px 48px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+.account .frame-718 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    box-sizing: border-box;
+}
+.account .frame-719 {
+    display: flex;
+    flex-direction: row;
+    width: 198px;
+    box-sizing: border-box;
+}
+.account .save-3-with-app-new-user-only {
+    opacity: 0.7;
+    margin: 0 4.7px 8px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: var(--title-12-px-medium-font-family, 'Poppins');
+    font-weight: var(--title-12-px-medium-font-weight, 500);
+    font-size: var(--title-12-px-medium-font-size, 12px);
+    line-height: var(--title-12-px-medium-line-height, 1.5);
+    color: var(--text, #FAFAFA);
+}
+.account .frame-720 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-721 {
+    margin-bottom: 27px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .frame-643 {
+    opacity: 0.4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1440px;
+    box-sizing: border-box;
+}
+.account .frame-67 {
+    opacity: 0.6;
+    display: flex;
+    flex-direction: row;
+    padding: 0 0.2px 0 1.7px;
+    width: fit-content;
+    box-sizing: border-box;
+}
+.account .copyright-rimel-2022-all-right-reserved {
+    overflow-wrap: break-word;
+    font-family: var(--title-16-px-regular-font-family, 'Poppins');
+    font-weight: var(--title-16-px-regular-font-weight, 400);
+    font-size: var(--title-16-px-regular-font-size, 16px);
+    line-height: var(--title-16-px-regular-line-height, 1.5);
+    color: var(--primary-1, #FFFFFF);
+}
+.account .icon-copyright {
+    margin: 3.7px 7.7px 3.7px 0;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+}
+.account .group {
+    width: 16.7px;
+    height: 16.7px;
+}
+.account .under-line {
+    opacity: 0.5;
+    margin-bottom: 16px;
+    display: flex;
+    width: 1440px;
+    height: 0px;
+    box-sizing: border-box;
+}
+.account .line-1 {
+    opacity: 0.4;
+    background: #FFFFFF;
+    width: 1440px;
+    height: 0px;
+}
+.account .icon-facebook {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .vector-12 {
+    width: 10.5px;
+    height: 18px;
+}
+.account .icon-twitter {
+    margin: 1px 0 0.4px 0;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .vector-13 {
+    width: 20.1px;
+    height: 16.6px;
+}
+.account .icon-instagram {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .group-1 {
+    width: 18px;
+    height: 18px;
+}
+.account .icon-linkedin {
+    margin-bottom: 0.5px;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+}
+.account .vector-17 {
+    width: 17.5px;
+    height: 17.5px;
+}
+.account .frame-741 {
+    margin: 0 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: flex-start;
+    width: 168px;
+    box-sizing: border-box;
+}
+.account .frame-742 {
+    margin-bottom: 29px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.account .frame-743 {
+    margin: 0 135px 60px 135px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    box-sizing: border-box;
 }

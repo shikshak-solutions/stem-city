@@ -18,11 +18,11 @@ const MenuLinks = [
         name: "Products",
         link: "/products",
     },
-    {
-        id: 3,
-        name: "About",
-        link: "/#about",
-    },
+    // {
+    //     id: 3,
+    //     name: "About",
+    //     link: "/#about",
+    // },
     {
         id: 4,
         name: "Curriculum",

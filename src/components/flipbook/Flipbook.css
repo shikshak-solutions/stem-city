@@ -34,10 +34,29 @@
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .flip-container{
-    margin-left: 100px;
+    margin-left: 330px;
     align-items: center;
     overflow: hidden;
 }
+.full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+}
+
+.full-screen .flip-container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+
 
 .navigation-buttons {
     display: flex;
@@ -55,25 +74,134 @@
     border: none;
 }
 
-@media (max-width: 768px) {
-    .flip-container {
-        height: auto;
+/*!* Media Queries for Responsive Design *!*/
+
+/*!* For devices with a width less than 1200px *!*/
+/*@media (max-width: 1199px) {*/
+/*    .flip-container {*/
+/*        margin-left: 50px; !* Adjust margin for medium screens *!*/
+/*    }*/
+
+/*    .navigation-buttons {*/
+/*        width: 90%; !* Adjust width for medium screens *!*/
+/*        margin-left: 5px;*/
+/*    }*/
+
+/*    .prev-button,*/
+/*    .next-button {*/
+/*        font-size: 20px; !* Adjust button size for medium screens *!*/
+/*    }*/
+/*}*/
+
+/*!* For devices with a width less than 768px *!*/
+/*@media (max-width: 767px) {*/
+/*    .flip-container {*/
+/*        margin-left: 0; !* Remove margin for small screens *!*/
+/*    }*/
+
+/*    .navigation-buttons {*/
+/*        width: 100%; !* Adjust width for small screens *!*/
+/*        margin-left: 0;*/
+/*        margin-top: 10px;*/
+/*    }*/
+
+/*    .prev-button,*/
+/*    .next-button {*/
+/*        font-size: 18px; !* Adjust button size for small screens *!*/
+/*    }*/
+/*}*/
+
+/*!* For devices with a width less than 480px *!*/
+/*@media (max-width: 479px) {*/
+/*    .flipbook {*/
+/*        width: 95vw; !* Adjust width for extra small screens *!*/
+/*        height: 70vh; !* Adjust height for extra small screens *!*/
+/*    }*/
+
+/*    .navigation-buttons {*/
+/*        width: 100%; !* Ensure full width for extra small screens *!*/
+/*        flex-direction: column; !* Stack buttons vertically *!*/
+/*        margin-top: 15px;*/
+/*    }*/
+
+/*    .prev-button,*/
+/*    .next-button {*/
+/*        font-size: 16px; !* Adjust button size for extra small screens *!*/
+/*        margin-bottom: 10px; !* Add margin between buttons *!*/
+/*    }*/
+/*}*/
+
+/* Media queries */
+
+@media screen and (max-width: 1200px) {
+    .flipbook {
+        width: 100%;
+        transform: scale(0.8); /* Adjust scale to fit smaller screens */
     }
 
+    .navigation-buttons {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/* For screens smaller than 1000px */
+@media screen and (max-width: 1000px) {
     .flipbook {
-        width: 80%;
+        transform: scale(0.6); /* Further adjust scale */
+    }
+}
+
+/* For tablets and smaller desktops */
+@media screen and (max-width: 768px) {
+    .flipbook-container {
+        flex-direction: column;
         height: auto;
+        padding: 20px;
+    }
+
+    .flip-container {
+        margin-left: -25px;
+    }
+
+    .navigation-buttons {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+        justify-content: center;
     }
 
     .prev-button,
     .next-button {
         font-size: 20px;
     }
+
+    .flipbook {
+        transform: scale(0.5); /* Adjust scale for tablets */
+    }
 }
 
-@media (max-width: 480px) {
+/* For smartphones */
+@media screen and (max-width: 480px) {
+    .flipbook-container {
+        padding: 10px;
+    }
+
+    .navigation-buttons {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 5px;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .prev-button,
     .next-button {
         font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .flipbook {
+        transform: scale(0.4); /* Adjust scale for smartphones */
     }
 }

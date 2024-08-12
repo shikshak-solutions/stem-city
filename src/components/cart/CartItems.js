@@ -1,15 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import remove_icon from "../../assets/images/cart_cross_icon.png";
 import "./CartItems.css";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {actionToRemoveFromCart} from "../../redux/action";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMinus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
 
 const Cart = () => {
+    const [quantity, setQuantity] = useState(1);
     const cartItem = useSelector((state)=> state.product.cartItems)
     const dispatch = useDispatch();
     const handleRemove = (id) => {
         dispatch(actionToRemoveFromCart(id));
+    };
+    const handleIncrease = () => {
+        setQuantity(prevQuantity => prevQuantity + 1);
+    };
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(prevQuantity => prevQuantity - 1);
+        }
     };
     return (
         <div className='cartitems'>
@@ -30,7 +43,15 @@ const Cart = () => {
                                 <img src={items.photo} alt='' className='carticon-product-icon'/>
                                 <p>{items.name}</p>
                                 <p>{items.price}</p>
-                                <button className='cartitems-quantity'>{items.quantity}</button>
+                                <div className="quantity-controls">
+                                    <button className="quantity-btn" onClick={handleDecrease}>
+                                        <FontAwesomeIcon icon={faMinus} />
+                                    </button>
+                                    <span className="quantity">{items.quantity}</span>
+                                    <button className="quantity-btn" onClick={handleIncrease}>
+                                        <FontAwesomeIcon icon={faPlus} />
+                                    </button>
+                                </div>
                                 <p>{items.price*items.quantity}</p>
                                 <img className='cartitems-remove-icon' src={remove_icon} alt='' onClick={()=> handleRemove(items.id)} />
                             </div>
