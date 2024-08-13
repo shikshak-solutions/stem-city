@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./Product.css";
 import { useParams } from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -14,20 +14,26 @@ import {faMinus} from "@fortawesome/free-solid-svg-icons";
 const ProductDetail = () => {
     const { cat_slug,sub_cat_slug,product_slug } = useParams();
     const [quantity, setQuantity] = useState(1);
+    const [activeImage, setActiveImage] = useState(""); // State for active image
     const ProductDetailData = useSelector((state) => state.product.ProductDetailData);
     const dispatch = useDispatch();
+
     useEffectOnce(()=>{
         dispatch(actionToGetProductsDetailsApiCall({cat_slug:cat_slug,sub_cat_slug:sub_cat_slug,product_slug:product_slug}));
-    })
+    });
+
+    useEffect(() => {
+        if (ProductDetailData?.photo) {
+            setActiveImage(ProductDetailData.photo); // Set initial active image
+        }
+    }, [ProductDetailData]);
+
     const addToCart = () =>{
         let products = {id: ProductDetailData.id,name:ProductDetailData.name,price:ProductDetailData.price,photo:ProductDetailData.photo, quantity:quantity};
-        console.log(products,'products')
+        console.log(products,'products');
         dispatch(actionToAddToCart(products));
-    }
+    };
 
-    if (!ProductDetailData) {
-        return <h2>Product not found</h2>;
-    }
     const handleIncrease = () => {
         setQuantity(prevQuantity => prevQuantity + 1);
     };
@@ -38,21 +44,36 @@ const ProductDetail = () => {
         }
     };
 
+    const handleImageClick = (image) => {
+        setActiveImage(image); // Change the active image
+    };
+
+    if (!ProductDetailData) {
+        return <h2>Product not found</h2>;
+    }
+
     return (
         <div className='product-details'>
             <div className='product-details-left'>
                 <div className='productdetails-img-list'>
-                    {ProductDetailData.photos?.map(photos =>{
-                        return <img src={photos.photo} alt=''/>;
-                    }) }
+                    {ProductDetailData.photos?.map((photos, index) => (
+                        <img
+                            key={index}
+                            src={photos.photo}
+                            alt=''
+                            onClick={() => handleImageClick(photos.photo)}
+                            className={activeImage === photos.photo ? 'active-image' : ''}
+                        />
+                    ))}
                 </div>
                 <div className='productdetails-img'>
-                    <img className='productdetails-main-img' src={ProductDetailData.photo} alt=''/>
+                    <img className='productdetails-main-img' src={activeImage} alt=''/>
                 </div>
             </div>
             <div className='product-details-right'>
                 <h1>{ProductDetailData.name}</h1>
                 <div className='productdetails-right-star'>
+                    <FontAwesomeIcon icon={faStar}/>
                     <FontAwesomeIcon icon={faStar}/>
                     <FontAwesomeIcon icon={faStar}/>
                     <FontAwesomeIcon icon={faStar}/>
@@ -63,12 +84,12 @@ const ProductDetail = () => {
                         <>
                             <div className='productdetails-right-price-old'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.sale_price}</div>
                             <div className='productdetails-right-price-new'><FontAwesomeIcon icon={faIndianRupeeSign}/> {
-                                (ProductDetailData.discount_amount_type == 'percentage' &&
+                                (ProductDetailData.discount_amount_type === 'percentage' &&
                                     ProductDetailData.sale_price*ProductDetailData.discount_percentage*0.01 < ProductDetailData.discount_maximum_discount)
                                     ? ProductDetailData.sale_price *(100-ProductDetailData.discount_percentage)*0.01 : ProductDetailData.sale_price-ProductDetailData.discount_maximum_discount }
                             </div>
                         </>
-                  : <div className='productdetails-right-price'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.sale_price}</div>
+                        : <div className='productdetails-right-price'><FontAwesomeIcon icon={faIndianRupeeSign}/> {ProductDetailData.sale_price}</div>
                     }
                 </div>
                 <div className='productdetails-right-description' dangerouslySetInnerHTML={{__html: ProductDetailData?.description}}>
@@ -86,7 +107,7 @@ const ProductDetail = () => {
                         </button>
                     </div>
                 </div>
-                <button className='button' onClick={()=> addToCart()}>Add to Cart</button>
+                <button className='button' onClick={addToCart}>Add to Cart</button>
                 <p className='productdisplay-right-category'><span>Category :</span> {ProductDetailData.subcategory_name}</p>
             </div>
         </div>

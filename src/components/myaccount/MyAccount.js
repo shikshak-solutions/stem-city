@@ -35,6 +35,7 @@ const MyAccount = () => {
         }
     }
     return (
+        <>
         <div className="account-container">
             <div className="account-sections">
                 <div className="account-section">
@@ -63,9 +64,13 @@ const MyAccount = () => {
                     <h2>Logout</h2>
                 </div>
             </div>
-            {getTabContent()}
         </div>
+            {getTabContent( )}
+        </>
+
     );
 };
 
 export default MyAccount;
+
+
