@@ -1,5 +1,4 @@
 import React from "react";
-import NavBar from "../components/navbar/NavBar";
 import Home from "../components/home/Home";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -11,7 +10,6 @@ import Defender from "../assets/images/home/defender.png";
 import creativeExpansion from "../assets/images/home/creative.png";
 import Products from "../components/products/Products";
 import Curriculum from "../components/curriculum/Curriculum";
-import Footer from "../footer/Footer";
 import Partners from "../components/partners/Partners";
 
 
@@ -52,7 +50,6 @@ const HomePage = () => {
 
     return (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
-            <NavBar/>
             <Home />
             <Category/>
             <Category2/>
@@ -62,7 +59,6 @@ const HomePage = () => {
             <Banner data={BannerData2} />
             <Curriculum/>
             <Partners/>
-            <Footer/>
         </div>
     )
 }

@@ -1045,7 +1045,7 @@ export const actionToGetProductsListForWebsiteApiCall = (body) => {
                               subcat.category_id as category_id, subcat.slug as sub_category_slug,
                               brand.name as brand_name, detail.slug as slug,cat.source as source,
                               detail.id as product_detail_id,detail.long_description,detail.min_age,detail.max_age,
-                              discount.discount_percentage,discount.maximum_discount
+                              discount.discount_percentage,discount.maximum_discount,discount.amount_type
                        FROM products AS prod
                                 LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
                                 LEFT JOIN categories AS cat ON cat.id=subcat.category_id

@@ -1,8 +1,6 @@
 import './App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import ProductOverview from "./pages/ProductOverview";
-import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
@@ -22,6 +20,8 @@ import RequireAuth from "./components/auth/RequireAuth";
 import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import Checkout from "./pages/Checkout";
+import ProductMainPage from "./pages/ProducMainPage";
+import Layout from "./components/layout/Layout";
 
 function App() {
     const { setAuth } = useAuth();
@@ -56,9 +56,9 @@ function App() {
       <BrowserRouter>
           <HelmetComponent />
           <Routes>
+              <Route path={''} element={<Layout />}>
               <Route exact path="/" element={<HomePage />}/>
-              <Route exact path="/products" element={<Product />}/>
-              <Route exact path="/products/:cat_slug/:sub_cat_slug/:product_slug" element={<ProductOverview />}/>
+              <Route exact path="/products/*" element={<ProductMainPage />}/>
               <Route exact path="/cart" element={<Cart />}/>
               <Route exact path="/login" element={<Login />}/>
               {/*<Route exact path="/signup" element={<SignUp />}/>*/}
@@ -77,6 +77,7 @@ function App() {
 
               {/* catch all */}
               <Route path="/*" element={<ErrorPage />}/>
+              </Route>
           </Routes>
       </BrowserRouter>
   );

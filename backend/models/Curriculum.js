@@ -35,13 +35,13 @@ export const actionToGetCurriculumFileApiCall = (body) => {
 export const actionToGetGradeListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select JSON_OBJECT('id', grades.id,
+            const query = `select grades.id,JSON_OBJECT('id', grades.id,
                                               'name', grades.name,
-                                              'product', (SELECT JSON_ARRAYAGG(product_grade.product_id)
-                                                          from product_grade
+                                              'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_grade.product_id,'id',product_grade.id,'name',prod.name))
+                                                          from product_grade left join products prod on prod.id=product_grade.grade_id
                                                           WHERE grade_id = grades.id),
-                                              'subject', (SELECT JSON_ARRAYAGG(grade_subject.subject_id)
-                                                          from grade_subject
+                                              'subject', (SELECT JSON_ARRAYAGG(JSON_OBJECT('subject_id',grade_subject.subject_id,'id',grade_subject.id))
+                                                          from grade_subject left join subjects sub on sub.id=grade_subject.subject_id
                                                           WHERE grade_id = grades.id)
                                   ) as data
                            from grades`;

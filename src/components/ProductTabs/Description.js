@@ -11,7 +11,7 @@ const ProductTabs = () => {
     }
     return (
         <div className='descriptionbox'>
-           <div className='descriptionbox-description' dangerouslySetInnerHTML={{__html: Product?.description}}>
+           <div className='descriptionbox-description' dangerouslySetInnerHTML={{__html: Product?.long_description}}>
            </div>
         </div>
     )

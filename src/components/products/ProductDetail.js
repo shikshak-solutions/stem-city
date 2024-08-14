@@ -1,26 +1,21 @@
 import React, {useState, useEffect} from "react";
 import "./Product.css";
-import { useParams } from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons/faStar";
 import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupeeSign";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
-import {actionToAddToCart, actionToGetProductsDetailsApiCall} from "../../redux/action";
+import {actionToAddToCart} from "../../redux/action";
 import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
 import {faMinus} from "@fortawesome/free-solid-svg-icons";
 
 
 const ProductDetail = () => {
-    const { cat_slug,sub_cat_slug,product_slug } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [activeImage, setActiveImage] = useState(""); // State for active image
     const ProductDetailData = useSelector((state) => state.product.ProductDetailData);
     const dispatch = useDispatch();
 
-    useEffectOnce(()=>{
-        dispatch(actionToGetProductsDetailsApiCall({cat_slug:cat_slug,sub_cat_slug:sub_cat_slug,product_slug:product_slug}));
-    });
+
 
     useEffect(() => {
         if (ProductDetailData?.photo) {
@@ -56,6 +51,13 @@ const ProductDetail = () => {
         <div className='product-details'>
             <div className='product-details-left'>
                 <div className='productdetails-img-list'>
+                    <img
+                        key={'main-image'}
+                        src={ProductDetailData.photo}
+                        alt=''
+                        onClick={() => handleImageClick(ProductDetailData.photo)}
+                        className={activeImage === ProductDetailData.photo ? 'active-image' : ''}
+                    />
                     {ProductDetailData.photos?.map((photos, index) => (
                         <img
                             key={index}
