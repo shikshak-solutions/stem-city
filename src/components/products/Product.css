@@ -294,7 +294,10 @@
 .productdetails-img-list img:not(.active) {
     opacity: 0.6;
 }
-
+.display-flex{
+    display: flex;
+    justify-content: space-between;
+}
 
 /* Responsive styles */
 @media (max-width: 1200px) {

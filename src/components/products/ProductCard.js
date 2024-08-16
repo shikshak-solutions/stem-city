@@ -1,8 +1,13 @@
 import React from "react";
 import Button from "../shared/Button";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupeeSign";
+import {useSelector} from "react-redux";
 
 const ProductCard = ({ data }) => {
+    const ProductDetailData = useSelector((state) => state.product.ProductDetailData);
+
     return (
         <div className="mb-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
@@ -31,7 +36,14 @@ const ProductCard = ({ data }) => {
                         </div>
                         <div className="leading-7">
                             <h2 className="font-semibold">{data.name}</h2>
-                            <h2 className="font-bold">Rs.{data.sale_price}</h2>
+                            <div className='display-flex'>
+                                <div className='productdetails-right-price-old'><FontAwesomeIcon icon={faIndianRupeeSign}/> {data.sale_price}</div>
+                                <div className='productdetails-right-price-new'><FontAwesomeIcon icon={faIndianRupeeSign}/> {
+                                    (ProductDetailData.discount_amount_type === 'percentage' &&
+                                        ProductDetailData.sale_price*ProductDetailData.discount_percentage*0.01 < ProductDetailData.discount_maximum_discount)
+                                        ? ProductDetailData.sale_price *(100-ProductDetailData.discount_percentage)*0.01 : ProductDetailData.sale_price-ProductDetailData.discount_maximum_discount }
+                                </div>
+                            </div>
                         </div>
                         </Link>
                     </div>

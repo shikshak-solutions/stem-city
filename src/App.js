@@ -20,6 +20,14 @@ import RequireAuth from "./components/auth/RequireAuth";
 import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import Checkout from "./pages/Checkout";
+import BalancingBirdFlip from "./pages/BalancingBirdFlip";
+import TriCycleFlip from "./pages/TriCycleFlip";
+import SlingshotFlip from "./pages/SlingshotFlip";
+import RevolverFlip from "./pages/RevolverFlip";
+import MiniforkliftFlip from "./pages/MiniForkliftFlip";
+import RotatingFlywheelFlip from "./pages/RotatingFlywheelFlip";
+import PullbackCarFlip from "./pages/PullbackCarFlip";
+import FerrisWheelFlip from "./pages/FerrisWheelFlip";
 import ProductMainPage from "./pages/ProducMainPage";
 import Layout from "./components/layout/Layout";
 
@@ -65,6 +73,14 @@ function App() {
               <Route exact path="/forgot-password" element={<ForgotPassword />}/>
               <Route exact path="/checkout" element={<Checkout />}/>
               <Route exact path="/flipbook" element={<FlipBook />}/>
+              <Route exact path="/products/stem/diy-kit/ferris-wheel/curriculum" element={<FerrisWheelFlip />}/>
+              <Route exact path="/products/stem/diy-kit/balancing-bird/curriculum" element={<BalancingBirdFlip />}/>
+              <Route exact path="/products/stem/diy-kit/tricycle/curriculum" element={<TriCycleFlip />}/>
+              <Route exact path="/products/stem/diy-kit/slingshot/curriculum" element={<SlingshotFlip />}/>
+              <Route exact path="/products/stem/diy-kit/revolver/curriculum" element={<RevolverFlip />}/>
+              <Route exact path="/products/stem/diy-kit/mini-forklift/curriculum" element={<MiniforkliftFlip />}/>
+              <Route exact path="/products/stem/diy-kit/rotating-flywheel/curriculum" element={<RotatingFlywheelFlip />}/>
+              <Route exact path="/products/stem/diy-kit/pullback-car/curriculum" element={<PullbackCarFlip />}/>
               <Route exact path="/terms-and-conditions" element={<TermsAndConditions />}/>
               <Route exact path="/privacy-policy" element={<PrivacyPolicyPage />}/>
               <Route exact path="/refund-and-cancellation" element={<RefundAndCancellation />}/>
