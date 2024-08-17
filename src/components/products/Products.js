@@ -3,10 +3,11 @@ import Heading from "../shared/Heading";
 import ProductCard from "./ProductCard";
 import {useEffectOnce} from "../../redux/hooks/useEffectOnce";
 import {actionToGetProductsApiCall} from "../../redux/action";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {ProductsData} from "../../pages/ProductData";
 
 const Products = () => {
-    const ProductsData = useSelector((state) => state.product.ProductsData);
+    // const ProductsData = useSelector((state) => state.product.ProductsData);
     const dispatch = useDispatch();
     useEffectOnce(()=>{
         dispatch(actionToGetProductsApiCall());

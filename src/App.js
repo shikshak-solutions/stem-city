@@ -30,6 +30,8 @@ import PullbackCarFlip from "./pages/PullbackCarFlip";
 import FerrisWheelFlip from "./pages/FerrisWheelFlip";
 import ProductMainPage from "./pages/ProducMainPage";
 import Layout from "./components/layout/Layout";
+import ProductOverview from "./pages/ProductOverview";
+
 
 function App() {
     const { setAuth } = useAuth();
@@ -67,6 +69,7 @@ function App() {
               <Route path={''} element={<Layout />}>
               <Route exact path="/" element={<HomePage />}/>
               <Route exact path="/products/*" element={<ProductMainPage />}/>
+                  <Route exact path="/product/:id" element={<ProductOverview />}/>
               <Route exact path="/cart" element={<Cart />}/>
               <Route exact path="/login" element={<Login />}/>
               {/*<Route exact path="/signup" element={<SignUp />}/>*/}
