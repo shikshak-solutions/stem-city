@@ -31,6 +31,8 @@ import FerrisWheelFlip from "./pages/FerrisWheelFlip";
 import ProductMainPage from "./pages/ProducMainPage";
 import Layout from "./components/layout/Layout";
 import ProductOverview from "./pages/ProductOverview";
+import CurriculumPage from "./pages/CurriculumPage";
+import ShopPage from "./pages/ShopPage";
 
 
 function App() {
@@ -60,7 +62,7 @@ function App() {
             dispatch(actionToLoadCart(storedCart));
         }
         authorized();
-        dispatch(actionToGetSEOMetaDataApiCall());
+        dispatch(actionToGetSEOMetaDataApiCall({pathname:window.location.pathname}));
     })
   return (
       <BrowserRouter>
@@ -69,6 +71,8 @@ function App() {
               <Route path={''} element={<Layout />}>
               <Route exact path="/" element={<HomePage />}/>
               <Route exact path="/products/*" element={<ProductMainPage />}/>
+              <Route exact path="/curriculum" element={<CurriculumPage />}/>
+              <Route exact path="/shop" element={<ShopPage />}/>
                   <Route exact path="/product/:id" element={<ProductOverview />}/>
               <Route exact path="/cart" element={<Cart />}/>
               <Route exact path="/login" element={<Login />}/>

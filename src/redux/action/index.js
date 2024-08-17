@@ -8,11 +8,11 @@ import {
     WEBSITE_CONTENT
 } from "../constant";
 import {parseJwt} from "../utility/jwtUtils";
-export const actionToGetSEOMetaDataApiCall = () => async (dispatch,getState) => {
+export const actionToGetSEOMetaDataApiCall = (payload) => async (dispatch,getState) => {
     let company_id = getState().webSetting.company_id;
-    const {data} = await api.post(`web-setting/get-seo-meta-data-website`,{id:company_id});
+    const {data} = await api.post(`web-setting/get-seo-meta-data-website`,{source_id:company_id,pathname:payload?.pathname});
     dispatch({ type: SEO_META_DATA, payload: data });
-    const response = await api.post(`web-setting/get-website-content`,{id:company_id});
+    const response = await api.post(`web-setting/get-website-content`,{source_id:company_id,pathname:payload?.pathname});
     dispatch({ type: WEBSITE_CONTENT, payload: response.data });
     return data;
 }

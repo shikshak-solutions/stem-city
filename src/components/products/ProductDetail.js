@@ -120,12 +120,9 @@
 
 import React from "react";
 import "./Product.css";
-import Img1 from "../../assets/images/product/p-1.png";
 import { useParams } from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons/faStar";
-import {faRupee} from "@fortawesome/free-solid-svg-icons";
-import {faRupeeSign} from "@fortawesome/free-solid-svg-icons/faRupeeSign";
 import {faIndianRupeeSign} from "@fortawesome/free-solid-svg-icons/faIndianRupeeSign";
 import {ProductsData} from "../../pages/ProductData";
 

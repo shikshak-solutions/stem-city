@@ -6,10 +6,10 @@ import {Helmet} from "react-helmet";
 export const HelmetComponent = ()=> {
     const location = useLocation();
 
-    const pathname = window.location.pathname;
-    const seoMetaData = useSelector((state) => state.webSetting.seoMetaData[pathname]);
+
+    const seoMetaData = useSelector((state) => state.webSetting.seoMetaData);
     const getHelmetData = (seoMeta, location) => {
-        console.log(location, 'loc')
+        console.log(location, 'loc',seoMeta)
         return seoMeta?.map((data, i) => {
             if (data?.name == 'title') {
                 document.title = data?.content;

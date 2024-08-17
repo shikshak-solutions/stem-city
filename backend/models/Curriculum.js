@@ -35,10 +35,9 @@ export const actionToGetCurriculumFileApiCall = (body) => {
 export const actionToGetGradeListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select grades.id,JSON_OBJECT('id', grades.id,
-                                              'name', grades.name,
+            const query = `select grades.id,grades.name,grades.photo,JSON_OBJECT(
                                               'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_grade.product_id,'id',product_grade.id,'name',prod.name))
-                                                          from product_grade left join products prod on prod.id=product_grade.grade_id
+                                                          from product_grade left join products prod on prod.id=product_grade.product_id
                                                           WHERE grade_id = grades.id),
                                               'subject', (SELECT JSON_ARRAYAGG(JSON_OBJECT('subject_id',grade_subject.subject_id,'id',grade_subject.id))
                                                           from grade_subject left join subjects sub on sub.id=grade_subject.subject_id
@@ -63,8 +62,7 @@ export const actionToGetGradeListApiCall =  () => {
 export const actionToGetSubjectListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select JSON_OBJECT('id', subjects.id,
-                                              'name', subjects.name,
+            const query = `select subjects.id,subjects.name,subjects.photo,JSON_OBJECT(
                                               'curriculum',
                                               (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', curriculum_topic.id, 'focus',
                                                                                 curriculum.focus, 'name',
@@ -87,11 +85,15 @@ export const actionToGetSubjectListApiCall =  () => {
                                                         join curriculum on curriculum.id = curriculum_topic.curriculum_id
                                                         join subject_topic ON subject_topic.topic_id = curriculum_topic.topic_id
                                                WHERE subject_topic.subject_id = subjects.id),
-                                              'product', (SELECT JSON_ARRAYAGG(product_subject.product_id)
-                                                          from product_subject
+                                              'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_subject.product_id,'id',product_subject.id,'name',prod.name))
+                                                          from product_subject left join products prod on prod.id=product_subject.product_id
                                                           WHERE subject_id = subjects.id),
-                                              'grade', (SELECT JSON_ARRAYAGG(grade_subject.grade_id)
+
+                                              'grade', (SELECT JSON_ARRAYAGG(JSON_OBJECT('grade_id',grade_subject.grade_id,'id',grade_subject.id))
                                                         from grade_subject
+                                                        WHERE subject_id = subjects.id),
+                                              'topic', (SELECT JSON_ARRAYAGG(JSON_OBJECT('topic_id',subject_topic.topic_id,'id',subject_topic.id))
+                                                        from subject_topic
                                                         WHERE subject_id = subjects.id)
                                   ) as data
                            from subjects  `;
@@ -113,8 +115,7 @@ export const actionToGetSubjectListApiCall =  () => {
 export const actionToGetTopicsListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select JSON_OBJECT('id', topics.id,
-                                              'name', topics.name,
+            const query = `select topics.id,topics.name,topics.photo,JSON_OBJECT(
                                               'curriculum',
                                               (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', curriculum_topic.id, 'focus',
                                                                                 curriculum.focus, 'name',
@@ -136,10 +137,10 @@ export const actionToGetTopicsListApiCall =  () => {
                                                from curriculum_topic
                                                         join curriculum on curriculum.id = curriculum_topic.curriculum_id
                                                WHERE curriculum_topic.topic_id = topics.id),
-                                              'product', (SELECT JSON_ARRAYAGG(product_topic.product_id)
-                                                          from product_topic
+                                              'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_topic.product_id,'id',product_topic.id,'name',prod.name))
+                                                          from product_topic left join products prod on prod.id=product_topic.product_id
                                                           WHERE topic_id = topics.id),
-                                              'subject', (SELECT JSON_ARRAYAGG(subject_topic.subject_id)
+                                              'subject', (SELECT JSON_ARRAYAGG(JSON_OBJECT('subject_id',subject_topic.subject_id,'id',subject_topic.id))
                                                           from subject_topic
                                                           WHERE topic_id = topics.id)
                                   ) as data
@@ -150,7 +151,7 @@ export const actionToGetTopicsListApiCall =  () => {
                 }
                 let data = [];
                 if(results?.length){
-                    data = results[0].data;
+                    data = results;
                 }
                 resolve(data);
             })

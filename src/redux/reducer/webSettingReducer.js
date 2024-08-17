@@ -1,7 +1,7 @@
 import {SEO_META_DATA, WEBSITE_CONTENT} from "../constant";
 const initialState = {
-    seoMetaData:{},
-    websiteContentData:{},
+    seoMetaData:[],
+    websiteContentData:[],
     company_id:2
 }
 export  const webSettingReducer = (state = initialState, action) => {

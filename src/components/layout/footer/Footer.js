@@ -110,6 +110,9 @@ const Footer = () => {
                                     <FaMobileAlt />
                                     <p>+91 9599185057</p>
                                 </div>
+                                <div className={"text-red-600"}>
+                                    Order Online Functionality Launching Soon!
+                                </div>
 
                                 {/* social links */}
                                 {/*<div className="flex items-center gap-3 mt-6">*/}

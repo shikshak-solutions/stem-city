@@ -14,9 +14,10 @@ export const insertCommonWithLogCommonApiCall = (body) => {
     const {tableName,data,userId,eventTypeId} = body;
     return new Promise(function(resolve, reject) {
         const columns = Object.keys(data).join(',');
-        const values = Object.values(data).map(value => `'${value}'`).join(',');
-        const query = `INSERT INTO ${tableName} (${columns}) VALUES (${values})`;
-        pool.query(query, (error, results) => {
+        const alias = Object.values(data).map(() => '?').join(',');
+        const values = Object.values(data);
+        const query = `INSERT INTO ${tableName} (${columns}) VALUES (${alias})`;
+        pool.query(query,values, (error, results) => {
             if (error) {
                 reject(error)
             }else{

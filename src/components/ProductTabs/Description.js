@@ -21,7 +21,6 @@
 import React from "react";
 import "./ProductTabs.css";
 import {ProductsData} from "../../pages/ProductData";
-import product from "../../pages/Product";
 import {useParams} from "react-router-dom";
 
 const ProductTabs = () => {
