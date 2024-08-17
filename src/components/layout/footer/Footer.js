@@ -113,6 +113,9 @@ const Footer = () => {
                                 <div className={"text-red-600"}>
                                     Order Online Functionality Launching Soon!
                                 </div>
+                                <div className={"text-red-600"}>
+                                    Currently accepting offline order by call
+                                </div>
 
                                 {/* social links */}
                                 {/*<div className="flex items-center gap-3 mt-6">*/}

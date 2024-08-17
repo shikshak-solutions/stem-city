@@ -12,7 +12,8 @@ export const ProductCurriculum = [
     focus:'Triangle',
     link:'/products/stem/diy-kit/ferris-wheel/curriculum',
     content:`<p>1. Learn the stability principle of triangles;</p><p>2. Build a triangular bracket with pegs, beams, and axles by hand.</p>`
-    },{name:'Balancing Bird',
+    },
+    {name:'Balancing Bird',
     image:balancingBird,
     focus:'Center of Gravity and Balance',
     link:'/products/stem/diy-kit/balancing-bird/curriculum',

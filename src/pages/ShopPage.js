@@ -6,6 +6,18 @@ import ProductCard from "../components/products/ProductCard";
 import {ProductsData} from "./ProductData";
 import AOS from "aos";
 const ShopPage = () => {
+    const [product,setProduct] = useState([]);
+    const [curriculum,setCurriculum] = useState([]);
+    useEffect(()=>{
+        let productData = ProductsData;
+        productData.length > 4 && productData.splice(4,productData.length-4)
+        setProduct(productData)
+    },[ProductsData]);
+    useEffect(()=>{
+        let curriculumData = ProductCurriculum;
+        curriculumData.length > 4 && curriculumData.splice(3,curriculumData.length-3)
+        setCurriculum(curriculumData)
+    },[ProductCurriculum]);
     useEffect(() => {
         AOS.init({
             duration: 800,
@@ -15,14 +27,18 @@ const ShopPage = () => {
         });
         AOS.refresh();
     }, []);
-    ProductsData.splice(4,ProductsData.length-4);
-    ProductCurriculum.splice(4,ProductCurriculum.length-4);
     return (
         <div>
             <div className="container">
-                <Heading title="Our Shop is Coming Soon!" subtitle={"We are working hard to launch our eCommerce functionality. Stay tuned!"} />
-                <ProductCard data={ProductsData} />
-                <CurriculumCard data={ProductCurriculum} />
+                <Heading title="We will accepting online order soon!" subtitle={"We are working hard to launch our eCommerce functionality. Stay tuned!"} />
+                <div className="text-center mb-10 max-w-[600px] mx-auto space-y-2">
+                <p className="text-xl font-bold lg:text-xl">Thank you for waiting</p>
+                <p className="text-xl font-bold lg:text-xl"> Currently accepting offline order by call</p>
+                </div>
+                <Heading title="Our Products" subtitle={"Explore Our Products"} />
+                <ProductCard data={product} />
+                <Heading title="Curriculum" subtitle={"Explore Our Curriculum"} />
+                <CurriculumCard data={curriculum} />
             </div>
         </div>
     );

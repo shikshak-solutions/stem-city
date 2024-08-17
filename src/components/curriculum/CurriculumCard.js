@@ -59,43 +59,34 @@ import React from "react";
 import Button from "../shared/Button";
 import {Link} from "react-router-dom";
 
-const CurriculumCard = ({ data,index }) => {
+const CurriculumCard = ({ data }) => {
     return (
-        <div className="mb-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
-                {data.map((data) => (
-                    <div
-                        data-aos="fade-up"
-                        data-aos-delay={data.aosDelay}
-                        className="group"
-                        key={index}
-                    >
-                        <div className="relative">
-                            <img
-                                src={data.image}
-                                alt=""
-                                className="h-[180px] object-cover rounded-md img-border-black"
-                            />
-
-                            <div className="hidden group-hover:flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-full w-full text-center group-hover:backdrop-blur-sm justify-center items-center duration-200 rounded-md">
-                                <Link to={data.link}>
-                                    <Button
-                                        text={"View Curriculum"}
-                                        bgColor={"bg-primary"}
-                                        textColor={"text-white"}
-                                    />
-
-                            </Link>
-                            </div>
-                        </div>
-                        <div className="leading-7">
-                            <h2 className="font-semibold">{data.name}</h2>
-                            <h2><span className="font-semibold">Focus: </span><span>{data.focus}</span></h2>
-                            <h4 dangerouslySetInnerHTML={{__html: data.content}} />
-                        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 gap-y-8 sm:gap-4 md:gap-7">
+            {/* Blog card */}
+            {data.map((data, index) => (
+                <div
+                    data-aos="fade-up"
+                    data-aos-delay={data.aosDelay}
+                    key={index}
+                    className="bg-white dark:bg-gray-900"
+                >
+                    {/* image section */}
+                    <div className="overflow-hidden rounded-2xl mb-2 w-fit shadow-md">
+                        <img
+                            src={data.image}
+                            alt=""
+                            className="w-full h-[220px] object-cover rounded-2xl hover:scale-105 duration-500"
+                        />
                     </div>
-                ))}
-            </div>
+                    {/* content section */}
+                    <div className="space-y-2">
+                        <p className="text-xs text-gray-500">{data.name}</p>
+                        <p className="font-bold line-clamp-1"><strong>Focus: </strong>{data.focus}</p>
+                        <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{__html: data.content}}>
+                        </p>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };
