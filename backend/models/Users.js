@@ -63,8 +63,9 @@ where app_user.source='${website}' and (app_user.email = '${email}' or app_user.
  */
 export const actionToGetUserIsExist = async (email,company) => {
     try {
+        let where = company ? `and source=${company}` : ''
     return new Promise(function(resolve, reject) {
-        const query = `select * from users where source=${company} and (email = '${email}' or mobile = '${email}')`;
+        const query = `select * from users where  (email = '${email}' or mobile = '${email}') ${where}`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -265,7 +266,7 @@ export const actionToGetUsersListApiCall = () =>{
  */
 export const actionToGetUserRoleApiCall = () =>{
     return new Promise(function(resolve, reject) {
-        const query = `SELECT r.* from role r where r.in_option='1'`;
+        const query = `SELECT r.* from role r `;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(error)

@@ -9,12 +9,12 @@ const ShopPage = () => {
     const [product,setProduct] = useState([]);
     const [curriculum,setCurriculum] = useState([]);
     useEffect(()=>{
-        let productData = ProductsData;
+        let productData = [...ProductsData];
         productData.length > 4 && productData.splice(4,productData.length-4)
         setProduct(productData)
     },[ProductsData]);
     useEffect(()=>{
-        let curriculumData = ProductCurriculum;
+        let curriculumData = [...ProductCurriculum];
         curriculumData.length > 4 && curriculumData.splice(3,curriculumData.length-3)
         setCurriculum(curriculumData)
     },[ProductCurriculum]);

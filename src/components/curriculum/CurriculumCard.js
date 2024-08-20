@@ -56,10 +56,10 @@
 // export default ProductCard;
 
 import React from "react";
-import Button from "../shared/Button";
 import {Link} from "react-router-dom";
 
 const CurriculumCard = ({ data }) => {
+    console.log(data,'link')
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 gap-y-8 sm:gap-4 md:gap-7">
             {/* Blog card */}
@@ -70,19 +70,24 @@ const CurriculumCard = ({ data }) => {
                     key={index}
                     className="bg-white dark:bg-gray-900"
                 >
+
                     {/* image section */}
                     <div className="overflow-hidden rounded-2xl mb-2 w-fit shadow-md">
+                        <Link to={`${data.link}`}>
                         <img
                             src={data.image}
                             alt=""
                             className="w-full h-[220px] object-cover rounded-2xl hover:scale-105 duration-500"
                         />
+
+                        </Link>
                     </div>
+
                     {/* content section */}
                     <div className="space-y-2">
                         <p className="text-xs text-gray-500">{data.name}</p>
                         <p className="font-bold line-clamp-1"><strong>Focus: </strong>{data.focus}</p>
-                        <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{__html: data.content}}>
+                        <p className="line-clamp-4 text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{__html: data.content}}>
                         </p>
                     </div>
                 </div>

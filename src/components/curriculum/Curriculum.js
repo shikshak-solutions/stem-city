@@ -8,7 +8,7 @@ import {ProductCurriculum} from "../../pages/ProductCurriculum";
 const Curriculum = () => {
     const [curriculum,setCurriculum] = useState([]);
     useEffect(()=>{
-        let curriculumData = ProductCurriculum;
+        let curriculumData = [...ProductCurriculum];
         curriculumData.length > 4 && curriculumData.splice(3,curriculumData.length-3)
         setCurriculum(curriculumData)
     },[ProductCurriculum]);

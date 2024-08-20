@@ -1,11 +1,6 @@
 import React from "react";
-import { IoMdSearch  } from "react-icons/io";
-import { FaCaretDown, FaCartShopping, FaRightToBracket} from "react-icons/fa6";
 import logo from "../../../assets/images/logo2.png";
-import {FaUser} from "react-icons/fa";
 import {Link} from "react-router-dom";
-import useAuth from "../../../redux/hooks/useAuth";
-import {useSelector} from "react-redux";
 
 const MenuLinks = [
     {
@@ -37,12 +32,6 @@ const MenuLinks = [
 
 
 const Navbar = () => {
-    const { auth } = useAuth();
-    const cartItem = useSelector((state)=> {
-        let quantity = 0;
-        state.product.cartItems.map(item => quantity+= item.quantity)
-        return {quantity:quantity};
-    })
     return (
         <div className="bg-white duration-200 relative z-40">
             <div className="py-4">
