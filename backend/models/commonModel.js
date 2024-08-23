@@ -1,7 +1,10 @@
 import connectPool from './connection.js';
 const pool = await connectPool();
 import {
-   actionToGetAllPincodeListDataQuery, actionToGetAllStateListQuery, actionToGetPinCodeDetailsDataQuery,
+    actionToGetAllCitiesListQuery,
+    actionToGetAllPincodeListDataQuery, actionToGetAllPinCodeListQuery,
+    actionToGetAllStateListQuery,
+    actionToGetPinCodeDetailsDataQuery,
 } from "./helpers/commonQueries.js";
 
 
@@ -87,15 +90,48 @@ export const actionToGetPinCodeDetailsDataApiCall = (body) => {
         })
     })
 }
-export const actionToGetALLStateListApiCall = (body) => {
-    const {teacherId,schoolId} = body;
+export const actionToGetALLStateListApiCall = () => {
     return new Promise(function(resolve, reject) {
-        const query = actionToGetAllStateListQuery(teacherId,schoolId);
+        const query = actionToGetAllStateListQuery();
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
             }
-            resolve(results);
+            let data = [];
+            if(results?.length){
+                data = results[0]['data'];
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetCityListApiCall = () => {
+    return new Promise(function(resolve, reject) {
+        const query = actionToGetAllCitiesListQuery();
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results[0]['data'];
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetPinCodeApiCall = () => {
+    return new Promise(function(resolve, reject) {
+        const query = actionToGetAllPinCodeListQuery();
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results[0]['data'];
+            }
+            resolve(data);
         })
     })
 }

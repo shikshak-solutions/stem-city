@@ -6,7 +6,44 @@ export const actionToGetWebSettingsContentApiCall = () => {
         const query = `select web.*, comp.name as company_name from website_content web
                                 LEFT JOIN menu_website_content on menu_website_content.website_content_id= web.id
                                 LEFT JOIN menu on menu.id= menu_website_content.menu_id
-                                         LEFT JOIN company comp on comp.id=menu.source where web.is_active='1'`;
+                                LEFT JOIN company comp on comp.id=menu.source where web.is_active='1' group by web.id,comp.id`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+
+export const actionToGetWebSettingsSectionContentApiCall = (body) => {
+    let {source_id} = body;
+    let where = source_id ? `and menu.source = ${source_id} ` : ``;
+    return new Promise(function(resolve, reject) {
+        const query = `select web.*, comp.id as source, comp.name as company_name,
+                              (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', content.id,
+                                                                'name', content.name,
+                                                                'source', comp.id,
+                                                                'company_name', comp.name,
+                                                                'object_value', content.object_value,
+                                                                'object_type', content.object_type,
+                                                                'object_subheading', content.object_heading,
+                                                                'object_heading', content.object_heading,
+                                                                'object_class', content.object_class,
+                                                                'call_to_action_link', content.call_to_action_link,
+                                                                'call_to_action_name', content.call_to_action_name,
+                                                                'position', content.position,
+                                                                'object_extras', content.object_extras)) FROM  website_section_content AS content WHERE
+                              content.is_active='1' and content.website_section_id = web.id ORDER BY content.position) AS content,
+                              JSON_ARRAYAGG(JSON_OBJECT('id', menu_website_section.id,'menu_id', menu_website_section.menu_id,'menu_name', menu.name,'ordering', menu_website_section.ordering)) as menu_data
+                       from website_section web
+                                LEFT JOIN menu_website_section on menu_website_section.website_section_id= web.id
+                                LEFT JOIN menu on menu.id= menu_website_section.menu_id
+                                LEFT JOIN company comp on comp.id=menu.source where web.is_active='1' ${where} group by web.id,comp.id`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -20,11 +57,13 @@ export const actionToGetWebSettingsContentApiCall = () => {
     })
 }
 export const actionToGetWebSettingSeoMetaApiCall = () => {
+    let {source_id} = body;
+    let where = source_id ? `and menu.source = ${source_id} ` : ``;
     return new Promise(function(resolve, reject) {
         const query = `select seo.*, menu.name as menu_name,comp.name as company_name,ref.name as html_type_name from seo_reference seo
-                                         LEFT JOIN menu on menu.id=seo.menu_id
+                                         LEFT JOIN menu on menu.id=seo.menu_id and menu.is_active='1'
                                          LEFT JOIN company comp on comp.id=menu.source
-                                         LEFT JOIN seo_reference_html ref on ref.id=seo.html_type where seo.is_active='1' `;
+                                         LEFT JOIN seo_reference_html ref on ref.id=seo.html_type where seo.is_active='1' and ${where}`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -43,37 +82,6 @@ export const actionToGetWebSettingMenuListApiCall = (body) => {
     return new Promise(function(resolve, reject) {
         const query = `select menu.*, comp.name as company_name from menu 
                                          LEFT JOIN company comp on comp.id=menu.source where menu.is_active='1' ${where}`;
-        pool.query(query, (error, results) => {
-            if (error) {
-                reject(query)
-            }
-            let data = [];
-            if(results?.length){
-                data = results;
-            }
-            resolve(data);
-        })
-    })
-}
-export const actionToGetWebsiteCompanyDataApiCall = (body) => {
-    let {id} = body;
-    return new Promise(function(resolve, reject) {
-        const query = `select * from company where id=${id}`;
-        pool.query(query, (error, results) => {
-            if (error) {
-                reject(query)
-            }
-            let data = [];
-            if(results?.length){
-                data = results;
-            }
-            resolve(data);
-        })
-    })
-}
-export const actionToGetWebSettingCompanyListApiCall = () => {
-    return new Promise(function(resolve, reject) {
-        const query = `select * from company`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -119,7 +127,7 @@ export const actionToGetWebsiteContentApiCall = (body) => {
                              FROM website_content AS content 
                              LEFT JOIN menu_website_content on menu_website_content.website_content_id= content.id
                              LEFT JOIN menu on menu.id= menu_website_content.menu_id
-                             WHERE content.is_active=1 ${where} GROUP BY content.name) AS content`;
+                             WHERE content.is_active='1' ${where} GROUP BY content.name) AS content`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -132,11 +140,29 @@ export const actionToGetWebsiteContentApiCall = (body) => {
         })
     })
 }
-export const actionToGetWebsiteMenuListApiCall = (body) => {
-    let {source_id} = body;
-    let where = source_id ? `and menu.source = ${source_id} ` : ``;
+export const actionToGetWebsiteSectionContentApiCall = (body) => {
+    let {pathname,source_id} = body;
+    let where = source_id ? `and menu.url = '${pathname}' and menu.source = ${source_id} ` : ``;
     return new Promise(function(resolve, reject) {
-        const query = `SELECT *  FROM menu WHERE is_active=1 ${where} order by ordering`;
+        const query = `SELECT section.*, (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', content.id,
+                                                                            'name', content.name,
+                                                                            'object_key', content.object_key,
+                                                                            'object_value', content.object_value,
+                                                                            'object_type', content.object_type,
+                                                                            'object_subheading', content.object_heading,
+                                                                            'object_heading', content.object_heading,
+                                                                            'object_class', content.object_class,
+                                                                            'call_to_action_link', content.call_to_action_link,
+                                                                            'call_to_action_name', content.call_to_action_name,
+                                                                            'component_type', content.component_type,
+                                                                            'position', content.position,
+                                                                            'component_type', content.component_type,
+                                                                            'object_extras', content.object_extras)) FROM  website_section_content AS content WHERE 
+                                                                            content.website_section_id = section.id ORDER BY content.position) AS content
+                             FROM  website_section AS section 
+                             LEFT JOIN menu_website_section on menu_website_section.website_section_id= section.id
+                             LEFT JOIN menu on menu.id= menu_website_section.menu_id and menu.is_active='1'
+                             WHERE section.is_active='1' ${where} order by menu.ordering`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -144,6 +170,45 @@ export const actionToGetWebsiteMenuListApiCall = (body) => {
             let data = [];
             if(results?.length){
                 data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetWebsiteMenuListApiCall = (body) => {
+    let {source_id} = body;
+    let where = source_id ? `and menu.source = ${source_id} ` : ``;
+    return new Promise(function(resolve, reject) {
+        const query = `SELECT *  FROM menu WHERE is_active='1' ${where} order by ordering`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetWebsiteCategoriesListApiCall = (body) => {
+    let {source_id} = body;
+    let where = source_id ? `and c.source = ${source_id} ` : ``;
+    return new Promise(function(resolve, reject) {
+        const query = `SELECT JSON_OBJECTAGG(category.id, category.jsdata) as data
+                       from (SELECT c.id,JSON_OBJECT('id', c.id,
+                                                             'name', c.name,
+                                                             'photo', c.photo,
+                                                             'slug', c.slug)  AS jsdata
+    FROM categories c WHERE c.is_active='1' ${where} group by c.id) as category`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results[0].data;
             }
             resolve(data);
         })
@@ -164,13 +229,14 @@ export const actionToGetSEOMetaDataWebsiteApiCall = (body) => {
                                      FROM seo_reference AS seo
                                               left join seo_reference_html as seo_html_type ON seo.html_type = seo_html_type.id
                                      left join menu ON menu.id=seo.menu_id where seo.is_active = '1' ${where} `;
+
                 pool.query(query, (error, results) => {
                     if (error) {
                         reject(error)
                     }
                     let data = [];
                     if (results?.length) {
-                        data = results[0]['data'];
+                        data = results;
                     }
                    // setCache('shikshak-admin-seo-meta-data',JSON.stringify(data))
                     resolve(data);

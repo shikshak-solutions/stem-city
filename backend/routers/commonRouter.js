@@ -1,6 +1,8 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import {
+    actionToGetALLStateListApiCall,
+    actionToGetCityListApiCall, actionToGetPinCodeApiCall,
 
     deleteCommonApiCall,
     insertCommonApiCall,
@@ -112,6 +114,39 @@ commonRouter.post(
             res.status(200).send({
                 data,
             });
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+commonRouter.post(
+    '/get-state-list',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetALLStateListApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+commonRouter.post(
+    '/get-city-list',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetCityListApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+commonRouter.post(
+    '/get-pin-code-list',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetPinCodeApiCall(req.body).then((data) => {
+            res.status(200).send(data);
         })
             .catch(error => {
                 res.status(500).send(error);

@@ -5,8 +5,6 @@ import {Helmet} from "react-helmet";
 
 export const HelmetComponent = ()=> {
     const location = useLocation();
-
-
     const seoMetaData = useSelector((state) => state.webSetting.seoMetaData);
     const getHelmetData = (seoMeta, location) => {
         console.log(location, 'loc',seoMeta)

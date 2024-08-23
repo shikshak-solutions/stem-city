@@ -30,10 +30,14 @@ export const insertCommonWithLogCommonApiCall = (body) => {
 }
 
 
-export const actionToGetCompanyListApiCall =  () => {
+export const actionToGetCompanyListApiCall =  (body) => {
+    let {in_inventory_use,in_website_use,id} = body;
+    let where = in_inventory_use ? ` and in_inventory_use='${in_inventory_use}'`: '';
+    where += in_website_use ? ` and in_website_use='${in_website_use}'`: '';
+    where += id ? ` and id=${id}`: '';
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select company.* from company where in_inventory_use='1'`;
+            const query = `select company.* from company where 1=1 ${where}`;
             pool.query(query, (error, results) => {
                 if (error) {
                     reject(error)
@@ -113,8 +117,9 @@ export const updateWithLogCommonApiCall = (body) => {
     const {eventTypeId,userId,id,tableName,data} = body;
     try {
         const setClause = Object.keys(data)
-            .map(key => `${key} = '${data[key]}'`)
+            .map(key => `${key} = ?`)
             .join(',');
+        const values = Object.values(data);
         return new Promise(function(resolve, reject) {
             const selectQuery = `SELECT * FROM ${tableName} WHERE id = ?`;
             pool.query(selectQuery, [id], (selectErr, selectResults) => {
@@ -124,7 +129,9 @@ export const updateWithLogCommonApiCall = (body) => {
                     const previousData = JSON.stringify(selectResults[0]);
                     const version = selectResults[0].version + 1;
                     const query = `UPDATE ${tableName} SET ${setClause}, version = ${version} WHERE id = ?`;
-                    pool.query(query, [id], (error) => {
+                    values.push(id);
+
+                    pool.query(query, values, (error) => {
                         if (error) {
                             reject(error)
                         }

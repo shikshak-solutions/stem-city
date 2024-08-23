@@ -244,5 +244,15 @@ export const actionToGetPinCodeDetailsDataQuery = (pinCode)=>{
     return `SELECT * FROM pincode_master where pincode=${pinCode} order by id desc`;
 }
 export const actionToGetAllStateListQuery = ()=>{
-    return `SELECT * FROM state_list order by state_name ASC`;
+    return `SELECT JSON_OBJECTAGG(id,JSON_OBJECT('id',id,'name',name)) AS data FROM state_list order by id ASC`;
+}
+export const actionToGetAllCitiesListQuery = ()=>{
+    return `SELECT JSON_OBJECTAGG(content.state_id, content.jsdata) as data
+            from (SELECT c.state_id, JSON_ARRAYAGG(JSON_OBJECT('id', c.id, 'name', c.name,'state_id', c.state_id)) AS jsdata
+                  FROM cities AS c  GROUP BY c.state_id) AS content`;
+}
+export const actionToGetAllPinCodeListQuery = ()=>{
+    return `SELECT JSON_OBJECTAGG(content.pincode, content.jsdata) as data
+            from (SELECT p.pincode, JSON_ARRAYAGG(JSON_OBJECT('id', p.id, 'pincode',p.pincode,'state_id',sl.id,'state_name',sl.name,'city_id',c.id,'city_name',c.name)) AS jsdata
+                  FROM pincode AS p LEFT JOIN cities c ON c.id=p.city_id LEFT JOIN state_list sl ON sl.id=c.state_id GROUP BY p.pincode) AS content`;
 }

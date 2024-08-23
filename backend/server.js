@@ -12,6 +12,7 @@ import inventoryRouter from "./routers/inventoryRouter.js";
 import curriculumRouter from "./routers/curriculumRouter.js";
 import usersRouter from "./routers/usersRouter.js";
 import commonLogRouter from "./routers/commonLogRouter.js";
+import salesRouter from "./routers/salesRouter.js";
 
 dotenv.config();
 const app = express();
@@ -71,6 +72,7 @@ app.use('/api/inventory', inventoryRouter);
 app.use('/api/curriculum', curriculumRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/common-log', commonLogRouter);
+app.use('/api/sales', salesRouter);
 ///////// BlogPost api GET ////////////////
 app.get('/api', (req, res) => {
     res.status(200).send({message:`Node Server is ready port ${port}`});

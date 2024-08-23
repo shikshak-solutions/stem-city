@@ -142,7 +142,7 @@ export const actionToGetSubCategoryListApiCall =  () => {
         return new Promise(async function(resolve, reject) {
           /* let {condition} = body;
             let where = (condition) ? ` ${condition} ` : '';*/
-            const query = `select s.*,cat.name AS category,cat.name AS company_name from sub_categories s join categories cat on cat.id=s.category_id join company c on c.id=cat.source where s.is_active='1'`;
+            const query = `select s.*,cat.name AS category,c.name AS company_name,c.id AS source from sub_categories s join categories cat on cat.id=s.category_id join company c on c.id=cat.source where s.is_active='1'`;
             pool.query(query, (error, results) => {
                 if (error) {
                     reject(error)
