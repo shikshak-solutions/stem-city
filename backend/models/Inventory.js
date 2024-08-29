@@ -40,7 +40,8 @@ export const actionToGetCustomerApiCall = (body) => {
 export const actionToGetProductListApiCall = () => {
     return new Promise(function(resolve, reject) {
         const query = `SELECT prod.*, subcat.name AS sub_category_name, cat.name AS category_name,subcat.category_id as category_id,
-                              brand.name as brand_name, comp.name as company_name,detail.slug as slug,cat.source as source,
+                              brand.name as brand_name, comp.name as company_name,comp.in_website_use as in_website_use,
+                              comp.in_curriculum_use as in_curriculum_use,comp.in_inventory_use as in_inventory_use,detail.slug as slug,cat.source as source,
                               detail.id as product_detail_id,detail.long_description,detail.min_age,detail.max_age
                        FROM products AS prod
                                 LEFT JOIN sub_categories AS subcat ON subcat.id = prod.sub_category_id
@@ -79,7 +80,55 @@ export const actionToGetProductImagesApiCall = (body) => {
 export const actionToGetProductCurriculumApiCall = (body) => {
     let {id} = body;
     return new Promise(function(resolve, reject) {
-        const query = `select c.*,p.product_id from product_curriculum p join curriculum c on c.id=p.curriculum_id where p.product_id = ${id}`;
+        const query = `select c.*,p.product_id,p.id as product_curriculum_id from product_curriculum p join curriculum c on c.id=p.curriculum_id where p.product_id = ${id}`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetProductGradeApiCall = (body) => {
+    let {id} = body;
+    return new Promise(function(resolve, reject) {
+        const query = `select g.*,p.product_id from product_grade p join grades g on g.id=p.grade_id where p.product_id = ${id}`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetProductSubjectApiCall = (body) => {
+    let {id} = body;
+    return new Promise(function(resolve, reject) {
+        const query = `select s.*,p.product_id from product_subject p join subjects s on s.id=p.subject_id where p.product_id = ${id}`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = [];
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+}
+export const actionToGetProductTopicApiCall = (body) => {
+    let {id} = body;
+    return new Promise(function(resolve, reject) {
+        const query = `select t.*,p.product_id from product_topic p join topics t on t.id=p.topic_id where p.product_id = ${id}`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)

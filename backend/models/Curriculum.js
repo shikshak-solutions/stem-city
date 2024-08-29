@@ -16,9 +16,13 @@ export const actionToGetCurriculumListApiCall = () => {
     })
 }
 export const actionToGetCurriculumFileApiCall = (body) => {
-    let {id} = body;
+    let {id,slug} = body;
+    let where = id ? ` and cc.curriculum_id = ${id} ` :'';
+     where += slug ? ` and c.slug = '${slug}' ` :'';
     return new Promise(function(resolve, reject) {
-        const query = `select * from curriculum_content where curriculum_id = ${id}`;
+        const query = `select * from curriculum_content cc
+         LEFT JOIN curriculum c ON c.id=cc.curriculum_id
+         where 1=1 ${where} order by ordering`;
         pool.query(query, (error, results) => {
             if (error) {
                 reject(query)
@@ -35,14 +39,7 @@ export const actionToGetCurriculumFileApiCall = (body) => {
 export const actionToGetGradeListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select grades.id,grades.name,grades.photo,JSON_OBJECT(
-                                              'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_grade.product_id,'id',product_grade.id,'name',prod.name))
-                                                          from product_grade left join products prod on prod.id=product_grade.product_id
-                                                          WHERE grade_id = grades.id),
-                                              'subject', (SELECT JSON_ARRAYAGG(JSON_OBJECT('subject_id',grade_subject.subject_id,'id',grade_subject.id))
-                                                          from grade_subject left join subjects sub on sub.id=grade_subject.subject_id
-                                                          WHERE grade_id = grades.id)
-                                  ) as data
+            const query = `select grades.id,grades.name,grades.photo
                            from grades`;
             pool.query(query, (error, results) => {
                 if (error) {
@@ -59,44 +56,33 @@ export const actionToGetGradeListApiCall =  () => {
         console.log(e);
     }
 }
+export const actionToGetWebsiteGradeListApiCall =  () => {
+    try {
+        return new Promise(async function(resolve, reject) {
+            const query = `SELECT JSON_OBJECTAGG(grades.id, grades.jsdata) as data
+                           from (SELECT g.id,JSON_OBJECT('id', g.id,
+                               'name', g.name,
+                               'photo', g.photo)  AS jsdata
+                               from grades g WHERE g.is_active='1'  group by g.id) as grades`;
+            pool.query(query, (error, results) => {
+                if (error) {
+                    reject(error)
+                }
+                let data = [];
+                if(results?.length){
+                    data = results[0].data;
+                }
+                resolve(data);
+            })
+        })
+    }catch (e){
+        console.log(e);
+    }
+}
 export const actionToGetSubjectListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select subjects.id,subjects.name,subjects.photo,JSON_OBJECT(
-                                              'curriculum',
-                                              (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', curriculum_topic.id, 'focus',
-                                                                                curriculum.focus, 'name',
-                                                                                curriculum.name, 'description',
-                                                                                curriculum.description,
-                                                                                'photo', curriculum.photo,
-                                                                                'curriculum_content',
-                                                                                (select JSON_ARRAYAGG(JSON_OBJECT('id',
-                                                                                                                  curriculum_content.id,
-                                                                                                                  'url',
-                                                                                                                  curriculum_content.url,
-                                                                                                                  'type',
-                                                                                                                  curriculum_content.type,
-                                                                                                                  'flipbook_code',
-                                                                                                                  curriculum_content.type))
-                                                                                 from curriculum_content
-                                                                                 WHERE curriculum_content.curriculum_id = curriculum_topic.curriculum_id)
-                                                                    ))
-                                               from curriculum_topic
-                                                        join curriculum on curriculum.id = curriculum_topic.curriculum_id
-                                                        join subject_topic ON subject_topic.topic_id = curriculum_topic.topic_id
-                                               WHERE subject_topic.subject_id = subjects.id),
-                                              'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_subject.product_id,'id',product_subject.id,'name',prod.name))
-                                                          from product_subject left join products prod on prod.id=product_subject.product_id
-                                                          WHERE subject_id = subjects.id),
-
-                                              'grade', (SELECT JSON_ARRAYAGG(JSON_OBJECT('grade_id',grade_subject.grade_id,'id',grade_subject.id))
-                                                        from grade_subject
-                                                        WHERE subject_id = subjects.id),
-                                              'topic', (SELECT JSON_ARRAYAGG(JSON_OBJECT('topic_id',subject_topic.topic_id,'id',subject_topic.id))
-                                                        from subject_topic
-                                                        WHERE subject_id = subjects.id)
-                                  ) as data
-                           from subjects  `;
+            const query = `select subjects.id,subjects.name,subjects.photo from subjects  where is_active='1'`;
             pool.query(query, (error, results) => {
                 if (error) {
                     reject(error)
@@ -115,36 +101,7 @@ export const actionToGetSubjectListApiCall =  () => {
 export const actionToGetTopicsListApiCall =  () => {
     try {
         return new Promise(async function(resolve, reject) {
-            const query = `select topics.id,topics.name,topics.photo,JSON_OBJECT(
-                                              'curriculum',
-                                              (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', curriculum_topic.id, 'focus',
-                                                                                curriculum.focus, 'name',
-                                                                                curriculum.name, 'description',
-                                                                                curriculum.description,
-                                                                                'photo', curriculum.photo,
-                                                                                'curriculum_content',
-                                                                                (select JSON_ARRAYAGG(JSON_OBJECT('id',
-                                                                                                                  curriculum_content.id,
-                                                                                                                  'url',
-                                                                                                                  curriculum_content.url,
-                                                                                                                  'type',
-                                                                                                                  curriculum_content.type,
-                                                                                                                  'flipbook_code',
-                                                                                                                  curriculum_content.type))
-                                                                                 from curriculum_content
-                                                                                 WHERE curriculum_content.curriculum_id = curriculum_topic.curriculum_id)
-                                                                    ))
-                                               from curriculum_topic
-                                                        join curriculum on curriculum.id = curriculum_topic.curriculum_id
-                                               WHERE curriculum_topic.topic_id = topics.id),
-                                              'product', (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_id',product_topic.product_id,'id',product_topic.id,'name',prod.name))
-                                                          from product_topic left join products prod on prod.id=product_topic.product_id
-                                                          WHERE topic_id = topics.id),
-                                              'subject', (SELECT JSON_ARRAYAGG(JSON_OBJECT('subject_id',subject_topic.subject_id,'id',subject_topic.id))
-                                                          from subject_topic
-                                                          WHERE topic_id = topics.id)
-                                  ) as data
-                           from topics `;
+            const query = `select topics.id,topics.name,topics.photo from topics where is_active = '1'`;
             pool.query(query, (error, results) => {
                 if (error) {
                     reject(error)
@@ -152,6 +109,104 @@ export const actionToGetTopicsListApiCall =  () => {
                 let data = [];
                 if(results?.length){
                     data = results;
+                }
+                resolve(data);
+            })
+        })
+    }catch (e){
+        console.log(e);
+    }
+}
+export const actionToGetSubjectTopicGradeListApiCall =  (body) => {
+    let {subject_id,grade_id,topic_id} = body;
+    let where = subject_id ? ` and stg.subject_id = ${subject_id}` : '';
+    where += grade_id ? ` and stg.grade_id = ${grade_id}` : '';
+    where += topic_id ? ` and stg.topic_id = ${topic_id}` : '';
+    try {
+        return new Promise(async function(resolve, reject) {
+            const query = `SELECT stg.*, s.name AS subject_name,t.name AS topic_name, g.name AS grade_name
+                           FROM grade_subject_topic stg LEFT JOIN subjects s ON s.id=stg.subject_id 
+                               LEFT JOIN topics t ON t.id = stg.topic_id LEFT JOIN grades g ON g.id = stg.grade_id where 1=1 ${where}`;
+            pool.query(query, (error, results) => {
+                if (error) {
+                    reject(error)
+                }
+                let data = [];
+                if(results?.length){
+                    data = results;
+                }
+                resolve(data);
+            })
+        })
+    }catch (e){
+        console.log(e);
+    }
+}
+export const actionToGetCurriculumTopicListApiCall =  (body) => {
+    let {curriculum_id,topic_id} = body;
+    let where =  curriculum_id ? ` and cgst.curriculum_id = ${curriculum_id}` : '';
+    where += topic_id ? ` and cgst.topic_id = ${topic_id}` : '';
+    try {
+        return new Promise(async function(resolve, reject) {
+            const query = `SELECT cgst.*, s.name AS subject_name,t.name AS topic_name, g.name AS grade_name
+                           FROM curriculum_grade_subject_topic cgst
+                               LEFT JOIN grade_subject_topic stg ON stg.id=cgst.grade_subject_topic_id LEFT JOIN subjects s ON s.id=stg.subject_id 
+                               LEFT JOIN topics t ON t.id = stg.topic_id LEFT JOIN grades g ON g.id = stg.grade_id where 1=1 ${where}`;
+            pool.query(query, (error, results) => {
+                if (error) {
+                    reject(error)
+                }
+                let data = [];
+                if(results?.length){
+                    data = results;
+                }
+                resolve(data);
+            })
+        })
+    }catch (e){
+        console.log(e);
+    }
+}
+
+export const actionToGetWebsiteCurriculumListApiCall =  (body) => {
+    let {source_id} = body;
+    let where =  source_id ? ` and cat.source = ${source_id}` : '';
+    try {
+        return new Promise(async function(resolve, reject) {
+            const query = `SELECT JSON_OBJECTAGG(curriculum.id, curriculum.jsdata) as data
+                           from (SELECT c.id,JSON_OBJECT('id',c.id,
+                                   'name',c.name,
+                                   'focus',c.focus,
+                                   'description',c.description,
+                                   'photo',c.photo,
+                                   'slug',c.slug,
+                                   'product_name',p.name,
+                                   'product_slug',pd.slug,
+                                   'subcategory_name',sc.name,
+                                   'subcategory_slug',sc.slug,
+                                   'category_name',cat.name,
+                                   'category_slug',cat.slug,
+                                   'grade_name',g.name,
+                                   'subject_name',s.name,
+                                   'topic_name',t.name) AS jsdata
+                                 FROM curriculum c
+                                          INNER JOIN product_curriculum pc on pc.curriculum_id =c.id
+                                          LEFT JOIN curriculum_grade_subject_topic cgst ON cgst.curriculum_id = c.id
+                                          LEFT JOIN grade_subject_topic gst ON gst.id = cgst.grade_subject_topic_id
+                                          LEFT JOIN grades g ON g.id = gst.grade_id
+                                          LEFT JOIN subjects s ON s.id = gst.subject_id
+                                          LEFT JOIN topics t ON t.id = gst.topic_id
+                                          LEFT JOIN products p ON p.id=pc.product_id
+                                          LEFT JOIN product_details pd ON pd.product_id=pc.product_id
+                                          LEFT JOIN sub_categories sc  ON sc.id = p.sub_category_id
+                                          LEFT JOIN categories cat ON cat.id = sc.category_id WHERE c.is_active = '1' ${where} ) as curriculum`;
+            pool.query(query, (error, results) => {
+                if (error) {
+                    reject(error)
+                }
+                let data = [];
+                if(results?.length){
+                    data = results[0].data;
                 }
                 resolve(data);
             })

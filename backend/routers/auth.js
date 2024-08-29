@@ -10,13 +10,13 @@ import {
   actionToGetAllUserApiCall,
   actionToGetUserDetailsByForgotPasswordTokenApiCall, actionToGetUserIsExist,
   actionToGetUserIsExistApiCall, actionToInsertGoogleUserApi,
-  actionToInsertUserApi, getOtpDetailsByOptAndEmail, userPassWordByIdApiCall
+  actionToInsertUserApi, actionToInsertUserData, getOtpDetailsByOptAndEmail, userPassWordByIdApiCall
 } from "../models/Users.js";
-import {actionToSendCustomEmail} from "../helper/emailNodeMailerHelper.js";
+import {actionToSendCustomEmail, actionToSendEmail} from "../helper/emailNodeMailerHelper.js";
 import {generateRandomString,updateCommonApiCall,insertCommonApiCall} from "../models/commonModel.js";
 import expressAsyncHandler from "express-async-handler";
 import {sendOtpSmsToMobile} from "../helper/CommonHelper.js";
-import {insertCommonWithLogCommonApiCall} from "../models/commonLogModel.js";
+import {actionToGetCompanyListApiCall, insertCommonWithLogCommonApiCall} from "../models/commonLogModel.js";
 const authRouter = express.Router();
 
 // Sign up
@@ -723,7 +723,7 @@ authRouter.post(
 
 
 // Log in
-authRouter.post("/login-to-desktop-app", async (req, res) => {
+authRouter.post("/website-login", async (req, res) => {
   const {email,source,password} = req.body;
   // Look for user email in the database
   let user = await actionToGetUserIsExist(email,source)
@@ -778,4 +778,112 @@ authRouter.post("/login-to-desktop-app", async (req, res) => {
     refreshToken,
   });
 });
+
+// Sign up
+authRouter.post(
+    "/website-signup",
+    [
+      check("email", "Invalid email").isEmail(),
+      check("password", "Password must be at least 6 chars long").isLength({
+        min: 6,
+      }),
+    ],
+    async (req, res) => {
+      const {email, name, password, mobile,source_id} = req.body;
+
+      // Validate user input
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(401).json({
+          errors: errors.array(),
+        });
+      }
+
+      // Validate if user already exists
+      await actionToGetUserIsExist(email,source_id).then(async (userData) => {
+        if (userData?.id) {
+          // 422 Unprocessable Entity: server understands the content type of the request entity
+          // 200 Ok: Gmail, Facebook, Amazon, Twitter are returning 200 for user already exists
+          return res.status(401).json({
+            errors: [
+              {
+                email: userData?.email,
+                mobile: userData?.mobile,
+                msg: "User with this email address is already exist.",
+              },
+            ],
+          });
+        } else {
+          // Hash password before saving to database
+          const salt = await bcrypt.genSalt(10);
+
+          const hashedPassword = await bcrypt.hash(password, salt);
+
+          // Save email and password to database/array
+          let user = {
+            email: email,
+            name: name,
+            password: hashedPassword,
+            mobile: mobile,
+            role: 7,
+            source_id:source_id
+          }
+          actionToInsertUserData(user);
+          const companyListData = await actionToGetCompanyListApiCall({id:source_id});
+          const companyData = companyListData.length > 0 ? companyListData[0] :'';
+          if(companyData){
+            let emailBodyHtml=`<body><h3> Thank you for register on ${companyData.name}</h3>
+        <p>Dear,${name}</p>
+        <p>This email is just for inform you that you have benn successfully registered on ${companyData.name}</p>
+        <p></p>
+        <h5>Thank you<br><b>Team ${companyData.name}</b></h5>`;
+            let emailBodyText=` Thank you for register on ${companyData.name}
+        Dear,{name}
+        This email is just for inform you that you have benn successfully registered on ${companyData.name}
+        Thank you Team ${companyData.name}`;
+
+
+            actionToSendEmail({
+              'to': email,
+              'subject': 'Signup Successfully',
+              'cc': '',
+              'bcc': '',
+              'html': emailBodyHtml,
+              'text': emailBodyText,
+              'snippet': '',
+              'account_type': 'gmail',
+              'attachments': ''
+            })
+          }
+      // Look for user email in the database
+          let users = await actionToGetUserIsExist(email,source_id)
+          // Do not include sensitive information in JWT
+          const accessToken = await JWT.sign(
+              {users},
+              process.env.ACCESS_TOKEN_SECRET,
+              {
+                expiresIn: "1m",
+              }
+          );
+          // Refresh token
+          const refreshToken = await JWT.sign(
+              { users },
+              process.env.REFRESH_TOKEN_SECRET,
+              {
+                expiresIn: "5m",
+              }
+          );
+          // Set refresh token in refreshTokens array
+          refreshTokens.push(refreshToken);
+
+          return res.json({
+            accessToken: accessToken,
+            refreshToken:refreshToken
+          });
+        }
+      });
+
+    }
+);
 export default authRouter;

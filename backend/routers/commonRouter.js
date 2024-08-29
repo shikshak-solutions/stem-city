@@ -8,7 +8,7 @@ import {
     insertCommonApiCall,
     updateCommonApiCall
 } from "../models/commonModel.js";
-import {actionToSendCustomEmail} from "../helper/emailNodeMailerHelper.js";
+import {actionToSendCustomEmail, sendTestEmail} from "../helper/emailNodeMailerHelper.js";
 import {actionToGetAllCustomersData} from "../models/Users.js";
 import CryptoJS from "crypto-js";
 const ENCRYPTION_KEY = "XkhZG4fW2t2W";
@@ -146,6 +146,17 @@ commonRouter.post(
     '/get-pin-code-list',
     expressAsyncHandler(async (req, res) => {
         actionToGetPinCodeApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+commonRouter.get(
+    '/test-email',
+    expressAsyncHandler(async (req, res) => {
+        sendTestEmail(req.body).then((data) => {
             res.status(200).send(data);
         })
             .catch(error => {

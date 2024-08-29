@@ -108,6 +108,34 @@ export const actionToInsertUserApi = async (body) => {
     }
 }
 
+/**
+ * This method is used to insert a new entry on user table when user signup
+ * @param body
+ * @returns {Promise<unknown>}
+ */
+export const actionToInsertUserData = async (body) => {
+   // try {
+    let {email,name,password,mobile,role,source_id} = body;
+    return new Promise(function(resolve, reject) {
+        const query = `INSERT INTO users (email,name,password,mobile,role,source)
+                       VALUES ('${email}','${name}','${password}','${mobile}',${role},'${source_id}')`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(query)
+            }
+            let data = {};
+            console.log(results,'results')
+            if(results?.length){
+                data = results;
+            }
+            resolve(data);
+        })
+    })
+    /*}catch (e){
+        return e;
+    }*/
+}
+
 export const actionToInsertGoogleUserApi = async (body) => {
     try {
         let {email,name,password,id} = body;

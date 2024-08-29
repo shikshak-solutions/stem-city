@@ -10,7 +10,9 @@ import {
     actionToGetWebSettingMenuListApiCall,
     actionToGetWebsiteMenuListApiCall,
     actionToGetWebsiteCategoriesListApiCall,
-    actionToGetWebSettingsSectionContentApiCall, actionToGetWebsiteSectionContentApiCall
+    actionToGetWebSettingsSectionContentApiCall,
+    actionToGetWebsiteSectionContentApiCall,
+    actionToGetComponentListApiCall
 } from "../models/WebSetting.js";
 
 
@@ -123,6 +125,17 @@ webSettingRouter.post(
     '/get-seo-meta-data-website',
     expressAsyncHandler(async (req, res) => {
         actionToGetSEOMetaDataWebsiteApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+webSettingRouter.post(
+    '/get-component-list',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetComponentListApiCall(req.body).then((data) => {
             res.status(200).send(data);
         })
             .catch(error => {

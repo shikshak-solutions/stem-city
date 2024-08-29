@@ -10,7 +10,10 @@ import {
     actionToGetVendorApiCall,
     actionToImportProductExcelApiCall,
     actionToGetProductImagesApiCall,
-    actionToGetProductCurriculumApiCall, actionToGetDiscountCouponForProductApiCall
+    actionToGetProductCurriculumApiCall,
+    actionToGetDiscountCouponForProductApiCall,
+    actionToGetProductGradeApiCall,
+    actionToGetProductSubjectApiCall, actionToGetProductTopicApiCall
 } from "../models/Inventory.js";
 
 const inventoryRouter = express.Router();
@@ -97,6 +100,39 @@ inventoryRouter.post(
     '/get-product-curriculum',
     expressAsyncHandler(async (req, res) => {
         actionToGetProductCurriculumApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+inventoryRouter.post(
+    '/get-product-grade',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetProductGradeApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+inventoryRouter.post(
+    '/get-product-subject',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetProductSubjectApiCall(req.body).then((data) => {
+            res.status(200).send(data);
+        })
+            .catch(error => {
+                res.status(500).send(error);
+            })
+    })
+);
+inventoryRouter.post(
+    '/get-product-topic',
+    expressAsyncHandler(async (req, res) => {
+        actionToGetProductTopicApiCall(req.body).then((data) => {
             res.status(200).send(data);
         })
             .catch(error => {
